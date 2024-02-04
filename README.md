@@ -4,7 +4,7 @@ Il seguente progetto è stato realizzato dagli studenti:
   - [Antonio De Martino](https://github.com/No1dem)
   - [Andrea Capitelli](https://github.com/AndreaCapitelli)
   - [Davide Gatta](https://github.com/Davidcat1118)
-##Collegamenti per lo Schema concettuale,ER,Schema ristrutturato:
+## Collegamenti per lo Schema concettuale,ER,Schema ristrutturato:
 1.[Schema concettuale](https://github.com/No1dem/Progetto-BB-OO-2023-24/blob/main/Basi%20Di%20Dati/UMLdef.svg)
 2.[Diagramma ER](https://github.com/No1dem/Progetto-BB-OO-2023-24/blob/main/Basi%20Di%20Dati/ErDef.svg)
 3.[Schema ristrutturato](https://github.com/No1dem/Progetto-BB-OO-2023-24)
