@@ -539,6 +539,43 @@ AFTER DELETE ON Like_
 FOR EACH ROW
 EXECUTE FUNCTION SottraiLike();
 
+--	ControlloUtenteLikeIscrittoAlGruppo
+--La seguente funzione controlla che l’IdUtente di una riga da inserire in Like_ corrisponda a quello 
+--di un utente iscritto al gruppo in cui è stato scritto il post o il commento,altrimenti blocca l’inserimento del like.
+
+CREATE OR REPLACE FUNCTION ControlloUtenteLikeIscrittoAlGruppo()
+RETURNS TRIGGER AS $$
+DECLARE 
+	varIdGruppo Gruppo.IdGruppo%TYPE;
+BEGIN 
+	--Recupero l'id del gruppo in cui il like è stato inserito 
+	IF NEW.IdCommento IS NULL THEN   --Il like è per un post
+		SELECT IdGruppo
+		INTO varIdGruppo
+		FROM Post
+		WHERE IdPost=NEW.IdPost;
+	ELSE  				--Il like è per un commento
+		SELECT IdGruppo
+		INTO varIdGruppo
+		FROM Commento C JOIN Post P
+		ON C.IdPostCommentato=P.IdPost
+		WHERE IdCommento=NEW.IdCommento;
+	END IF;
+		
+	IF NEW.IdUtente NOT IN(SELECT IdUtente
+			       FROM Iscrizione 
+			       WHERE IdGruppo=varIdGruppo)
+	THEN
+		RAISE EXCEPTION 'L''utente non è iscritto al gruppo.';
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
+		
+CREATE OR REPLACE TRIGGER ControlloUtenteLikeIscrittoAlGruppo
+BEFORE INSERT ON Like_
+FOR EACH ROW 
+EXECUTE FUNCTION ControlloUtenteLikeIscrittoAlGruppo();
+
 -- 	AggiungiCommento 
 --La seguente funzione permette di incrementare il numero di commenti sotto a un post
 --non appena viene inserita una nuova riga in Commento
