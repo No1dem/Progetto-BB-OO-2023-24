@@ -633,6 +633,37 @@ BEFORE INSERT ON Post
 FOR EACH ROW 
 EXECUTE FUNCTION ControllaDataOraPost();
 
+
+--	ControlloUtenteCommentoIscrittoAlGruppo
+--La seguente funzione permette di controllare che un Utente che vuole inserire un commento sia
+--iscritto al gruppo in cui commenta,se così non è allora blocca l'inserimento 
+
+CREATE OR REPLACE FUNCTION ControlloUtenteCommentoIscrittoAlGruppo ()
+RETURNS TRIGGER AS $$
+DECLARE 
+	varIdGruppo Gruppo.IdGruppo%TYPE;
+BEGIN 
+	--Recupero l’IdGruppo in cui si trova il post (o il commento sotto il post) commentato
+	SELECT IdGruppo
+	INTO varIdGruppo
+	FROM Post
+	WHERE IdPost=NEW.IdPostCommentato;
+
+	IF NEW.IdUtente NOT IN (SELECT IdUtente
+				FROM Iscrizione 
+				WHERE IdGruppo=varIdGruppo)
+	THEN
+		RAISE EXCEPTION 'L''utente non è iscritto al gruppo.';
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER ControlloUtenteCommentoIscrittoAlGruppo
+BEFORE INSERT ON Commento
+FOR EACH ROW
+EXECUTE FUNCTION ControlloUtenteCommentoIscrittoAlGruppo();
+
+
 --	CreaGruppo
 --La seguente funzione, che prende in input l’id di un utente che vuole creare un gruppo e le 
 --informazioni necessarie per la creazione del gruppo,permette di creare un gruppo,nominare
