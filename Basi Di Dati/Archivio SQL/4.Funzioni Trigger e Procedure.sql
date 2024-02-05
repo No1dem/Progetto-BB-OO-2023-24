@@ -1,3 +1,41 @@
+-- 	ControlloNumeroLikeCommentiInPost
+--La seguente funzione controlla che all'inserimento di un nuovo post 
+--i valori NumeroLike e NumeroCommenti sia settato a quello di default 0
+
+CREATE OR REPLACE FUNCTION ControlloNumeroLikeCommentiInPost()
+RETURNS TRIGGER AS $$
+BEGIN
+	IF (NEW.NumeroCommenti <> 0 OR NEW.NumeroLike <> 0) THEN 
+		RAISE EXCEPTION 'Impossibile inserire un post che abbia già dei like e commenti';
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER ControlloNumeroLikeCommentiInPost
+BEFORE INSERT ON Post
+FOR EACH ROW 
+EXECUTE FUNCTION ControlloNumeroLikeCommentiInPost();
+
+-- 	ControlloNumeroLikeInCommento
+--La seguente funzione controlla che all'inserimento di un nuovo commento
+--il numero di like sia settato al valore di default 0 
+
+CREATE OR REPLACE FUNCTION ControlloNumeroLikeInCommento()
+RETURNS TRIGGER AS $$	
+BEGIN
+	IF (NEW.NumeroLike <> 0) THEN 
+		RAISE EXCEPTION 'Impossibile inserire un commento che abbia un numero di like diverso da zero';
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER ControlloNumeroLikeInCommento
+BEFORE INSERT ON Commento
+FOR EACH ROW 
+EXECUTE FUNCTION ControlloNumeroLikeInCommento();
+
 --	CreatoreGruppoèAmministratore
 
 CREATE OR REPLACE FUNCTION CreatoreAdmin() 
@@ -261,7 +299,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE TRIGGER GestioneEliminazioneUtenteCreatoreGruppo
-AFTER DELETE ON Utente 
+BEFORE DELETE ON Utente 
 FOR EACH ROW
 EXECUTE FUNCTION GestioneEliminazioneUtenteCreatoreGruppo();
 
@@ -445,8 +483,7 @@ RETURNS VOID AS $$
 BEGIN 
 	--Solo uno tra IdCommento e IdPost è NOT NULL in una riga di Like_ poiché uno stesso like
 	--non può fare riferimento ad un Post e ad un Commento
-	IF(CommentoIN IS NOT NULL)
-	THEN 
+	IF(CommentoIN IS NOT NULL) THEN 
 		UPDATE Commento SET NumeroLike=NumeroLike+1 
 		WHERE IdCommento=CommentoIN;
 	ELSE 
@@ -492,15 +529,72 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION SottraiLike()
 RETURNS TRIGGER AS $$
 BEGIN
-		PERFORM DecrementaLike(NEW.IdCommento,NEW.IdPost);
+		PERFORM DecrementaLike(OLD.IdCommento,OLD.IdPost);
 		RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE TRIGGER SottraiLike
-AFTER INSERT ON Like_
+AFTER DELETE ON Like_
 FOR EACH ROW
 EXECUTE FUNCTION SottraiLike();
+
+-- 	AggiungiCommento 
+--La seguente funzione permette di incrementare il numero di commenti sotto a un post
+--non appena viene inserita una nuova riga in Commento
+
+CREATE OR REPLACE FUNCTION AggiungiCommento()
+RETURNS TRIGGER AS $$
+BEGIN 
+	UPDATE Post SET NumeroCommenti=NumeroCommenti+1
+	WHERE IdPost=NEW.IdPostCommentato;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER AggiungiCommento
+AFTER INSERT ON Commento
+FOR EACH ROW
+EXECUTE FUNCTION AggiungiCommento();
+
+-- 	RimuoviCommento
+--La seguente funzione permette di decrementare il numero di commenti sotto a un post
+--non appena viene eliminata una  riga in Commento 
+
+CREATE OR REPLACE FUNCTION RimuoviCommento()
+RETURNS TRIGGER AS $$
+BEGIN 
+	UPDATE Post SET NumeroCommenti=NumeroCommenti-1
+	WHERE IdPost=OLD.IdPostCommentato;
+	RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER RimuoviCommento
+AFTER DELETE ON Commento
+FOR EACH ROW
+EXECUTE FUNCTION RimuoviCommento();
+
+-- 	ControllaDataOraPost
+--La seguente funzione controlla che all'inserimento di un nuovo post data e ora siano quelle
+--correnti del sistema.
+
+CREATE OR REPLACE FUNCTION ControllaDataOraPost()
+RETURNS TRIGGER AS $$
+BEGIN
+	IF (NEW.DataPubblicazione <> CURRENT_DATE) THEN 
+		RAISE EXCEPTION  'Impossibile inserire un post che non abbia la data odierna';
+	ELSIF (NEW.OraPubblicazione <> CURRENT_TIME) THEN
+		RAISE EXCEPTION 'Impossibile inserire un post che non abbia l''orario corrente';
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER ControllaDataOraPost
+BEFORE INSERT ON Post
+FOR EACH ROW 
+EXECUTE FUNCTION ControllaDataOraPost();
 
 --	CreaGruppo
 --La seguente funzione, che prende in input l’id di un utente che vuole creare un gruppo e le 
@@ -550,14 +644,20 @@ BEGIN
 	--Salvo l'id del Creatore del Post
   	SELECT IdUtente 
   	INTO CreatorePost
-  	FROM Post P
-  	WHERE P.IdUtente = NEW.IdUtente;
+  	FROM Post 
+  	WHERE IdPost = NEW.IdPost;
+
+	--Se il creatore post ha messo like al suo post non deve ricevere la notifica
+	IF CreatorePost = NEW.IdUtente 
+	THEN
+		RETURN NULL;
+	END IF;
 
 	Messaggio:= 'L''utente '|| NomeUtenteInterazione ||' '|| CognomeUtenteInterazione||'ha messo "Mi piace" al tuo post.';
 
   	--Creo e salvo l'id della notifica appena generata
-  	INSERT INTO Notifica(DataInvio,OraInvio,TestoNotifica,TipoNotifica)
-  	VALUES (CURRENT_DATE,CURRENT_TIME,Messaggio,'Interazione')
+  	INSERT INTO Notifica(DataInvio,OraInvio,TestoNotifica,TipoNotifica,IdNuovoLike)
+  	VALUES (CURRENT_DATE,CURRENT_TIME,Messaggio,'Interazione',NEW.IdLike)
   	RETURNING IdNotifica INTO NewIdNotifica;
 
  	 --Invio della notifica al creatore del post
@@ -570,6 +670,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE TRIGGER InviaNotificaInterazioneLike
 AFTER INSERT ON Like_
 FOR EACH ROW
+WHEN (NEW.IdPost IS NOT NULL)
 EXECUTE FUNCTION NotificaInterazioneLike();
 
 
@@ -599,14 +700,19 @@ BEGIN
   	--Salvo l'id del Creatore del Post
   	SELECT IdUtente 
   	INTO CreatorePost
-  	FROM Post P
-  	WHERE P.IdUtente = NEW.IdPostCommentato;
+  	FROM Post 
+  	WHERE IdPost = NEW.IdPostCommentato;
+	
+	--Se il creatore post ha commentato sotto il suo post non deve ricevere la notifica
+	IF CreatorePost = NEW.IdUtente THEN
+		RETURN NULL;
+	END IF;
 
 	Messaggio:= 'L''utente '|| NomeUtenteInterazione ||' '|| CognomeUtenteInterazione||'ha commentato il tuo post.';
 
   	--Creo e salvo l'id della notifica appena generata
-  	INSERT INTO Notifica(DataInvio,OraInvio,TestoNotifica,TipoNotifica)
-  	VALUES (CURRENT_DATE,CURRENT_TIME,Messaggio,'Interazione')
+  	INSERT INTO Notifica(DataInvio,OraInvio,TestoNotifica,TipoNotifica,IdNuovoCommento)
+  	VALUES (CURRENT_DATE,CURRENT_TIME,Messaggio,'Interazione',NEW.IdCommento)
   	RETURNING IdNotifica INTO NewIdNotifica;
 
   	--Invio della notifica al creatore del post
@@ -691,7 +797,6 @@ BEGIN
 	RETURN varIdCreatore;
 END;
 $$ LANGUAGE plpgsql;
-
 
 -- IscriviUtente
 --La seguente funzione è utilizzata nel popolamento del DB, per iscrivere un utente ad un gruppo
