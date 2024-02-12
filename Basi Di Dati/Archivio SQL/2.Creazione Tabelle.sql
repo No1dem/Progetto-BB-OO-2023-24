@@ -12,8 +12,8 @@ DROP TABLE IF EXISTS Amministratore CASCADE;
 
 CREATE TABLE Utente (
  	IdUtente SERIAL PRIMARY KEY,
-  	NomeUtente VARCHAR(30) NOT NULL CHECK (NomeUtente ~ '^[A-Za-zÀ-ÖØ-öø-ÿ]+$'),
-  	CognomeUtente VARCHAR(30) NOT NULL CHECK (CognomeUtente ~ '^[A-Za-zÀ-ÖØ-öø-ÿ]+$'),
+  	NomeUtente VARCHAR(30) NOT NULL CHECK (NomeUtente ~ '^[A-Za-zÀ-ÖØ-öø-ÿ ]+$'),
+  	CognomeUtente VARCHAR(30) NOT NULL CHECK (CognomeUtente ~ '^[A-Za-zÀ-ÖØ-öø-ÿ ]+$'),
   	Nickname VARCHAR(20) NOT NULL CHECK(LENGTH(Nickname)>=5),
  	Email VARCHAR(100) UNIQUE NOT NULL,  
   	Password VARCHAR(50) NOT NULL CHECK(LENGTH(Password)>=6),

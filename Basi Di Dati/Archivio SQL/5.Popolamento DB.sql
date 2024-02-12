@@ -81,7 +81,7 @@ BEGIN
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Frank1415'),varIdCreatore,varIdGruppo) ;
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Giulia1617'),varIdCreatore,varIdGruppo) ;
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Bob456'),varIdCreatore,varIdGruppo) ;
-    	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Alice123'),varIdCreatore,varIdGruppo) ;
+    PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Alice123'),varIdCreatore,varIdGruppo) ;
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('andrcap03'),varIdCreatore,varIdGruppo);
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('DaviGatta'),varIdCreatore,varIdGruppo);
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('HugoToKnow'),varIdCreatore,varIdGruppo);
@@ -187,10 +187,10 @@ BEGIN
 	INSERT INTO Commento (TestoCommento,IdUtente,IdPostCommentato) VALUES ('La mia serie tv preferita è Game of Thrones',RecuperaIdUtenteConNickname('DaviGatta'),varIdPost)
 	RETURNING IdCommento INTO varIdCommento;
 	
-	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('Eva1213'), varIdCommento);
-    	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('Giulia1617'), varIdCommento);
+	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('andrcap03'), varIdCommento);
+    INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('DaviGatta'), varIdCommento);
 	
-    	INSERT INTO Commento (TestoCommento,IdUtente,IdPostCommentato) VALUES ('La mia serie tv preferita è Peaky Blinders',RecuperaIdUtenteConNickname('LukeScotti'),varIdPost)
+    INSERT INTO Commento (TestoCommento,IdUtente,IdPostCommentato) VALUES ('La mia serie tv preferita è Peaky Blinders',RecuperaIdUtenteConNickname('LukeScotti'),varIdPost)
 	RETURNING IdCommento INTO varIdCommento;
 	
 	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('DaviGatta'), varIdCommento);

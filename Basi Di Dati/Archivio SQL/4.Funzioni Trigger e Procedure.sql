@@ -31,7 +31,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER ControlloNumeroLikeInCommento
+CREATE OR REPLACE TRIGGER ControlloNumeroLikeInCommento
 BEFORE INSERT ON Commento
 FOR EACH ROW 
 EXECUTE FUNCTION ControlloNumeroLikeInCommento();
@@ -568,6 +568,7 @@ BEGIN
 	THEN
 		RAISE EXCEPTION 'L''utente non è iscritto al gruppo.';
 	END IF;
+	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 		
@@ -655,6 +656,7 @@ BEGIN
 	THEN
 		RAISE EXCEPTION 'L''utente non è iscritto al gruppo.';
 	END IF;
+	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
