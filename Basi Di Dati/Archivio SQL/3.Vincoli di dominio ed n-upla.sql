@@ -12,7 +12,7 @@ UNIQUE(IdGruppo,IdUtente);
 
 --	UnicitàRichiestaAccessoPerGruppo
 ALTER TABLE RichiestaDiAccesso ADD CONSTRAINT UnicitàRichiestaAccessoPerGruppo
-UNIQUE (IdUtenteRichiesta,IdGruppoRichiesta)
+UNIQUE (IdUtenteRichiesta,IdGruppoRichiesta);
 
 --	ValiditàDataOraPost
 ALTER TABLE Post
