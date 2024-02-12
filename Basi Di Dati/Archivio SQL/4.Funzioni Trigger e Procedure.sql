@@ -187,6 +187,29 @@ BEFORE INSERT ON Iscrizione
 FOR EACH ROW 
 EXECUTE FUNCTION VerificaStatoRichiesta();
 
+--	ControllaRichiestaUtenteIscritto
+--La seguente funzione ha il compito di evitare che un utente già iscritto al gruppo 
+--possano mandare una richiesta di accesso 
+
+CREATE OR REPLACE FUNCTION ControllaRichiestaUtenteIscritto() 
+RETURNS TRIGGER AS $$
+BEGIN 
+	IF EXISTS(SELECT 1
+		  FROM Iscrizione
+		  WHERE NEW.idUtenteRichiesta=idUtente AND 
+		  NEW.idGruppoRichiesta=idGruppo)
+	THEN
+		RAISE EXCEPTION  'Utente già iscritto al gruppo';
+	END IF;
+ 	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE  TRIGGER ValiditàRichiestaDiAccesso 
+BEFORE INSERT ON RichiestaDiAccesso
+FOR EACH ROW 
+EXECUTE FUNCTION ControllaRichiestaUtenteIscritto();
+
 
 --	IscriviUtenteInGruppo
 --La seguente funzione non appena la richiesta di accesso a un gruppo di un utente viene accettata, --quest’ultimo viene iscritto nel gruppo a cui aveva fatto richiesta.
