@@ -37,6 +37,8 @@ FOR EACH ROW
 EXECUTE FUNCTION ControlloNumeroLikeInCommento();
 
 --	CreatoreGruppoèAmministratore
+--All'inserimento di una tupla in creatoreGruppo la funzione inseirsce una tupla anche nella tabella
+--amministratore relativa allo stesso utente 
 
 CREATE OR REPLACE FUNCTION CreatoreAdmin() 
 RETURNS TRIGGER AS $$
@@ -55,6 +57,8 @@ FOR EACH ROW
 EXECUTE FUNCTION CreatoreAdmin();
 
 --	NuovoAdmin
+-- la seguente funzione si occupa di controllare che l'utente nominato amministratore
+--sia effetivamente iscritto al gruppo
 
 CREATE OR REPLACE FUNCTION NuovoAdmin()
 RETURNS TRIGGER AS $$
@@ -77,7 +81,7 @@ EXECUTE FUNCTION NuovoAdmin();
 
 --	CreatorePostInGruppo
 --La seguente funzione si occupa di controllare che un utente che scrive un post, lo stia scrivendo  
---per un gruppo in cui è iscritto
+--in un gruppo in cui è iscritto
 
 CREATE OR REPLACE FUNCTION CreatorePostInGruppo()
 RETURNS TRIGGER AS $$
@@ -188,8 +192,8 @@ FOR EACH ROW
 EXECUTE FUNCTION VerificaStatoRichiesta();
 
 --	ControllaRichiestaUtenteIscritto
---La seguente funzione ha il compito di evitare che un utente già iscritto al gruppo 
---possano mandare una richiesta di accesso 
+--La seguente funzione ha il compito di evitare che un utente possa mandare una richiesta di accesso ad un gruppo in cui è gia iscritto 
+--possa mandare una richiesta di accesso 
 
 CREATE OR REPLACE FUNCTION ControllaRichiestaUtenteIscritto() 
 RETURNS TRIGGER AS $$
@@ -212,7 +216,7 @@ EXECUTE FUNCTION ControllaRichiestaUtenteIscritto();
 
 
 --	IscriviUtenteInGruppo
---La seguente funzione non appena la richiesta di accesso a un gruppo di un utente viene accettata, --quest’ultimo viene iscritto nel gruppo a cui aveva fatto richiesta.
+--La seguente funzione non appena la richiesta di accesso di un utente viene accettata, --quest’ultimo viene iscritto nel gruppo a cui aveva fatto richiesta.
 
 CREATE OR REPLACE FUNCTION IscriviUtenteInGruppo()
 RETURNS TRIGGER AS $$
@@ -251,8 +255,7 @@ FOR EACH ROW
 EXECUTE FUNCTION ValiditàCreatoreInRichiesta();
 
 --	EliminaRichiestaAccesso
---La seguente funzione appena viene esitata una richiesta di accesso come <<Rifiutato>>
---quest’ultima viene eliminata dalla tabella
+--La seguente funzione ha il compito di eliminare una richiesta di accesso dalla relativa tabella appena viene esitata come <<Rifiutato>>
 
 CREATE OR REPLACE FUNCTION EliminaRichiestaAccesso()
 RETURNS TRIGGER AS $$
@@ -637,8 +640,8 @@ FOR EACH ROW
 EXECUTE FUNCTION RimuoviCommento();
 
 -- 	ControllaDataOraPost
---La seguente funzione controlla che all'inserimento di un nuovo post data e ora siano quelle
---correnti del sistema.
+--la seguente funzione si occupa di controllare che l'inserimento di un post avvenga rispettando la 
+--data e l'orario attuali, di conseguenza vieta inserimenti di post in date passate o future
 
 CREATE OR REPLACE FUNCTION ControllaDataOraPost()
 RETURNS TRIGGER AS $$
@@ -714,6 +717,8 @@ $$ LANGUAGE plpgsql;
 
 
 --	InviaNotificaInterazioneLike
+-- la seguente funzione, all'inserimento di una nuova riga nella tabbella Like_ per un Post, consente di 
+-- inviare la relativa notifica al creatore del Post, questo si traduce con l'inserimento di una nuova riga nella tabella Notifica
 
 CREATE OR REPLACE FUNCTION NotificaInterazioneLike()
 RETURNS TRIGGER AS $$
@@ -768,6 +773,8 @@ EXECUTE FUNCTION NotificaInterazioneLike();
 
 
 --	InviaNotificaInterazioneCommento
+-- la seguente funzione, all'inserimento di una nuova riga nella tabbella Commento per un Post, consente di 
+-- inviare la relativa notifica al creatore del Post, questo si traduce con l'inserimento di una nuova riga nella tabella Notifica
 
 CREATE OR REPLACE FUNCTION NotificaInterazioneCommento()
 RETURNS TRIGGER AS $$
@@ -821,6 +828,8 @@ FOR EACH ROW
 EXECUTE FUNCTION NotificaInterazioneCommento();
 
 --	OttieniStatisticheGruppo
+-- La seguente procedure si occupa di fornire delle statistiche mensili relative ad un gruppo, i parametri di ingresso sono 
+-- idGruppo ed un mese e anno di riferimento, la funzione restituirà numero totale di post, commenti , like ai post relativi al periodo di riferimento.
 
 CREATE OR REPLACE PROCEDURE OttieniStatisticheGruppo(IN idGruppoin Gruppo.idGruppo%TYPE,IN mese INT,IN anno INT,OUT numero_post INT,OUT numero_commenti INT,OUT numero_like INT)
 AS $$
@@ -847,6 +856,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- RecuperaIdUtenteConNickname
+--La seguente funzione la utilizziamo per popolare il database
 
 CREATE OR REPLACE FUNCTION RecuperaIdUtenteConNickname(NicknameIN IN Utente.Nickname%TYPE)
 RETURNS INT AS $$
