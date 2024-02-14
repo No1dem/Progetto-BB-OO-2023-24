@@ -39,10 +39,7 @@ BEGIN
     	('Simona', 'Pellegrino', 'SimPell', 'simona@gmail.com', 'passsimona', 'Ingegnere ambientale e attivista per la sostenibilità', NULL),
 	('Raffaele','Cecere', 'lello00', 'lellocece@libero.it', 'pass9923','Ingegnere Gestionale,24 anni.', NULL);
 
-
-	--Creazione gruppi e iscrivi utenti nel gruppo
-	--PROTOTIPO CreaGruppo: 
-	--PROTOTIPO IscriviUtente:
+	--Creazione e popolamento gruppi
 	--------------------------
 	SELECT CreaGruppo(RecuperaIdUtenteConNickname('giorginho01'),'Tifosi della Juve ITA','Sport,Calcio','Gruppo italiano per i tifosi della Juventus') INTO varIdGruppo;
 	SELECT RecuperaIdCreatoreConNickname('giorginho01',varIdGruppo) INTO varIdCreatore;
@@ -81,7 +78,7 @@ BEGIN
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Frank1415'),varIdCreatore,varIdGruppo) ;
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Giulia1617'),varIdCreatore,varIdGruppo) ;
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Bob456'),varIdCreatore,varIdGruppo) ;
-    PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Alice123'),varIdCreatore,varIdGruppo) ;
+    	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('Alice123'),varIdCreatore,varIdGruppo) ;
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('andrcap03'),varIdCreatore,varIdGruppo);
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('DaviGatta'),varIdCreatore,varIdGruppo);
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('HugoToKnow'),varIdCreatore,varIdGruppo);
@@ -140,7 +137,7 @@ BEGIN
 	INSERT INTO Like_ (IdUtente,IdPost) VALUES (RecuperaIdUtenteConNickname('David1011'), varIdPost);
 	INSERT INTO Like_ (idUtente,IdPost) VALUES (RecuperaIdUtenteConNickname('LukeScotti'), varIdpost);
 	
-	INSERT INTO Commento (TestoCommento,IdUtente,IdPostCommentato) VALUES ('Sono entusiasta di unirmi a questa comunità culinaria. Vorrei sapere, qual è la vostra ricetta preferita da preparare?',RecuperaIdUtenteConNickname('Lau01'), varIdPost)
+	INSERT INTO Commento (TestoCommento,IdUtente,IdPostCommentato) VALUES ('Sono entusiasta di unirmi a questa comunità culinaria. Vorrei sapere, qual è la vostra ricetta preferita da 	preparare?',RecuperaIdUtenteConNickname('Lau01'), varIdPost)
 	RETURNING IdCommento INTO varIdCommento;
 	
 	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('Eva1213'), varIdCommento);
@@ -188,9 +185,9 @@ BEGIN
 	RETURNING IdCommento INTO varIdCommento;
 	
 	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('andrcap03'), varIdCommento);
-    INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('DaviGatta'), varIdCommento);
+   	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('DaviGatta'), varIdCommento);
 	
-    INSERT INTO Commento (TestoCommento,IdUtente,IdPostCommentato) VALUES ('La mia serie tv preferita è Peaky Blinders',RecuperaIdUtenteConNickname('LukeScotti'),varIdPost)
+    	INSERT INTO Commento (TestoCommento,IdUtente,IdPostCommentato) VALUES ('La mia serie tv preferita è Peaky Blinders',RecuperaIdUtenteConNickname('LukeScotti'),varIdPost)
 	RETURNING IdCommento INTO varIdCommento;
 	
 	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('DaviGatta'), varIdCommento);
