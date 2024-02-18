@@ -660,6 +660,25 @@ BEFORE INSERT ON Post
 FOR EACH ROW 
 EXECUTE FUNCTION ControllaDataOraPost();
 
+--	DataOraPostNonModificabile
+--La data e l'orario di un post non possono essere modificati una volta
+--che sono stati inseriti in fase di creazione del post
+
+CREATE OR REPLACE FUNCTION DataOraPostNonModificabile()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF OLD.OraPubblicazione IS DISTINCT FROM NEW.OraPubblicazione  OR OLD.DataPubblicazione IS DISTINCT FROM NEW.DataPubblicazione  THEN
+        RAISE EXCEPTION 'Non è consentito modificare data o orario.';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER DataOraPostNonModificabile
+BEFORE UPDATE ON Post
+FOR EACH ROW
+EXECUTE FUNCTION DataOraPostNonModificabile();
+
 
 --	ControlloUtenteCommentoIscrittoAlGruppo
 --La seguente funzione permette di controllare che un Utente che vuole inserire un commento sia
