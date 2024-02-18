@@ -14,15 +14,11 @@ UNIQUE(IdGruppo,IdUtente);
 ALTER TABLE RichiestaDiAccesso ADD CONSTRAINT UnicitàRichiestaAccessoPerGruppo
 UNIQUE (IdUtenteRichiesta,IdGruppoRichiesta);
 
---	ValiditàDataOraPost
-ALTER TABLE Post
-ADD CONSTRAINT ValiditàDataOraPost
-CHECK (DataPubblicazione = CURRENT_DATE AND OraPubblicazione=CURRENT_TIME);
 
 --	ValiditàDataOraNotifica
 ALTER TABLE Notifica
 ADD CONSTRAINT ValiditàDataOraNotifica
-CHECK (DataInvio=CURRENT_DATE AND OraInvio=CURRENT_TIME);
+CHECK (DataInvio<=CURRENT_DATE AND OraInvio=CURRENT_TIME);
 
 --	ControlloPostNoTestoNoFoto
 ALTER TABLE Post ADD CONSTRAINT ControlloPostNoTestoNoFoto
