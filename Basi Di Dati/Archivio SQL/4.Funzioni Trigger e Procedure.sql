@@ -860,7 +860,7 @@ BEGIN
    
     SELECT COUNT(*) INTO numero_commenti
     FROM Commento AS C , Post AS P
-    WHERE P.IdGruppo = idGruppoin AND C.idPost=P.idPost
+    WHERE P.IdGruppo = idGruppoin AND C.idPostCommentato=P.idPost
         AND EXTRACT(MONTH FROM P.DataPubblicazione) = mese
         AND EXTRACT(YEAR FROM P.DataPubblicazione) = anno;
 
