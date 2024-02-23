@@ -131,9 +131,18 @@ public class UtenteDAO {
 	}
 	
 	
-	public Utente getUtenteFromArrayList(String nickname) {
+	public Utente getUtenteFromArrayListByNickname(String nickname) {
 		for (Utente ut : listaUtente) {  
             if (ut.getNickname().equals(nickname)){
+                return ut;
+            }
+        }
+		return null;
+	}
+	
+	public Utente getUtenteFromArrayListByEmail(String Email) {
+		for (Utente ut : listaUtente) {  
+            if (ut.getEmail().equals(Email)){
                 return ut;
             }
         }
