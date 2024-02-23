@@ -140,6 +140,15 @@ public class UtenteDAO {
 		return null;
 	}
 	
+	public Utente getUtenteFromArrayList(String email) {
+		for (Utente ut : listaUtente) {  
+            if (ut.getEmail().equals(Email)){
+                return ut;
+            }
+        }
+		return null;
+	}
+	
 	
 	public boolean utenteExistInArrayList(Utente ut) {
 		return listaUtente.contains(ut);
