@@ -46,27 +46,14 @@ public class PostDAO {
 	        Time oraPubblicazione = Time.valueOf(p.getOraPubblicazione());
 	        pstmt.setTime(4, oraPubblicazione);
 			pstmt.setInt(5,p.getIdUtente());
-			pstmt.setInt(6,p.getIdGruppo());		
+			pstmt.setInt(6,p.getIdGruppo());
+			pstmt.execute();
+			listaPost.add(p);
+			pstmt.close();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void insertNuovoPost(Post p,Gruppo g,Utente u) {
-		String query="INSERT INTO Post (testo,urlImmagine,dataPubblicazione,oraPubblicazione,idUtente,idGruppo) VALUES (?,?,?,?,?,?)";
-		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
-			pstmt.setString(1,p.getTesto());
-			pstmt.setString(2,p.getUrlImmagine()); 
-	        Date dataPubblicazione = Date.valueOf(p.getDataPubblicazione());
-	        pstmt.setDate(3, dataPubblicazione);
-	        Time oraPubblicazione = Time.valueOf(p.getOraPubblicazione());
-	        pstmt.setTime(4, oraPubblicazione);
-			pstmt.setInt(5,g.getIdGruppo());
-			pstmt.setInt(6,u.getIdUtente());		
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
+
 }
