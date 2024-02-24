@@ -10,15 +10,15 @@ import java.util.LinkedList;
 
 public class GruppoDAO {
 	private Connection connessioneDB;
-	private LinkedList<Gruppo> listaGruppi;
+	private LinkedList<Gruppo> listaGruppo;
 		
 	public void listaGruppiDao(Connection conn) {
 			String query="SELECT * FROM Gruppo";
-			listaGruppi = new LinkedList<Gruppo>();
+			listaGruppo = new LinkedList<Gruppo>();
 			try(Statement stmt=conn.createStatement()){
 				ResultSet res=stmt.executeQuery(query);
 				while(res.next()) {
-					listaGruppi.add(new Gruppo (res.getInt("IdGruppo"),res.getString("nomeGruppo"),res.getString("tagGruppo"),res.getString("descrizioneGruppo"),
+					listaGruppo.add(new Gruppo (res.getInt("IdGruppo"),res.getString("nomeGruppo"),res.getString("tagGruppo"),res.getString("descrizioneGruppo"),
 							                    res.getInt("numeroIscritti")));
                 }
 			    connessioneDB=conn;
@@ -26,5 +26,15 @@ public class GruppoDAO {
 			catch(SQLException e) {
 				e.printStackTrace();
 			}	
+	}
+	
+	
+	public Gruppo getGruppoFromArrayListById(int id) {
+		for (Gruppo g : listaGruppo) {  
+            if (g.getIdGruppo() == id){
+                return g;
+            }
+        }
+		return null;
 	}
 }

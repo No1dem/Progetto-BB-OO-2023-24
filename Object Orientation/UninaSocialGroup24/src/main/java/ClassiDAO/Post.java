@@ -10,21 +10,26 @@ public class Post {
 	private LocalTime oraPubblicazione;
 	private int numeroLike;
 	private int numeroCommenti;
+	private Utente utente;
+	private Gruppo gruppo;
 	
 	//Costruttore
 	
-	public Post(int idPost, String testo, String urlImmagine, LocalDate dataPubblicazione, LocalTime oraPubblicazione,int numeroLike, int numeroCommenti) {
+	public Post(int idPost, String Testo, String urlImmagine, LocalDate dataPubblicazione, LocalTime oraPubblicazione,
+			int numeroLike, int numeroCommenti, Utente utente, Gruppo gruppo) {
 		super();
 		this.idPost = idPost;
-		Testo = testo;
+		this.Testo = Testo;
 		this.urlImmagine = urlImmagine;
 		this.dataPubblicazione = dataPubblicazione;
 		this.oraPubblicazione = oraPubblicazione;
 		this.numeroLike = numeroLike;
 		this.numeroCommenti = numeroCommenti;
+		this.utente = utente;
+		this.gruppo = gruppo;
 	}
 	
-	//Getters e Setters
+	//Getter e Setter
 
 	public int getIdPost() {
 		return idPost;
@@ -81,5 +86,13 @@ public class Post {
 	public void setNumeroCommenti(int numeroCommenti) {
 		this.numeroCommenti = numeroCommenti;
 	}
-		
+
+	public int getIdUtente() {
+		return utente.getIdUtente();
+	}
+
+	public int getIdGruppo() {
+		return gruppo.getIdGruppo();
+	}
+
 }

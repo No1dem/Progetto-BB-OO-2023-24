@@ -60,6 +60,7 @@ public class UtenteDAO {
 		}
 	}
 	
+	
 	public void updateBiografiaByNickname(String nickname,String biografia){
 		String query="UPDATE FROM Utente SET Biografia='"+biografia+"' WHERE Nickname='"+nickname+"'";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
@@ -149,6 +150,14 @@ public class UtenteDAO {
 		return null;
 	}
 	
+	public Utente getUtenteFromArrayListById(int id) {
+		for (Utente ut : listaUtente) {  
+            if (ut.getIdUtente()==id){
+                return ut;
+            }
+        }
+		return null;
+	}
 	
 	public boolean utenteExistInArrayList(Utente ut) {
 		return listaUtente.contains(ut);
