@@ -1,4 +1,5 @@
 package ClassiDAO;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -8,6 +9,7 @@ public class Notifica {
 	private LocalTime oraInvio;
 	private String testoNotifica;
 	private EnumTipoNotifica tipoNotifica;
+	
 	
 	public Notifica(int idNotifica, LocalDate dataInvio, LocalTime oraInvio, String testoNotifica,EnumTipoNotifica tipoNotifica) {
 		super();
@@ -20,6 +22,8 @@ public class Notifica {
 
 	//Getters e Setters
 	
+
+
 	public int getIdNotifica() {
 		return idNotifica;
 	}
