@@ -39,6 +39,9 @@ public class PostDAO {
 		}
 	}
 	
+	
+	// INSERT 
+	
 	public void insertNuovoPost(Post p) {
 		String query="INSERT INTO Post (testo,dataPubblicazione,oraPubblicazione,idUtente,idGruppo) VALUES (?,?,?,?,?)";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
@@ -62,6 +65,9 @@ public class PostDAO {
 		}
 	}
 	
+	
+	
+	// DELETE 
 	public void deletePostById(Post p) {
 		String query="DELETE FROM Post WHERE idPost='?' ";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
@@ -78,6 +84,8 @@ public class PostDAO {
 		}
 		
 	}
+	
+	
 	
 	public void updateTestoPost(String modificaTesto,Post p) {
 		String query="UPDATE Testo FROM Post WHERE idPost='?'";
@@ -98,6 +106,8 @@ public class PostDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public float getMediaPostInUnMese(LocalDate data,Gruppo g) {
 		float media=0.0f;
@@ -128,6 +138,9 @@ public class PostDAO {
 		return media;
 			
 	}
+	
+	
+	
 	
 	
 	public Post getPostConPiùLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
@@ -166,6 +179,10 @@ public class PostDAO {
 		return postConPiùLike;
 	}
 	
+	
+	
+	
+	
 	public Post getPostConMenoLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
 		String query = "SELECT * "
 					 + "FROM Post P "
@@ -201,6 +218,10 @@ public class PostDAO {
 		}
 		return postConMenoLike;
 	}
+	
+	
+	
+	
 	
 	public Post getPostConPiùCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
 		String query = "SELECT * "
@@ -238,6 +259,10 @@ public class PostDAO {
 		return postConPiùCommenti;
 	}
 	
+	
+	
+	
+	
 	public Post getPostConMenoCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
 		String query = "SELECT * "
 					 + "FROM Post P "
@@ -273,6 +298,24 @@ public class PostDAO {
 		}
 		return postConMenoCommenti;
 	}
+
+	
+	
+	
+	
+	// dato in input idPost restituisce l'oggetto post se presente 
+	public Post getPostFromArrayListById(int idPost) {
+	    for (Post post : listaPost) {
+	        if (post.getIdPost() == idPost) {
+	            return post;
+	        }
+	    }
+	   
+	    return null;
+	}
+
+	
+	
 }
 
 					

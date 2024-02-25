@@ -70,7 +70,7 @@ public class Notifica {
 		this.tipoNotifica = tipoNotifica;
 	}
 
-	public int getCommento() {
+	public int getIdCommento() {
 		return commento.getIdCommento();
 	}
 
@@ -78,7 +78,7 @@ public class Notifica {
 		this.commento = commento;
 	}
 
-	public int getLike() {
+	public int getIdLike() {
 		return like.getIdLike();
 	}
 
@@ -86,12 +86,14 @@ public class Notifica {
 		this.like = like;
 	}
 
-	public int getPost() {
+	public int getIdPost() {
 		return post.getIdPost();
 	}
 
 	public void setPost(Post post) {
 		this.post = post;
 	}
+
+
 		
 }
