@@ -21,7 +21,8 @@ public class NotificaDAO {
 		try(Statement stmt=conn.createStatement()){
 			ResultSet res=stmt.executeQuery(query);
 			while(res.next()) {
-				listaNotifiche.add(new Notifica(res.getInt("IdNotifica"),  res.getDate("dataInvio").toLocalDate(), res.getTime("oraInvio").toLocalTime(), res.getString("testoNotifica"),  EnumTipoNotifica.valueOf(res.getString("tipoNotifica"))));  				
+				listaNotifiche.add(new Notifica(res.getInt("IdNotifica"),  res.getDate("dataInvio").toLocalDate(), res.getTime("oraInvio").toLocalTime(),
+						res.getString("testoNotifica"),EnumTipoNotifica.valueOf(res.getString("tipoNotifica"))));  				
 			}
 			connessioneDB=conn;
 		}
@@ -48,6 +49,12 @@ public class NotificaDAO {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+	}
+
+
+	public Notifica getNotificaFromArrayListById(int int1) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

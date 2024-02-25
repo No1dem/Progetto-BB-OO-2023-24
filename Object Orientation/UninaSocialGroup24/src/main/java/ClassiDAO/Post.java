@@ -12,11 +12,12 @@ public class Post {
 	private int numeroCommenti;
 	private Utente utente;
 	private Gruppo gruppo;
+	private Notifica notifica;
 	
 	//Costruttore
 	
 	public Post(int idPost, String Testo, String urlImmagine, LocalDate dataPubblicazione, LocalTime oraPubblicazione,
-			int numeroLike, int numeroCommenti, Utente utente, Gruppo gruppo) {
+			int numeroLike, int numeroCommenti, Utente utente, Gruppo gruppo,Notifica notifica) {
 		super();
 		this.idPost = idPost;
 		this.Testo = Testo;
@@ -27,6 +28,7 @@ public class Post {
 		this.numeroCommenti = numeroCommenti;
 		this.utente = utente;
 		this.gruppo = gruppo;
+		this.notifica = notifica;
 	}
 	
 	//Getter e Setter
@@ -93,6 +95,14 @@ public class Post {
 
 	public int getIdGruppo() {
 		return gruppo.getIdGruppo();
+	}
+
+	public int getNotifica() {
+		return notifica.getIdNotifica();
+	}
+
+	public void setNotifica(Notifica notifica) {
+		this.notifica = notifica;
 	}
 
 }

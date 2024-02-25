@@ -9,21 +9,27 @@ public class Notifica {
 	private LocalTime oraInvio;
 	private String testoNotifica;
 	private EnumTipoNotifica tipoNotifica;
+	private Post post;
+	private Like like;
+	private Commento commento;
 	
+	// Costruttore
 	
-	public Notifica(int idNotifica, LocalDate dataInvio, LocalTime oraInvio, String testoNotifica,EnumTipoNotifica tipoNotifica) {
+	public Notifica(int idNotifica, LocalDate dataInvio, LocalTime oraInvio, String testoNotifica,
+			EnumTipoNotifica tipoNotifica, Post post, Like like, Commento commento) {
 		super();
 		this.idNotifica = idNotifica;
 		this.dataInvio = dataInvio;
 		this.oraInvio = oraInvio;
 		this.testoNotifica = testoNotifica;
 		this.tipoNotifica = tipoNotifica;
+		this.post = post;
+		this.like = like;
+		this.commento = commento;
 	}
 
 	//Getters e Setters
 	
-
-
 	public int getIdNotifica() {
 		return idNotifica;
 	}
@@ -62,6 +68,30 @@ public class Notifica {
 
 	public void setTipoNotifica(EnumTipoNotifica tipoNotifica) {
 		this.tipoNotifica = tipoNotifica;
+	}
+
+	public int getCommento() {
+		return commento.getIdCommento();
+	}
+
+	public void setCommento(Commento commento) {
+		this.commento = commento;
+	}
+
+	public int getLike() {
+		return like.getIdLike();
+	}
+
+	public void setLike(Like like) {
+		this.like = like;
+	}
+
+	public int getPost() {
+		return post.getIdPost();
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
 	}
 		
 }
