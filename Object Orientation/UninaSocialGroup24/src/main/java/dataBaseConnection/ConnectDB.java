@@ -1,4 +1,4 @@
-package DataBaseConnection;
+package dataBaseConnection;
 import java.sql.*;
 
 public class ConnectDB{	

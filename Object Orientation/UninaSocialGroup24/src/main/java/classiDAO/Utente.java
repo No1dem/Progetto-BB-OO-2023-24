@@ -1,4 +1,4 @@
-package ClassiDAO;
+package classiDAO;
 
 public class Utente {
 	private int idUtente;

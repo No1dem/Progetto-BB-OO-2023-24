@@ -1,4 +1,4 @@
-package ClassiDAO;
+package classiDAO;
 
 import java.sql.Statement;
 import java.sql.Time;
@@ -14,6 +14,7 @@ import java.util.LinkedList;
 public class PostDAO {
 	private Connection connessioneDB; 
 	private LinkedList<Post> listaPost;
+	
 	
 	public void listaPostDao(Connection conn) {
 		String query="SELECT * FROM Post";
@@ -41,7 +42,6 @@ public class PostDAO {
 	
 	
 	// INSERT 
-	
 	public void insertNuovoPost(Post p) {
 		String query="INSERT INTO Post (testo,dataPubblicazione,oraPubblicazione,idUtente,idGruppo) VALUES (?,?,?,?,?)";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
@@ -69,7 +69,7 @@ public class PostDAO {
 	
 	// DELETE 
 	public void deletePostById(Post p) {
-		String query="DELETE FROM Post WHERE idPost='?' ";
+		String query="DELETE FROM Post WHERE idPost = ? ";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,p.getIdPost());
@@ -88,7 +88,7 @@ public class PostDAO {
 	
 	
 	public void updateTestoPost(String modificaTesto,Post p) {
-		String query="UPDATE Testo FROM Post WHERE idPost='?'";
+		String query="UPDATE Testo FROM Post WHERE idPost = ? ";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,p.getIdPost());
@@ -140,9 +140,6 @@ public class PostDAO {
 	}
 	
 	
-	
-	
-	
 	public Post getPostConPiùLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
 		String query = "SELECT * "
 					 + "FROM Post P "
@@ -180,9 +177,6 @@ public class PostDAO {
 	}
 	
 	
-	
-	
-	
 	public Post getPostConMenoLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
 		String query = "SELECT * "
 					 + "FROM Post P "
@@ -218,7 +212,6 @@ public class PostDAO {
 		}
 		return postConMenoLike;
 	}
-	
 	
 	
 	
@@ -261,8 +254,6 @@ public class PostDAO {
 	
 	
 	
-	
-	
 	public Post getPostConMenoCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
 		String query = "SELECT * "
 					 + "FROM Post P "
@@ -300,17 +291,12 @@ public class PostDAO {
 	}
 
 	
-	
-	
-	
-	// dato in input idPost restituisce l'oggetto post se presente 
 	public Post getPostFromArrayListById(int idPost) {
 	    for (Post post : listaPost) {
 	        if (post.getIdPost() == idPost) {
 	            return post;
 	        }
 	    }
-	   
 	    return null;
 	}
 

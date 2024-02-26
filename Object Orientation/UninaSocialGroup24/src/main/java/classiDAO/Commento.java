@@ -1,4 +1,4 @@
-package ClassiDAO;
+package classiDAO;
 
 public class Commento {
 	private int idCommento;

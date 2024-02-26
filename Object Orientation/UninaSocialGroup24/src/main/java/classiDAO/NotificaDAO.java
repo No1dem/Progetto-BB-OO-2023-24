@@ -1,4 +1,4 @@
-package ClassiDAO;
+package classiDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,15 +63,6 @@ public class NotificaDAO {
 	}
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

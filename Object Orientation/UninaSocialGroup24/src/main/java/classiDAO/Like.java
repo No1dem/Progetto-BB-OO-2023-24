@@ -1,4 +1,4 @@
-package ClassiDAO;
+package classiDAO;
 
 public class Like {
 	private int idLike;

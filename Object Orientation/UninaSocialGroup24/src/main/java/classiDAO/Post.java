@@ -1,4 +1,4 @@
-package ClassiDAO;
+package classiDAO;
 import java.time.LocalDate;
 import java.time.LocalTime;
 

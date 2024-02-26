@@ -1,4 +1,4 @@
-package ClassiDAO;
+package classiDAO;
 
 public enum EnumTipoNotifica {
 	Accesso,

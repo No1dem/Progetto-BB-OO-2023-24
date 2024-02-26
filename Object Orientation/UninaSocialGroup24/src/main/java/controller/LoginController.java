@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import ClassiDAO.Utente;
-import ClassiDAO.UtenteDAO;
+import classiDAO.Utente;
+import classiDAO.UtenteDAO;
 
 public class LoginController {
 	

@@ -1,4 +1,4 @@
-package ClassiDAO;
+package classiDAO;
 
 public class Gruppo {
 	private int idGruppo;

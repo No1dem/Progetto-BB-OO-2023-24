@@ -1,4 +1,4 @@
-package ClassiDAO;
+package classiDAO;
 
 import java.sql.Connection;
 import java.util.LinkedList;
