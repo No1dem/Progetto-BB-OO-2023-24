@@ -12,9 +12,6 @@ public class AmministratoreDAO {
 	private LinkedList<Amministratore> listaAmministratori;
 	
 	
-
-	
-	
 	public void listaAmministratoriDao() {
         String query = "SELECT * FROM Amministratore";
         try (PreparedStatement pstmt = connessioneDB.prepareStatement(query);
@@ -33,6 +30,7 @@ public class AmministratoreDAO {
                 Amministratore amministratore = new Amministratore(utente.getIdUtente(),utente.getNomeUtente(),utente.getCognomeUtente(),
 					    utente.getEmail(),utente.getNickname(),utente.getPassword(),utente.getBiografia(),
 					    utente.getUrlFotoProfilo() , idAmministratore, gruppoAmministrato);
+                
                 listaAmministratori.add(amministratore);
             }
         } catch (SQLException e) {
@@ -42,8 +40,7 @@ public class AmministratoreDAO {
 
 	
 	
-	
-	//INSERT
+	//INSERT         ****Ciao Andrea,questa è da sistemare.Buon lavoro :D !!
 	
 	public void insertNuovoAmministratore(Amministratore amministratore) {
 	    String query = "INSERT INTO Amministratore (idAmministratore, idGruppo) VALUES (?, ?)";
@@ -59,7 +56,6 @@ public class AmministratoreDAO {
 
 
 	
-	
 	//DELETE 
 	
 	public void deleteAmministratoreByNickname(Amministratore amministratore) {
@@ -74,16 +70,13 @@ public class AmministratoreDAO {
 	}
 
 	
-	
-
-	
+		
 	public Amministratore getAmministratoreFromArrayListById(int idAmministratore) {
 	    for (Amministratore admin : listaAmministratori) {
 	        if (admin.getIdAmministratore() == idAmministratore) {
 	            return admin;
 	        }
 	    }
-	    
 	    return null;
 	}
 

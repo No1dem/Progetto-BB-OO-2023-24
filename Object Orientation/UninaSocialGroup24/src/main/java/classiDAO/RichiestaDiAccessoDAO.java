@@ -51,7 +51,31 @@ public class RichiestaDiAccessoDAO {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-		
+	}
+	
+	public void updateRichiestaDiAccesso(RichiestaDiAccesso rds,EnumStatiRichiesta statoRichiesta) {
+		String query = "UPDATE FROM RichiestaDiAccesso SET StatoRichiesta='?' WHERE IdRichiesta = ?";
+	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
+	    
+	        pstmt.setString(1,statoRichiesta.toString());
+	        pstmt.setInt(2,rds.getIdRichiesta());
+	        
+	        pstmt.executeUpdate();
+	        
+	        for ( RichiestaDiAccesso currRds : listaRichiesteDiAccesso) {  
+	            if (currRds.getIdRichiesta() == rds.getIdRichiesta()){
+	                if (statoRichiesta == EnumStatiRichiesta.Rifiutato)
+	                	listaRichiesteDiAccesso.remove(rds);
+	                else if (statoRichiesta == EnumStatiRichiesta.Accettato)
+	                	rds.setStatoRichiesta(statoRichiesta);
+	                break;
+	            }
+	        }
+	        pstmt.close();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 }
