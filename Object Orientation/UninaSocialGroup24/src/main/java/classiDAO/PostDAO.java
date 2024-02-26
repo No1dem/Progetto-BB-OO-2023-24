@@ -41,6 +41,8 @@ public class PostDAO {
 	}
 	
 	
+	
+	
 	// INSERT 
 	public void insertNuovoPost(Post p) {
 		String query="INSERT INTO Post (testo,dataPubblicazione,oraPubblicazione,idUtente,idGruppo) VALUES (?,?,?,?,?)";
@@ -67,6 +69,8 @@ public class PostDAO {
 	
 	
 	
+	
+	
 	// DELETE 
 	public void deletePostById(Post p) {
 		String query="DELETE FROM Post WHERE idPost = ? ";
@@ -84,6 +88,8 @@ public class PostDAO {
 		}
 		
 	}
+	
+	
 	
 	
 	
@@ -106,6 +112,8 @@ public class PostDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	
 	
@@ -138,6 +146,10 @@ public class PostDAO {
 		return media;
 			
 	}
+	
+	
+	
+	
 	
 	
 	public Post getPostConPiùLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
@@ -175,6 +187,10 @@ public class PostDAO {
 		}
 		return postConPiùLike;
 	}
+	
+	
+	
+	
 	
 	
 	public Post getPostConMenoLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
@@ -254,6 +270,9 @@ public class PostDAO {
 	
 	
 	
+	
+	
+	
 	public Post getPostConMenoCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
 		String query = "SELECT * "
 					 + "FROM Post P "
@@ -290,6 +309,9 @@ public class PostDAO {
 		return postConMenoCommenti;
 	}
 
+	
+	
+	
 	
 	public Post getPostFromArrayListById(int idPost) {
 	    for (Post post : listaPost) {

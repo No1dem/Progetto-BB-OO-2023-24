@@ -14,6 +14,7 @@ public class Amministratore extends Utente{
 	}
 
 
+
 	public int getIdAmministratore() {
 		return idAmministratore;
 	}

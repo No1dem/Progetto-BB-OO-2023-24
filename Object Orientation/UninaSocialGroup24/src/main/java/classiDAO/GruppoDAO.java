@@ -12,6 +12,7 @@ public class GruppoDAO {
 	private Connection connessioneDB;
 	private LinkedList<Gruppo> listaGruppo;
 		
+	
 	public void listaGruppiDao(Connection conn) {
 			String query="SELECT * FROM Gruppo";
 			listaGruppo = new LinkedList<Gruppo>();
@@ -27,6 +28,10 @@ public class GruppoDAO {
 				e.printStackTrace();
 			}	
 	}
+	
+	
+	
+	
 	
 	
 	public Gruppo getGruppoFromArrayListById(int id) {

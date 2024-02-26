@@ -28,7 +28,7 @@ public class CreatoreGruppoDAO {
 			    Gruppo gruppo = gruppoDAO.getGruppoFromArrayListById(idGruppo);
 			    
 			    AmministratoreDAO amministratoreDAO = new AmministratoreDAO();
-			    Amministratore amministratore = amministratoreDAO.getAmministratoreFromArrayListById();
+			    Amministratore amministratore = amministratoreDAO.getAmministratoreFromArrayListById(idGruppo);
 			    
 			    listaCreatoriGruppi.add(new CreatoreGruppo (utente.getIdUtente(),utente.getNomeUtente(),utente.getCognomeUtente(),
 			    										    utente.getEmail(),utente.getNickname(),utente.getPassword(),utente.getBiografia(),
