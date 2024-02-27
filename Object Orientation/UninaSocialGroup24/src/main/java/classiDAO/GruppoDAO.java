@@ -59,6 +59,26 @@ public class GruppoDAO {
 	    		e.printStackTrace();
 	    	}
 	 }
+	 
+	 
+	 
+	 public void updateDescrizioneGruppo(String descrizioneModificata, Gruppo g) {
+		 String query = "UPDATE Gruppo SET descrizioneGruppo = ? WHERE idGruppo = ?";
+		 try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
+			 pstmt.setString(1, descrizioneModificata);
+			 pstmt.setInt(2, g.getIdGruppo());
+			 pstmt.execute(query);
+			 
+			 for(Gruppo CurrGruppo : listaGruppo) {
+				 if (CurrGruppo.getIdGruppo() == g.getIdGruppo()) {
+		                CurrGruppo.setDescrizioneGruppo(descrizioneModificata);
+		         }
+			 }
+		 }
+		 catch(SQLException e) {
+			 e.printStackTrace();
+		 }
+	 }
      	
 	 
 	 
