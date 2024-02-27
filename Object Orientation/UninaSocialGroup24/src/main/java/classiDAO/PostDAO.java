@@ -152,7 +152,7 @@ public class PostDAO {
 	
 	
 	
-	public Post getPostConPiùLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
+	public Post getPostConPiuLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
 		String query = "SELECT * "
 					 + "FROM Post P "
 					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
@@ -160,7 +160,7 @@ public class PostDAO {
 					 + "AND P.IdGruppo = ? "
 					 + "ORDER BY P.NumeroLike DESC "
 					 + "LIMIT 1";
-	    Post postConPiùLike = null;
+	    Post postConPiuLike = null;
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,dataRicerca.getYear());
@@ -178,14 +178,14 @@ public class PostDAO {
                 Gruppo gruppo = new GruppoDAO().getGruppoFromArrayListById(res.getInt("IdGruppo"));
                 Notifica notifica = new NotificaDAO().getNotificaFromArrayListById(res.getInt("IdNotifica"));
                 
-				postConPiùLike = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
+				postConPiuLike = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
 								          res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,gruppo,notifica);
 		   }
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return postConPiùLike;
+		return postConPiuLike;
 	}
 	
 	
@@ -232,7 +232,7 @@ public class PostDAO {
 	
 	
 	
-	public Post getPostConPiùCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
+	public Post getPostConPiuCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
 		String query = "SELECT * "
 					 + "FROM Post P "
 					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
@@ -240,7 +240,7 @@ public class PostDAO {
 					 + "AND P.IdGruppo = ? "
 					 + "ORDER BY P.NumeroCommenti DESC "
 					 + "LIMIT 1";
-	    Post postConPiùCommenti = null;
+	    Post postConPiuCommenti = null;
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,dataRicerca.getYear());
@@ -258,14 +258,14 @@ public class PostDAO {
                 Gruppo gruppo = new GruppoDAO().getGruppoFromArrayListById(res.getInt("IdGruppo"));
                 Notifica notifica = new NotificaDAO().getNotificaFromArrayListById(res.getInt("IdNotifica"));
                 
-				postConPiùCommenti = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
+				postConPiuCommenti = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
 								          res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,gruppo,notifica);
 		   }
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return postConPiùCommenti;
+		return postConPiuCommenti;
 	}
 	
 	
@@ -328,5 +328,4 @@ public class PostDAO {
 
 					
 					
-					
-					
+									
