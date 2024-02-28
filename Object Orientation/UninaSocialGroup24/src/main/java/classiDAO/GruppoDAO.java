@@ -127,6 +127,29 @@ public class GruppoDAO {
 
      
      
+     public void iscrizioniGruppoDAO(Gruppo gruppo) {
+         String query = "SELECT idUtente FROM Iscrizione WHERE idGruppo = ?";
+         try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
+             pstmt.setInt(1, gruppo.getIdGruppo());
+             ResultSet rs = pstmt.executeQuery();
+             LinkedList<Utente> listaUtentiIscritti = new LinkedList<>();
+             while (rs.next()) {
+                 int idUtente = rs.getInt("idUtente");
+                 
+                UtenteDAO utenteDAO = new UtenteDAO();
+ 				Utente utente = utenteDAO.getUtenteFromArrayListById(idUtente);
+                 listaUtentiIscritti.add(utente);
+             }
+             pstmt.close();
+             gruppo.setListaUtentiIscritti(listaUtentiIscritti);
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+     }
+     
+     
+     
+     
 	 public Gruppo getGruppoFromArrayListById(int id) {
 		for (Gruppo g : listaGruppo) {  
             if (g.getIdGruppo() == id){

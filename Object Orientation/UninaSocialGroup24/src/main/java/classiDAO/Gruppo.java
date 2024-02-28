@@ -1,11 +1,14 @@
 package classiDAO;
 
+import java.util.LinkedList;
+
 public class Gruppo {
 	private int idGruppo;
 	private String nomeGruppo;
 	private String tagGruppo;
 	private String descrizioneGruppo;
 	private int numeroIscritti;
+	private LinkedList<Utente> listaUtentiIscritti;
 	
 	// Costruttore
 	
@@ -16,6 +19,7 @@ public class Gruppo {
 		tagGruppo = TagG;
 		descrizioneGruppo = DescrG;
 		numeroIscritti = NumI;
+		
 	}
 	
 	// Getters e Setters
@@ -58,6 +62,14 @@ public class Gruppo {
 
 	public void setNumeroIscritti(int numeroIscritti) {
 		this.numeroIscritti = numeroIscritti;
+	}
+
+	public LinkedList<Utente> getListaUtentiIscritti() {
+		return listaUtentiIscritti;
+	}
+
+	public void setListaUtentiIscritti(LinkedList<Utente> listaUtentiIscritti) {
+		this.listaUtentiIscritti = listaUtentiIscritti;
 	}
 	
 
