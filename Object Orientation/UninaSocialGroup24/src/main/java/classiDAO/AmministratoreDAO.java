@@ -40,7 +40,7 @@ public class AmministratoreDAO {
 
 	
 	
-	//INSERT         ****Ciao Andrea,questa è da sistemare.Buon lavoro :D !!
+	//INSERT        
 	
 	public void insertNuovoAmministratore(Amministratore amministratore) {
 	    String query = "INSERT INTO Amministratore (idCreatore , idUtente, idGruppo) VALUES (?, ? ,?)";
