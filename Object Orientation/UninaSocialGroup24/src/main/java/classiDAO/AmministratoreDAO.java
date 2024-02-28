@@ -43,10 +43,15 @@ public class AmministratoreDAO {
 	//INSERT         ****Ciao Andrea,questa è da sistemare.Buon lavoro :D !!
 	
 	public void insertNuovoAmministratore(Amministratore amministratore) {
-	    String query = "INSERT INTO Amministratore (idAmministratore, idGruppo) VALUES (?, ?)";
-	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
-	        pstmt.setInt(1, amministratore.getIdAmministratore());
-	        pstmt.setInt(2, amministratore.getGruppoAmministrato());
+	    String query = "INSERT INTO Amministratore (idCreatore , idUtente, idGruppo) VALUES (?, ? ,?)";
+	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
+	    	
+	    	CreatoreGruppoDAO creatoreDAO = new CreatoreGruppoDAO();
+	    	CreatoreGruppo CreatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListByIdGruppo(amministratore.getGruppoAmministrato());
+	    	
+	    	pstmt.setInt(1, CreatoreGruppo.getIdCreatoreGruppo());
+	        pstmt.setInt(2, amministratore.getIdUtente());
+	        pstmt.setInt(3, amministratore.getGruppoAmministrato());
 	        pstmt.executeUpdate();
 	        listaAmministratori.add(amministratore); 
 	    } catch (SQLException e) {

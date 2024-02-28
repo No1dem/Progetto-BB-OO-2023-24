@@ -52,4 +52,18 @@ public class CreatoreGruppoDAO {
 		return null;
 	}
 
+
+	
+	
+
+	public  CreatoreGruppo getCreatoreGruppoFromArrayListByIdGruppo(int idGruppo) {
+		
+		 for (CreatoreGruppo creatoreGruppo : listaCreatoriGruppi) {
+		        if (creatoreGruppo.getGruppoAmministrato() == idGruppo) {
+		            return creatoreGruppo;
+		        }
+		    }
+		    return null;
+	}
+
 }
