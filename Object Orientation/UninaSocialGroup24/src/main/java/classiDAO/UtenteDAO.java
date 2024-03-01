@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 
@@ -51,7 +52,8 @@ public class UtenteDAO {
 		String query="DELETE FROM Utente WHERE Nickname='?'";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			pstmt.setString(1,ut.getNickname());
-			pstmt.executeUpdate();
+			pstmt.executeUpdate();		
+				
 			listaUtente.remove(ut);
 			pstmt.close();
 		}

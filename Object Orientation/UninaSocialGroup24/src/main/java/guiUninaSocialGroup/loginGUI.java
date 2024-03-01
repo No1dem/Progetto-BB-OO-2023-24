@@ -84,7 +84,7 @@ public class loginGUI extends JFrame {
 		passwordDimenticataButton.setBounds(107, 220, 163, 23);
 		contentPane.add(passwordDimenticataButton);
 		
-		JButton LoginButton = new JButton("login");
+		JButton LoginButton = new JButton("Login");
 		LoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -94,7 +94,7 @@ public class loginGUI extends JFrame {
 		contentPane.add(LoginButton);
 		
 		JLabel imgPWLabel = new JLabel("");
-		imgPWLabel.setIcon(new ImageIcon("C:\\Users\\Utente\\Desktop\\git\\Progetto-BB-OO-2023-24\\Object Orientation\\UninaSocialGroup24\\loghiGUI\\chiaveLucchetto.png"));
+		imgPWLabel.setIcon(new ImageIcon("\"C:\\Users\\Antonio De Martino\\OneDrive\\Desktop\\Repository Progetto BD-OO\\Progetto-BB-OO-2023-24\\Object Orientation\\UninaSocialGroup24\\loghiGUI\\chiaveLucchetto.png\""));
 		imgPWLabel.setBounds(65, 143, 32, 30);
 		contentPane.add(imgPWLabel);
 		

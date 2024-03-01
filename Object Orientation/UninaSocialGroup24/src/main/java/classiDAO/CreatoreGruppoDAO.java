@@ -65,5 +65,11 @@ public class CreatoreGruppoDAO {
 		    }
 		    return null;
 	}
+	
+	
+	public void deleteGruppoCreatoById(int idGruppo) {   //**********  DA FARE *****
+		
+		
+	}
 
 }

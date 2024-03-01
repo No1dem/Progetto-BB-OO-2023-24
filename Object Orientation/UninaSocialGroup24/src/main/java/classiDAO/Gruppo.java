@@ -12,14 +12,14 @@ public class Gruppo {
 	
 	// Costruttore
 	
-	public Gruppo(int IdG, String NomeG, String TagG, String DescrG, int NumI) {
+	public Gruppo(int IdG, String NomeG, String TagG, String DescrG, int NumI, LinkedList<Utente> listaUI) {
 		super();
 		idGruppo = IdG;
 		nomeGruppo = NomeG;
 		tagGruppo = TagG;
 		descrizioneGruppo = DescrG;
 		numeroIscritti = NumI;
-		
+		listaUtentiIscritti = listaUI;
 	}
 	
 	// Getters e Setters
@@ -72,6 +72,12 @@ public class Gruppo {
 		this.listaUtentiIscritti = listaUtentiIscritti;
 	}
 	
-
+	public void removeUtenteDaListaIscrittiById(int id) {
+		for (Utente ut : listaUtentiIscritti) {
+			if (ut.getIdUtente() == id )
+				listaUtentiIscritti.remove(ut);
+			
+		}
+	}
 		
 }

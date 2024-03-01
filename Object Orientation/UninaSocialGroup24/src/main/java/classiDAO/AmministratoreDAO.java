@@ -12,9 +12,9 @@ public class AmministratoreDAO {
 	private LinkedList<Amministratore> listaAmministratori;
 	
 	
-	public void listaAmministratoriDao() {
+	public void listaAmministratoriDao(Connection conn) {
         String query = "SELECT * FROM Amministratore";
-        try (PreparedStatement pstmt = connessioneDB.prepareStatement(query);
+        try (PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 int idAmministratore = rs.getInt("idAmministratore");
@@ -38,7 +38,6 @@ public class AmministratoreDAO {
         }
     }
 
-	
 	
 	//INSERT        
 	
