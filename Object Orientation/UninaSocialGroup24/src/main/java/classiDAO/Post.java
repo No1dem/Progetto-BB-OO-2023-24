@@ -1,6 +1,7 @@
 package classiDAO;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.LinkedList;
 
 public class Post {
 	private int idPost;
@@ -13,11 +14,12 @@ public class Post {
 	private Utente utente;
 	private Gruppo gruppo;
 	private Notifica notifica;
+	private LinkedList<Like> listaLikePost;
 	
 	//Costruttore
 	
 	public Post(int idPost, String Testo, String urlImmagine, LocalDate dataPubblicazione, LocalTime oraPubblicazione,
-			int numeroLike, int numeroCommenti, Utente utente, Gruppo gruppo,Notifica notifica) {
+			int numeroLike, int numeroCommenti, Utente utente, Gruppo gruppo,Notifica notifica,LinkedList<Like> listaLP) {
 		super();
 		this.idPost = idPost;
 		this.Testo = Testo;
@@ -29,6 +31,7 @@ public class Post {
 		this.utente = utente;
 		this.gruppo = gruppo;
 		this.notifica = notifica;
+		this.listaLikePost=listaLP;
 	}
 	
 	//Getter e Setter
@@ -104,5 +107,15 @@ public class Post {
 	public void setNotifica(Notifica notifica) {
 		this.notifica = notifica;
 	}
+
+	public LinkedList<Like> getListaLikePost() {
+		return listaLikePost;
+	}
+
+	public void setListaLikePost(LinkedList<Like> listaLikePost) {
+		this.listaLikePost = listaLikePost;
+	}
+	
+	
 
 }

@@ -53,7 +53,8 @@ public class LikeDAO {
 	}
 	
 	
-	public Like getLikeFromArrayListById(int idLike) {
+	public Like getLikeFromArrayListByIdLike(int idLike) {
+		
 	    for (Like like : listaLikes) {
 	        if (like.getIdLike() == idLike) {
 	            return like;
@@ -61,6 +62,18 @@ public class LikeDAO {
 	    }
 	    
 	    return null;
+	}
+	
+	public LinkedList<Like> getLikeFromArrayListByIdPost(int idPost) {
+		LinkedList<Like> listaLikePost = new LinkedList<Like>() ;
+		
+	    for (Like like : listaLikes) {
+	        if (like.getIdPostConLike() == idPost) {
+	            	listaLikePost.add(like);
+	        }
+	    }  
+	    
+	    return listaLikePost;
 	}
 
 

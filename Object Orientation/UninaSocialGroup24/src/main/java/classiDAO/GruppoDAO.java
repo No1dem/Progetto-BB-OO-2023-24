@@ -86,7 +86,7 @@ public class GruppoDAO {
      	
 	 
 	 
-	 public int recuperaNumeroIscritti(int id) {
+	 public int recuperaNumeroIscrittiById(int id) {
 	       int numIscritti = 0;
 	       String query ="SELECT numeroIscritti FROM Gruppo WHERE idGruppo = ?";
 	       try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
@@ -120,7 +120,7 @@ public class GruppoDAO {
 	                String descrizioneGruppo = res.getString("descrizioneGruppo");
 	                int numeroIscritti = res.getInt("numeroIscritti");
 	              
-
+	                
 	                Gruppo gruppo = new Gruppo(id, nomeGruppo, tagGruppo, descrizioneGruppo, numeroIscritti,getIscrittiGruppoById(id));
 	                risultati.add(gruppo);
 	            }

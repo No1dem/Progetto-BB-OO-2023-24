@@ -14,8 +14,6 @@ public class NotificaDAO {
 	private LinkedList<Notifica> listaNotifiche;
 	
 	
-	// inizializzo la lista con tutte le notifiche presenti nella base di dati
-	
 	public void listaNotificheDao(Connection conn) {
 		String query="SELECT * FROM Notifica";
 		listaNotifiche = new LinkedList<Notifica>();
@@ -26,7 +24,7 @@ public class NotificaDAO {
 				
 				Commento commento = new CommentoDAO().getCommentoFromArrayListById(res.getInt("IdCommento"));
                 Post post = new PostDAO().getPostFromArrayListById(res.getInt("IdPost"));
-                Like like = new LikeDAO().getLikeFromArrayListById(res.getInt("IdLike"));
+                Like like = new LikeDAO().getLikeFromArrayListByIdLike(res.getInt("IdLike"));
 				
 				listaNotifiche.add(new Notifica(res.getInt("IdNotifica"),  res.getDate("dataInvio").toLocalDate(), res.getTime("oraInvio").toLocalTime(),
 						res.getString("testoNotifica"),EnumTipoNotifica.valueOf(res.getString("tipoNotifica")) ,post ,like ,commento ));  				
@@ -39,8 +37,6 @@ public class NotificaDAO {
 	}
 	
 	
-	
-	// INSERT
 	
 	public void insertNuovaNotifica(Notifica notifica) {
 	    String query = "INSERT INTO Notifica (IdNotifica, DataInvio, OraInvio, TestoNotifica, TipoNotifica, IdPost, IdLike, IdCommento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -63,10 +59,7 @@ public class NotificaDAO {
 	}
 
 
-	
-	
-	
-	// dato in input un idnotifica restituisce, se presente, la notifica corrispondente 
+		
 	public Notifica getNotificaFromArrayListById(int idNotifica) {
 	    for (Notifica notifica : listaNotifiche) {
 	        if (notifica.getIdNotifica() == idNotifica) {
