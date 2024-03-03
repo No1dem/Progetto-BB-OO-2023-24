@@ -16,6 +16,12 @@
         	<version>1.8.0</version>
     	</dependency>
 
+		<dependency>
+  		    <groupId>net.coobird</groupId>
+    		<artifactId>thumbnailator</artifactId>
+    		<version>0.4.14</version> <!-- Specifica la versione desiderata -->
+		</dependency>
+
   </dependencies>
 	
 </project>

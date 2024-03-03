@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 
 public class AmministratoreDAO {
@@ -12,26 +13,28 @@ public class AmministratoreDAO {
 	private LinkedList<Amministratore> listaAmministratori;
 	
 	
-	public void listaAmministratoriDao(Connection conn) {
+	public AmministratoreDAO(Connection conn) throws SQLException{
         String query = "SELECT * FROM Amministratore";
-        try (PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
+        listaAmministratori = new LinkedList<Amministratore>();
+        
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+        	
             while (rs.next()) {
                 int idAmministratore = rs.getInt("idAmministratore");
                 int idGruppo = rs.getInt("idGruppo");
 
-                Gruppo gruppoAmministrato = new GruppoDAO().getGruppoFromArrayListById(idGruppo);
+                Gruppo gruppoAmministrato = new GruppoDAO(conn).getGruppoFromArrayListById(idGruppo);
           
                 
                 int idUtente = rs.getInt("IdUtente");
-                UtenteDAO utenteDAO = new UtenteDAO();
+                UtenteDAO utenteDAO = new UtenteDAO(conn);
 				Utente utente = utenteDAO.getUtenteFromArrayListById(idUtente);
                 
-                Amministratore amministratore = new Amministratore(utente.getIdUtente(),utente.getNomeUtente(),utente.getCognomeUtente(),
-					    utente.getEmail(),utente.getNickname(),utente.getPassword(),utente.getBiografia(),
-					    utente.getUrlFotoProfilo() , idAmministratore, gruppoAmministrato);
-                
-                listaAmministratori.add(amministratore);
+                              
+                listaAmministratori.add(new Amministratore(utente.getIdUtente(),utente.getNomeUtente(),utente.getCognomeUtente(),
+					    							 	   utente.getEmail(),utente.getNickname(),utente.getPassword(),utente.getBiografia(),
+					    								   utente.getUrlFotoProfilo() , idAmministratore, gruppoAmministrato));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,7 +48,7 @@ public class AmministratoreDAO {
 	    String query = "INSERT INTO Amministratore (idCreatore , idUtente, idGruppo) VALUES (?, ? ,?)";
 	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 	    	
-	    	CreatoreGruppoDAO creatoreDAO = new CreatoreGruppoDAO();
+	    	CreatoreGruppoDAO creatoreDAO = new CreatoreGruppoDAO(connessioneDB);
 	    	CreatoreGruppo CreatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListByIdGruppo(amministratore.getIdGruppoAmministrato());
 	    	
 	    	pstmt.setInt(1, CreatoreGruppo.getIdCreatoreGruppo());

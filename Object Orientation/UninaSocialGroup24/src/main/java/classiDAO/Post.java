@@ -13,13 +13,13 @@ public class Post {
 	private int numeroCommenti;
 	private Utente utente;
 	private Gruppo gruppo;
-	private Notifica notifica;
-	private LinkedList<Like> listaLikePost;
+	private int idNotificaGenerata;
+
 	
 	//Costruttore
 	
 	public Post(int idPost, String Testo, String urlImmagine, LocalDate dataPubblicazione, LocalTime oraPubblicazione,
-			int numeroLike, int numeroCommenti, Utente utente, Gruppo gruppo,Notifica notifica,LinkedList<Like> listaLP) {
+			int numeroLike, int numeroCommenti, Utente utente, Gruppo gruppo,int idN) {
 		super();
 		this.idPost = idPost;
 		this.Testo = Testo;
@@ -30,8 +30,8 @@ public class Post {
 		this.numeroCommenti = numeroCommenti;
 		this.utente = utente;
 		this.gruppo = gruppo;
-		this.notifica = notifica;
-		this.listaLikePost=listaLP;
+		this.idNotificaGenerata = idN;
+		
 	}
 	
 	//Getter e Setter
@@ -100,20 +100,13 @@ public class Post {
 		return gruppo.getIdGruppo();
 	}
 
-	public int getNotifica() {
-		return notifica.getIdNotifica();
+
+	public int getIdNotificaGenerata() {
+		return idNotificaGenerata;
 	}
 
-	public void setNotifica(Notifica notifica) {
-		this.notifica = notifica;
-	}
-
-	public LinkedList<Like> getListaLikePost() {
-		return listaLikePost;
-	}
-
-	public void setListaLikePost(LinkedList<Like> listaLikePost) {
-		this.listaLikePost = listaLikePost;
+	public void setIdNotificaGenerata(int idNotificaGenerata) {
+		this.idNotificaGenerata = idNotificaGenerata;
 	}
 	
 	

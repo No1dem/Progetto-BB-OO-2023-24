@@ -14,7 +14,7 @@ public class NotificaDAO {
 	private LinkedList<Notifica> listaNotifiche;
 	
 	
-	public void listaNotificheDao(Connection conn) {
+	public NotificaDAO(Connection conn) throws SQLException {
 		String query="SELECT * FROM Notifica";
 		listaNotifiche = new LinkedList<Notifica>();
 		
@@ -22,9 +22,9 @@ public class NotificaDAO {
 			ResultSet res=stmt.executeQuery(query);
 			while(res.next()) {
 				
-				Commento commento = new CommentoDAO().getCommentoFromArrayListById(res.getInt("IdCommento"));
-                Post post = new PostDAO().getPostFromArrayListById(res.getInt("IdPost"));
-                Like like = new LikeDAO().getLikeFromArrayListByIdLike(res.getInt("IdLike"));
+				Commento commento = new CommentoDAO(conn).getCommentoFromArrayListById(res.getInt("IdNuovoCommento"));
+                Post post = new PostDAO(conn).getPostFromArrayListById(res.getInt("IdNuovoPost"));
+                Like like = new LikeDAO(conn).getLikeFromArrayListByIdLike(res.getInt("IdNuovoLike"));
 				
 				listaNotifiche.add(new Notifica(res.getInt("IdNotifica"),  res.getDate("dataInvio").toLocalDate(), res.getTime("oraInvio").toLocalTime(),
 						res.getString("testoNotifica"),EnumTipoNotifica.valueOf(res.getString("tipoNotifica")) ,post ,like ,commento ));  				

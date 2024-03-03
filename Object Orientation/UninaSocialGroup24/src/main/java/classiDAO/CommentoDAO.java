@@ -12,15 +12,14 @@ public class CommentoDAO {
 	private LinkedList<Commento> listaCommenti;
 	
 	
-	
-	
-	public void ListaCommentiDAO(Connection conn) {
+	public CommentoDAO(Connection conn) throws SQLException{
 		String query = "SELECT * FROM Commento";
 		listaCommenti = new LinkedList<Commento>();
 		try(Statement stmt = conn.createStatement()){
 			ResultSet res = stmt.executeQuery(query);
 			while(res.next()) {
-				listaCommenti.add(new Commento (res.getInt("idCommento"),res.getString("testoCommento"),res.getInt("numeroLike")));
+				listaCommenti.add(new Commento (res.getInt("idCommento"),res.getString("testoCommento"),res.getInt("numeroLike"),
+												res.getInt("IdCommentoRisp"),res.getInt("IdPostCommentato")));
 			}
 			connessioneDB = conn;
 		}
@@ -31,8 +30,6 @@ public class CommentoDAO {
 	}
 	
 	
-		
-	// dato in input un idCommento restituisce l'oggetto commento se presente 
 	public Commento getCommentoFromArrayListById(int idCommento) {
 	    for (Commento commento : listaCommenti) {
 	        if (commento.getIdCommento() == idCommento) {

@@ -14,16 +14,17 @@ public class GruppoDAO {
 	private LinkedList<Gruppo> listaGruppi;
 		
 	
-	public void listaGruppiDao(Connection conn ) {
+	public GruppoDAO(Connection conn) throws SQLException {
 			String query="SELECT * FROM Gruppo";
+			connessioneDB=conn;
 			listaGruppi = new LinkedList<Gruppo>();
+			
 			try(Statement stmt=conn.createStatement()){
 				ResultSet res=stmt.executeQuery(query);
 				while(res.next()) {
 					listaGruppi.add(new Gruppo (res.getInt("IdGruppo"),res.getString("nomeGruppo"),res.getString("tagGruppo"),res.getString("descrizioneGruppo"),
 							                    res.getInt("numeroIscritti"),getIscrittiGruppoById(res.getInt("IdGruppo"))));
                 }
-			    connessioneDB=conn;
 			}
 			catch(SQLException e) {
 				e.printStackTrace();
@@ -162,7 +163,7 @@ public class GruppoDAO {
     	        while (rs.next()) {
     	            int idUtente = rs.getInt("idUtente");
     	   
-    	            UtenteDAO utenteDAO = new UtenteDAO();
+    	            UtenteDAO utenteDAO = new UtenteDAO(connessioneDB);
     	            Utente utente = utenteDAO.getUtenteFromArrayListById(idUtente);
     	            listaUtentiIscritti.add(utente);
     	        }

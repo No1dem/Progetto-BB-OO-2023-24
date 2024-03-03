@@ -11,16 +11,18 @@ public class RichiestaDiAccessoDAO {
 	private Connection connessioneDB;
 	private LinkedList<RichiestaDiAccesso> listaRichiesteDiAccesso;
 	
-	public void listaRichiesteDiAccessoDao (Connection conn) {
+	public RichiestaDiAccessoDAO (Connection conn) throws SQLException {
 		String query="SELECT * FROM RichiestaDiAccesso";
 		listaRichiesteDiAccesso = new LinkedList<RichiestaDiAccesso>();
+		
 		try(Statement stmt=conn.createStatement()){
 			ResultSet res=stmt.executeQuery(query);
+			
 			while(res.next()) {
-				Utente utenteRichiesta = new UtenteDAO().getUtenteFromArrayListById(res.getInt("IdUtenteRichiesta"));
-				CreatoreGruppo creatoreGruppo = new CreatoreGruppoDAO().getCreatoreGruppoFromArrayListById(res.getInt("IdCreatore"));
-				Gruppo gruppoRichiesta = new GruppoDAO().getGruppoFromArrayListById(res.getInt("IdGruppoRichiesta"));
-				Notifica notificaRichiesta = new NotificaDAO().getNotificaFromArrayListById(res.getInt("IdNotificaGenerata"));
+				Utente utenteRichiesta = new UtenteDAO(conn).getUtenteFromArrayListById(res.getInt("IdUtenteRichiesta"));
+				CreatoreGruppo creatoreGruppo = new CreatoreGruppoDAO(conn).getCreatoreGruppoFromArrayListById(res.getInt("IdCreatore"));
+				Gruppo gruppoRichiesta = new GruppoDAO(conn).getGruppoFromArrayListById(res.getInt("IdGruppoRichiesta"));
+				Notifica notificaRichiesta = new NotificaDAO(conn).getNotificaFromArrayListById(res.getInt("IdNotificaGenerata"));
 				
 				String statoRichiestaString = res.getString("StatoRichiesta");
 	            EnumStatiRichiesta statoRichiesta = EnumStatiRichiesta.valueOf(statoRichiestaString);

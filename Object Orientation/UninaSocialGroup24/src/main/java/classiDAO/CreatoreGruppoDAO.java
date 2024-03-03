@@ -11,24 +11,26 @@ public class CreatoreGruppoDAO {
 	private Connection connessioneDB; 
 	private LinkedList<CreatoreGruppo> listaCreatoriGruppi;
 	
-	public void listaUtenteDao(Connection conn) {
+	public CreatoreGruppoDAO(Connection conn) throws SQLException {
 		String query="SELECT * FROM CreatoreGruppo";
 		listaCreatoriGruppi = new LinkedList<CreatoreGruppo>();
+		
 		try(Statement stmt=conn.createStatement()){
 			ResultSet res=stmt.executeQuery(query);
+			
 			while(res.next()) {
 				int idCreatore = res.getInt("IdCreatore");
 			    int idUtente = res.getInt("IdUtente");
 			    int idGruppo = res.getInt("IdGruppo");
 
-			    UtenteDAO utenteDAO = new UtenteDAO();
+			    UtenteDAO utenteDAO = new UtenteDAO(conn);
 			    Utente utente = utenteDAO.getUtenteFromArrayListById(idUtente);
 			    
 			    
-			    GruppoDAO gruppoDAO = new GruppoDAO();
+			    GruppoDAO gruppoDAO = new GruppoDAO(conn);
 			    Gruppo gruppo = gruppoDAO.getGruppoFromArrayListById(idGruppo);
 			    
-			    AmministratoreDAO amministratoreDAO = new AmministratoreDAO();
+			    AmministratoreDAO amministratoreDAO = new AmministratoreDAO(conn);
 			    Amministratore amministratore = amministratoreDAO.getAmministratoreFromArrayListById(idGruppo);
 			    
 			    listaCreatoriGruppi.add(new CreatoreGruppo (utente.getIdUtente(),utente.getNomeUtente(),utente.getCognomeUtente(),
@@ -51,7 +53,7 @@ public class CreatoreGruppoDAO {
 			
 			listaCreatoriGruppi.remove(cg);
 			
-			GruppoDAO gruppoDAO = new GruppoDAO();
+			GruppoDAO gruppoDAO = new GruppoDAO(connessioneDB);
 			Gruppo gruppo = gruppoDAO.getGruppoFromArrayListById(cg.getIdGruppoAmministrato());
 			
 			if (gruppo != null) {

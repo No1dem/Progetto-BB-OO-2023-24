@@ -8,15 +8,25 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
+
+import controller.Controller;
+import controller.LoginController;
+import dataBaseConnection.ConnectDB;
 
 public class loginGUI extends JFrame {
 
@@ -82,6 +92,7 @@ public class loginGUI extends JFrame {
 		passwordDimenticataButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		passwordDimenticataButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+		
 			}
 		});
 		passwordDimenticataButton.setBounds(107, 220, 163, 23);
@@ -90,6 +101,36 @@ public class loginGUI extends JFrame {
 		JButton LoginButton = new JButton("Login");
 		LoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 String nickname = nickTextField.getText();
+			     String password = new String(passwordField.getPassword());
+			     
+			     if (nickname.isEmpty() || password.isEmpty()) {
+			            JOptionPane.showMessageDialog(contentPane, "Inserisci nickname e password.", "Errore di accesso", JOptionPane.ERROR_MESSAGE);
+			            return; 
+			     }
+			     
+			     new ConnectDB();
+			     Connection conn = ConnectDB.getConnection();
+			           
+			     boolean loginCorretto = new LoginController().login(nickname, password, conn);
+			        
+			     if (loginCorretto) {
+			    	 
+			    	 try {	
+							Controller.checkDataBase(conn);
+							
+							setVisible(false);
+							
+							HomeGUI home = new HomeGUI();
+							home.setVisible(true);
+							
+					 } catch (SQLException exc) {
+							exc.printStackTrace();
+					   }
+		
+			     } else {
+			    	 JOptionPane.showMessageDialog(contentPane, "Credenziali non valide. Riprova.", "Errore di accesso", JOptionPane.ERROR_MESSAGE);
+			       }
 			}
 		});
 		LoginButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -97,13 +138,13 @@ public class loginGUI extends JFrame {
 		contentPane.add(LoginButton);
 		
 		JLabel imgPWLabel = new JLabel("");
-		Image imgPassword = new ImageIcon(this.getClass().getResource("/user.png")).getImage();
+		Image imgPassword = new ImageIcon(this.getClass().getResource("/chiaveLucchetto.png")).getImage();
 		imgPWLabel.setIcon(new ImageIcon(imgPassword));
 		imgPWLabel.setBounds(65, 143, 32, 30);
 		contentPane.add(imgPWLabel);
 		
 		JLabel imgUserLabel = new JLabel("");
-		Image imgUser = new ImageIcon(this.getClass().getResource("/chiaveLucchetto.png")).getImage();
+		Image imgUser = new ImageIcon(this.getClass().getResource("/user.png")).getImage();
 		imgUserLabel.setIcon(new ImageIcon(imgUser));
 		imgUserLabel.setBounds(65, 83, 32, 29);
 		contentPane.add(imgUserLabel);
