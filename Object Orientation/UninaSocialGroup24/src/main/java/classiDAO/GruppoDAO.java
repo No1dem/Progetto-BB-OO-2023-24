@@ -83,6 +83,25 @@ public class GruppoDAO {
 			 e.printStackTrace();
 		 }
 	 }
+	 
+	 public void updateTagGruppo(String tagModificato, Gruppo g) {
+		 String query = "UPDATE Gruppo SET TagGruppo = '?' WHERE idGruppo = ?";
+		 try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
+			 pstmt.setString(1, tagModificato);
+			 pstmt.setInt(2, g.getIdGruppo());
+			 
+			 pstmt.executeUpdate();
+			 
+			 for(Gruppo CurrGruppo : listaGruppi) {
+				 if (CurrGruppo.getIdGruppo() == g.getIdGruppo()) {
+		                CurrGruppo.setDescrizioneGruppo(tagModificato);
+		         }
+			 }
+		 }
+		 catch(SQLException e) {
+			 e.printStackTrace();
+		 }
+	 }
      	
 	 
 	 
@@ -107,7 +126,7 @@ public class GruppoDAO {
 	 
      public List<Gruppo> cercaGruppiPerNomeOTag(String Ricerca) {
 	        List<Gruppo> risultati = new LinkedList<>();
-	        String query = "SELECT * FROM Gruppo WHERE nomeGruppo LIKE % ? % OR tagGruppo LIKE % ? %";
+	        String query = "SELECT * FROM Gruppo WHERE nomeGruppo LIKE '%'|| ? ||'%' OR tagGruppo LIKE '%'|| ? ||'%'";
 	        try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
 	            pstmt.setString(1, Ricerca);
 	            pstmt.setString(2, Ricerca);
@@ -157,7 +176,7 @@ public class GruppoDAO {
 
      
      public void deleteUtenteDaGruppoById(Gruppo g,int idUtente) {
-    	 String query = "DELETE FROM Iscrizione WHERE IdGruppo = ? AND IdUtente ="+idUtente;
+    	 String query = "DELETE FROM Iscrizione WHERE IdGruppo = ? AND IdUtente = "+idUtente;
     	 try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
     		 
     		 pstmt.setInt(1,g.getIdGruppo());

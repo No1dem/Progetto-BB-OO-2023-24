@@ -1,6 +1,7 @@
 package classiDAO;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -41,6 +42,28 @@ public class CreatoreGruppoDAO {
 		}
 	}
 	
+	public void deleteCreatoreGruppo(CreatoreGruppo cg) {
+		String query = "DELETE FROM CreatoreGruppo WHERE idCreatore = ? ";
+		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
+			
+			pstmt.setInt(1,cg.getIdCreatoreGruppo());
+			pstmt.execute(query);
+			
+			listaCreatoriGruppi.remove(cg);
+			
+			GruppoDAO gruppoDAO = new GruppoDAO();
+			Gruppo gruppo = gruppoDAO.getGruppoFromArrayListById(cg.getIdGruppoAmministrato());
+			
+			if (gruppo != null) {
+	            gruppoDAO.getListaGruppi().remove(gruppo);
+	        }
+			
+			pstmt.close();
+		}
+		catch(SQLException e ) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	public CreatoreGruppo getCreatoreGruppoFromArrayListById(int id) {
@@ -53,23 +76,15 @@ public class CreatoreGruppoDAO {
 	}
 
 
-	
-	
 
 	public  CreatoreGruppo getCreatoreGruppoFromArrayListByIdGruppo(int idGruppo) {
 		
 		 for (CreatoreGruppo creatoreGruppo : listaCreatoriGruppi) {
-		        if (creatoreGruppo.getGruppoAmministrato() == idGruppo) {
+		        if (creatoreGruppo.getIdGruppoAmministrato() == idGruppo) {
 		            return creatoreGruppo;
 		        }
 		    }
 		    return null;
 	}
 	
-	
-	public void deleteGruppoCreatoById(int idGruppo) {   //**********  DA FARE *****
-		
-		
-	}
-
 }

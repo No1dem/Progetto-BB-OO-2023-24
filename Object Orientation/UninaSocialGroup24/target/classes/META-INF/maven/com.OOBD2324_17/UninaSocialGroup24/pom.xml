@@ -6,8 +6,16 @@
   <dependencies>
     	<dependency>
         	<groupId>org.postgresql</groupId>
-        		<artifactId>postgresql</artifactId>
-        		<version>42.2.24</version> <!-- Versione più recente del driver JDBC di PostgreSQL -->
+        	<artifactId>postgresql</artifactId>
+        	<version>42.2.24</version> <!-- Versione più recente del driver JDBC di PostgreSQL -->
     	</dependency>
-	</dependencies>
+    	    
+    	<dependency>
+        	<groupId>com.jgoodies</groupId>
+        	<artifactId>jgoodies-forms</artifactId>
+        	<version>1.8.0</version>
+    	</dependency>
+
+  </dependencies>
+	
 </project>

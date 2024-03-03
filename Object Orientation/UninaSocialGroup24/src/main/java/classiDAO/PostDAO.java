@@ -47,8 +47,8 @@ public class PostDAO {
 		
 	
 	public void insertNuovoPost(Post p) {
-		String query="INSERT INTO Post (testo,dataPubblicazione,oraPubblicazione,idUtente,idGruppo) VALUES (?,?,?,?,?)";
-		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
+		String query = "INSERT INTO Post (testo,dataPubblicazione,oraPubblicazione,idUtente,idGruppo) VALUES (?,?,?,?,?)";
+		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
 			pstmt.setString(1,p.getTesto());
 	        Date dataPubblicazione = Date.valueOf(p.getDataPubblicazione());
@@ -72,8 +72,8 @@ public class PostDAO {
 	
  
 	public void deletePostById(Post p) {
-		String query="DELETE FROM Post WHERE idPost = ? ";
-		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
+		String query = "DELETE FROM Post WHERE idPost = ? ";
+		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,p.getIdPost());
 			pstmt.execute(query);
@@ -90,8 +90,8 @@ public class PostDAO {
 	
 		
 	public void updateTestoPost(String modificaTesto,Post p) {
-		String query="UPDATE Testo FROM Post WHERE idPost = ? ";
-		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
+		String query = "UPDATE Testo FROM Post WHERE idPost = ? ";
+		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,p.getIdPost());
 			pstmt.execute(query);
@@ -113,23 +113,23 @@ public class PostDAO {
 	
 
 	public float getMediaPostInUnMese(LocalDate data,Gruppo g) {
-		float media=0.0f;
-		int numeroGiorniMese=data.lengthOfMonth();
-		String query="SELECT count(*) AS numeroPostMese"
-					+"FROM Post P "
-					+"WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
-					+"AND EXTRACT(MONTH FROM P.DataPubblicazione) = ? "
-					+"AND P.IdGruppo = ?";
+		float media = 0.0f;
+		int numeroGiorniMese = data.lengthOfMonth();
+		String query = "SELECT count(*) AS numeroPostMese"
+					 + "FROM Post P "
+					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
+					 + "AND EXTRACT(MONTH FROM P.DataPubblicazione) = ? "
+					 + "AND P.IdGruppo = ?";
 		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,data.getYear());
 			pstmt.setInt(2,data.getMonthValue());
 			pstmt.setInt(3,g.getIdGruppo());
 			
-			ResultSet res=pstmt.executeQuery();
+			ResultSet res = pstmt.executeQuery();
 			
 			if(res.next()) {
-				int numeroPostMese=res.getInt("numeroPostMese");
+				int numeroPostMese = res.getInt("numeroPostMese");
 				media=(float) numeroPostMese/numeroGiorniMese;
 			}
 			
@@ -153,13 +153,13 @@ public class PostDAO {
 					 + "ORDER BY P.NumeroLike DESC "
 					 + "LIMIT 1";
 	    Post postConPiuLike = null;
-		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
+		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,dataRicerca.getYear());
 			pstmt.setInt(2,dataRicerca.getMonthValue());
 			pstmt.setInt(3,g.getIdGruppo());
 			
-			ResultSet res=pstmt.executeQuery();
+			ResultSet res = pstmt.executeQuery();
 			if(res.next()) {
 				
 				Date dataPost=res.getDate("DataPubblicazione");
@@ -193,7 +193,7 @@ public class PostDAO {
 					 + "ORDER BY P.NumeroLike ASC "
 					 + "LIMIT 1";
 	    Post postConMenoLike = null;
-		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
+		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,dataRicerca.getYear());
 			pstmt.setInt(2,dataRicerca.getMonthValue());
@@ -202,10 +202,10 @@ public class PostDAO {
 			ResultSet res=pstmt.executeQuery();
 			if(res.next()) {
 				
-				Date dataPost=res.getDate("DataPubblicazione");
-				LocalDate localDataPost=dataPost.toLocalDate();
-				Time oraPost=res.getTime("OraPubblicazione");
-				LocalTime localOraPost=oraPost.toLocalTime();
+				Date dataPost = res.getDate("DataPubblicazione");
+				LocalDate localDataPost = dataPost.toLocalDate();
+				Time oraPost = res.getTime("OraPubblicazione");
+				LocalTime localOraPost = oraPost.toLocalTime();
 				
 				Utente utente = new UtenteDAO().getUtenteFromArrayListById(res.getInt("IdUtente"));
 				Notifica notifica = new NotificaDAO().getNotificaFromArrayListById(res.getInt("IdNotifica"));
@@ -234,19 +234,19 @@ public class PostDAO {
 					 + "ORDER BY P.NumeroCommenti DESC "
 					 + "LIMIT 1";
 	    Post postConPiuCommenti = null;
-		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
+		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,dataRicerca.getYear());
 			pstmt.setInt(2,dataRicerca.getMonthValue());
 			pstmt.setInt(3,g.getIdGruppo());
 			
-			ResultSet res=pstmt.executeQuery();
+			ResultSet res = pstmt.executeQuery();
 			if(res.next()) {
 				
-				Date dataPost=res.getDate("DataPubblicazione");
-				LocalDate localDataPost=dataPost.toLocalDate();
-				Time oraPost=res.getTime("OraPubblicazione");
-				LocalTime localOraPost=oraPost.toLocalTime();
+				Date dataPost = res.getDate("DataPubblicazione");
+				LocalDate localDataPost = dataPost.toLocalDate();
+				Time oraPost = res.getTime("OraPubblicazione");
+				LocalTime localOraPost = oraPost.toLocalTime();
 				Utente utente = new UtenteDAO().getUtenteFromArrayListById(res.getInt("IdUtente"));
                 Notifica notifica = new NotificaDAO().getNotificaFromArrayListById(res.getInt("IdNotifica"));
                 Post post = new PostDAO().getPostFromArrayListById(res.getInt("IdPost"));
@@ -272,19 +272,19 @@ public class PostDAO {
 					 + "ORDER BY P.NumeroCommenti ASC "
 					 + "LIMIT 1";
 	    Post postConMenoCommenti = null;
-		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
+		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,dataRicerca.getYear());
 			pstmt.setInt(2,dataRicerca.getMonthValue());
 			pstmt.setInt(3,g.getIdGruppo());
 			
-			ResultSet res=pstmt.executeQuery();
+			ResultSet res = pstmt.executeQuery();
 			if(res.next()) {
 				
-				Date dataPost=res.getDate("DataPubblicazione");
-				LocalDate localDataPost=dataPost.toLocalDate();
-				Time oraPost=res.getTime("OraPubblicazione");
-				LocalTime localOraPost=oraPost.toLocalTime();
+				Date dataPost = res.getDate("DataPubblicazione");
+				LocalDate localDataPost = dataPost.toLocalDate();
+				Time oraPost = res.getTime("OraPubblicazione");
+				LocalTime localOraPost = oraPost.toLocalTime();
 				Utente utente = new UtenteDAO().getUtenteFromArrayListById(res.getInt("IdUtente"));
 				Notifica notifica = new NotificaDAO().getNotificaFromArrayListById(res.getInt("IdNotifica"));
                 Post post = new PostDAO().getPostFromArrayListById(res.getInt("IdPost"));

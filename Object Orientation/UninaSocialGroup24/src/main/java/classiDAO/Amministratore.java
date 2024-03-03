@@ -25,7 +25,7 @@ public class Amministratore extends Utente{
 	}
 
 
-	public int getGruppoAmministrato() {
+	public int getIdGruppoAmministrato() {
 		return gruppoAmministrato.getIdGruppo();
 	}
 

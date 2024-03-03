@@ -46,11 +46,11 @@ public class AmministratoreDAO {
 	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 	    	
 	    	CreatoreGruppoDAO creatoreDAO = new CreatoreGruppoDAO();
-	    	CreatoreGruppo CreatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListByIdGruppo(amministratore.getGruppoAmministrato());
+	    	CreatoreGruppo CreatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListByIdGruppo(amministratore.getIdGruppoAmministrato());
 	    	
 	    	pstmt.setInt(1, CreatoreGruppo.getIdCreatoreGruppo());
 	        pstmt.setInt(2, amministratore.getIdUtente());
-	        pstmt.setInt(3, amministratore.getGruppoAmministrato());
+	        pstmt.setInt(3, amministratore.getIdGruppoAmministrato());
 	        pstmt.executeUpdate();
 	        listaAmministratori.add(amministratore); 
 	    } catch (SQLException e) {

@@ -9,11 +9,14 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JSeparator;
 
 public class loginGUI extends JFrame {
 
@@ -47,7 +50,7 @@ public class loginGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 360);
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.DARK_GRAY);
+		contentPane.setBackground(new Color(64, 64, 64));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -94,12 +97,14 @@ public class loginGUI extends JFrame {
 		contentPane.add(LoginButton);
 		
 		JLabel imgPWLabel = new JLabel("");
-		imgPWLabel.setIcon(new ImageIcon("\"C:\\Users\\Antonio De Martino\\OneDrive\\Desktop\\Repository Progetto BD-OO\\Progetto-BB-OO-2023-24\\Object Orientation\\UninaSocialGroup24\\loghiGUI\\chiaveLucchetto.png\""));
+		Image imgPassword = new ImageIcon(this.getClass().getResource("/user.png")).getImage();
+		imgPWLabel.setIcon(new ImageIcon(imgPassword));
 		imgPWLabel.setBounds(65, 143, 32, 30);
 		contentPane.add(imgPWLabel);
 		
 		JLabel imgUserLabel = new JLabel("");
-		imgUserLabel.setIcon(new ImageIcon("C:\\Users\\Utente\\Desktop\\git\\Progetto-BB-OO-2023-24\\Object Orientation\\UninaSocialGroup24\\loghiGUI\\user.png"));
+		Image imgUser = new ImageIcon(this.getClass().getResource("/chiaveLucchetto.png")).getImage();
+		imgUserLabel.setIcon(new ImageIcon(imgUser));
 		imgUserLabel.setBounds(65, 83, 32, 29);
 		contentPane.add(imgUserLabel);
 	}
