@@ -23,8 +23,7 @@ public class CreatoreGruppoDAO {
 			    int idUtente = res.getInt("IdUtente");
 			    int idGruppo = res.getInt("IdGruppo");
 
-			    UtenteDAO utenteDAO = new UtenteDAO(conn);
-			    Utente utente = utenteDAO.getUtenteFromArrayListById(idUtente);
+			    Utente utente =new UtenteDAO(conn).getUtenteFromArrayListById(idUtente);
 			    
 			    
 			    GruppoDAO gruppoDAO = new GruppoDAO(conn);

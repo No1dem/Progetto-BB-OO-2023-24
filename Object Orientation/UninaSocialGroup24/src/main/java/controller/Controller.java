@@ -19,7 +19,15 @@ import dataBaseConnection.ConnectDB;
 import guiUninaSocialGroup.loginGUI;
 
 public class Controller {
-	
+	public static UtenteDAO utenteDAO;
+	public static CreatoreGruppoDAO creatoreGruppoDAO;
+    public static AmministratoreDAO amministratoreDAO;
+    public static GruppoDAO gruppoDAO; 
+    public static PostDAO postDAO ;
+    public static NotificaDAO notificaDAO;
+    public static LikeDAO likeDAO ;
+    public static RichiestaDiAccessoDAO rdaDAO;
+    public static CommentoDAO commentoDAO;
 
 	public static void main(String[] args) {
 		loginGUI log = new loginGUI();
@@ -30,21 +38,22 @@ public class Controller {
 	
 	public static void checkDataBase(Connection conn)throws SQLException {
 	    try {
-//	        UtenteDAO utenteDAO = new UtenteDAO(conn);
-//	        CreatoreGruppoDAO creatoreGruppoDAO = new CreatoreGruppoDAO(conn);
-//	        AmministratoreDAO amministratoreDAO = new AmministratoreDAO(conn);
-//	        GruppoDAO gruppoDAO = new GruppoDAO(conn);
-//	        PostDAO postDAO = new PostDAO(conn);
-//	        NotificaDAO notificaDAO = new NotificaDAO(conn);
-	        LikeDAO likeDAO = new LikeDAO(conn);
-//	        RichiestaDiAccessoDAO rdaDAO = new RichiestaDiAccessoDAO(conn);
-//	        CommentoDAO commentoDAO = new CommentoDAO(conn);
+	        utenteDAO = new UtenteDAO(conn);
+	        creatoreGruppoDAO = new CreatoreGruppoDAO(conn);
+	        amministratoreDAO = new AmministratoreDAO(conn);
+	        gruppoDAO = new GruppoDAO(conn);
+	        postDAO = new PostDAO(conn);
+	        notificaDAO = new NotificaDAO(conn);
+	        likeDAO = new LikeDAO(conn);
+	        rdaDAO = new RichiestaDiAccessoDAO(conn);
+	        commentoDAO = new CommentoDAO(conn);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        JOptionPane.showMessageDialog(null, "Errore durante la connessione al database. Riprova più tardi.", "Errore di connessione", JOptionPane.ERROR_MESSAGE);
 	    }
 	}
 
+	
 			
 		
 		

@@ -22,9 +22,9 @@ public class NotificaDAO {
 			ResultSet res=stmt.executeQuery(query);
 			while(res.next()) {
 				
-				Commento commento = new CommentoDAO(conn).getCommentoFromArrayListById(res.getInt("IdNuovoCommento"));
-                Post post = new PostDAO(conn).getPostFromArrayListById(res.getInt("IdNuovoPost"));
-                Like like = new LikeDAO(conn).getLikeFromArrayListByIdLike(res.getInt("IdNuovoLike"));
+				int commento = res.getInt("IdNuovoCommento");
+                int post = res.getInt("IdNuovoPost");
+                int like = res.getInt("IdNuovoLike");
 				
 				listaNotifiche.add(new Notifica(res.getInt("IdNotifica"),  res.getDate("dataInvio").toLocalDate(), res.getTime("oraInvio").toLocalTime(),
 						res.getString("testoNotifica"),EnumTipoNotifica.valueOf(res.getString("tipoNotifica")) ,post ,like ,commento ));  				

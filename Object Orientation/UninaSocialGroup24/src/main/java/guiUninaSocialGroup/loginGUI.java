@@ -117,12 +117,12 @@ public class loginGUI extends JFrame {
 			     if (loginCorretto) {
 			    	 
 			    	 try {	
-							Controller.checkDataBase(conn);
-							
-							setVisible(false);
+			    		 	setVisible(false);
 							
 							HomeGUI home = new HomeGUI();
 							home.setVisible(true);
+			    		 
+							Controller.checkDataBase(conn);
 							
 					 } catch (SQLException exc) {
 							exc.printStackTrace();
