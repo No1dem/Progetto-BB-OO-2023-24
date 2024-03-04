@@ -4,18 +4,18 @@ public class Commento {
 	private int idCommento;
 	private String testoCommento;
 	private int numeroLike;
-	private int idCommentoRisposto;
-	private int idPostRisposto;
+	private Commento CommentoRisposto;
+	private Post PostRisposto;
 	
 	//Costruttore
 	
-	public Commento(int idCommento, String testoCommento, int numeroLike, int idCommRisp, int idPostRisp) {
+	public Commento(int idCommento, String testoCommento, int numeroLike, Commento CommRisp, Post PostRisp) {
 		super();
 		this.idCommento = idCommento;
 		this.testoCommento = testoCommento;
 		this.numeroLike = numeroLike;
-		this.idCommentoRisposto = idCommRisp;
-		this.idPostRisposto = idPostRisp;
+		this.CommentoRisposto = CommRisp;
+		this.PostRisposto = PostRisp;
 	}
 
 	//Getters e Setters
@@ -44,20 +44,22 @@ public class Commento {
 		this.numeroLike = numeroLike;
 	}
 
-	public int getIdCommentoRisposto() {
-		return idCommentoRisposto;
+	public Commento getCommentoRisposto() {
+		return CommentoRisposto;
 	}
 
-	public void setIdCommentoRisposto(int idCommentoRisposto) {
-		this.idCommentoRisposto = idCommentoRisposto;
+	public void setCommentoRisposto(Commento commentoRisposto) {
+		CommentoRisposto = commentoRisposto;
 	}
 
-	public int getIdPostRisposto() {
-		return idPostRisposto;
+	public Post getPostRisposto() {
+		return PostRisposto;
 	}
 
-	public void setIdPostRisposto(int idPostRisposto) {
-		this.idPostRisposto = idPostRisposto;
+	public void setPostRisposto(Post postRisposto) {
+		PostRisposto = postRisposto;
 	}
+
+	
 					
 }

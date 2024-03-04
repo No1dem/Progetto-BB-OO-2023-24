@@ -39,20 +39,24 @@ public class Controller {
 	public static void checkDataBase(Connection conn)throws SQLException {
 	    try {
 	        utenteDAO = new UtenteDAO(conn);
-	        creatoreGruppoDAO = new CreatoreGruppoDAO(conn);
-	        amministratoreDAO = new AmministratoreDAO(conn);
 	        gruppoDAO = new GruppoDAO(conn);
-	        postDAO = new PostDAO(conn);
-	        notificaDAO = new NotificaDAO(conn);
-	        likeDAO = new LikeDAO(conn);
-	        rdaDAO = new RichiestaDiAccessoDAO(conn);
-	        commentoDAO = new CommentoDAO(conn);
+	        amministratoreDAO = new AmministratoreDAO(conn,gruppoDAO,utenteDAO);
+	        creatoreGruppoDAO = new CreatoreGruppoDAO(conn,gruppoDAO,amministratoreDAO,utenteDAO);
+	        postDAO = new PostDAO(conn,utenteDAO,gruppoDAO);
+	        commentoDAO = new CommentoDAO(conn,postDAO);
+	        likeDAO = new LikeDAO(conn,postDAO,commentoDAO,utenteDAO);
+	        notificaDAO = new NotificaDAO(conn,postDAO,likeDAO,commentoDAO);
+	        rdaDAO = new RichiestaDiAccessoDAO(conn,utenteDAO,creatoreGruppoDAO,gruppoDAO,notificaDAO);
+	              
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        JOptionPane.showMessageDialog(null, "Errore durante la connessione al database. Riprova più tardi.", "Errore di connessione", JOptionPane.ERROR_MESSAGE);
 	    }
 	}
-
+	
+	
+	
+	
 	
 			
 		

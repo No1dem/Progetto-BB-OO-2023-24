@@ -11,11 +11,12 @@ public class AmministratoreDAO {
 	
 	private Connection connessioneDB; 
 	private LinkedList<Amministratore> listaAmministratori;
+
 	
-	
-	public AmministratoreDAO(Connection conn) throws SQLException{
+	public AmministratoreDAO(Connection conn, GruppoDAO gruppoDAO, UtenteDAO utenteDAO) throws SQLException{
         String query = "SELECT * FROM Amministratore";
         listaAmministratori = new LinkedList<Amministratore>();
+
         
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -23,12 +24,11 @@ public class AmministratoreDAO {
             while (rs.next()) {
                 int idAmministratore = rs.getInt("idAmministratore");
                 int idGruppo = rs.getInt("idGruppo");
+                int idUtente = rs.getInt("IdUtente");
 
-                Gruppo gruppoAmministrato = new GruppoDAO(conn).getGruppoFromArrayListById(idGruppo);
+                Gruppo gruppoAmministrato = gruppoDAO.getGruppoFromArrayListById(idGruppo);
           
                 
-                int idUtente = rs.getInt("IdUtente");
-                UtenteDAO utenteDAO = new UtenteDAO(conn);
 				Utente utente = utenteDAO.getUtenteFromArrayListById(idUtente);
                 
                               
@@ -42,13 +42,12 @@ public class AmministratoreDAO {
     }
 
 	
-	//INSERT        
+    
 	
-	public void insertNuovoAmministratore(Amministratore amministratore) {
+	public void insertNuovoAmministratore(Amministratore amministratore,CreatoreGruppoDAO creatoreDAO) {
 	    String query = "INSERT INTO Amministratore (idCreatore , idUtente, idGruppo) VALUES (?, ? ,?)";
 	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 	    	
-	    	CreatoreGruppoDAO creatoreDAO = new CreatoreGruppoDAO(connessioneDB);
 	    	CreatoreGruppo CreatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListByIdGruppo(amministratore.getIdGruppoAmministrato());
 	    	
 	    	pstmt.setInt(1, CreatoreGruppo.getIdCreatoreGruppo());
@@ -62,9 +61,7 @@ public class AmministratoreDAO {
 	}
 
 
-	
-	//DELETE 
-	
+
 	public void deleteAmministratoreByNickname(Amministratore amministratore) {
 	    String query = "DELETE FROM Amministratore WHERE idAmministratore IN (SELECT idAmministratore FROM Utente WHERE Nickname = ?)";
 	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {

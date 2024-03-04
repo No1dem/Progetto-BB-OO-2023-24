@@ -16,7 +16,7 @@ public class PostDAO {
 	private LinkedList<Post> listaPost;
 	
 	
-	public PostDAO(Connection conn) throws SQLException{
+	public PostDAO(Connection conn,UtenteDAO utenteDAO,GruppoDAO gruppoDAO) throws SQLException{
 		String query="SELECT * FROM Post";
 		listaPost = new LinkedList<Post>();
 		
@@ -30,13 +30,13 @@ public class PostDAO {
 	            java.sql.Time sqlTime = res.getTime("oraPubblicazione");
 	            LocalTime oraPubblicazione = sqlTime.toLocalTime();
 	            
-	            Utente utente = new UtenteDAO(conn).getUtenteFromArrayListById(res.getInt("IdUtente"));
-                Gruppo gruppo = new GruppoDAO(conn).getGruppoFromArrayListById(res.getInt("IdGruppo"));
-                int idNotifica = res.getInt("IdNotifica");
+	            Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));
+                Gruppo gruppo = gruppoDAO.getGruppoFromArrayListById(res.getInt("IdGruppo"));
+               
                
                        
 				listaPost.add(new Post(res.getInt("idPost"),res.getString("testo"),res.getString("urlImmagine"),dataPubblicazione,oraPubblicazione,
-									   res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,gruppo,idNotifica));  				
+									   res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,gruppo));  				
 			}
 			connessioneDB=conn;
 		}
@@ -145,7 +145,7 @@ public class PostDAO {
 	
 	
 	
-	public Post getPostConPiuLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
+	public Post getPostConPiuLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {   //*** UtenteDAO in input forse
 		String query = "SELECT * "
 					 + "FROM Post P "
 					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
@@ -171,7 +171,7 @@ public class PostDAO {
 				Utente utente = new UtenteDAO(connessioneDB).getUtenteFromArrayListById(res.getInt("IdUtente"));                
                 
 				postConPiuLike = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
-								          res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g,res.getInt("IdNotifica"));
+								          res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g);
 		   }
 		}
 		catch(SQLException e) {
@@ -209,7 +209,7 @@ public class PostDAO {
                 
                 
                 postConMenoLike = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
-				          				   res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g,res.getInt("IdNotifica"));
+				          				   res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g);
            
 		   }
 		}
@@ -248,7 +248,7 @@ public class PostDAO {
                 
                 
                 postConPiuCommenti = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
-			          	  res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g,res.getInt("IdNotifica"));
+			          	  res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g);
 		   }
 		}
 		catch(SQLException e) {
@@ -285,7 +285,7 @@ public class PostDAO {
 
                 
                 postConMenoCommenti = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
-				          					   res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g,res.getInt("IdNotifica"));
+				          					   res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g);
 		   }
 		}
 		catch(SQLException e) {

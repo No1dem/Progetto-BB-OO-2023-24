@@ -11,7 +11,7 @@ public class CreatoreGruppoDAO {
 	private Connection connessioneDB; 
 	private LinkedList<CreatoreGruppo> listaCreatoriGruppi;
 	
-	public CreatoreGruppoDAO(Connection conn) throws SQLException {
+	public CreatoreGruppoDAO(Connection conn,GruppoDAO gruppoDAO , AmministratoreDAO amministratoreDAO, UtenteDAO utenteDAO ) throws SQLException {
 		String query="SELECT * FROM CreatoreGruppo";
 		listaCreatoriGruppi = new LinkedList<CreatoreGruppo>();
 		
@@ -23,13 +23,12 @@ public class CreatoreGruppoDAO {
 			    int idUtente = res.getInt("IdUtente");
 			    int idGruppo = res.getInt("IdGruppo");
 
-			    Utente utente =new UtenteDAO(conn).getUtenteFromArrayListById(idUtente);
+			    Utente utente = utenteDAO.getUtenteFromArrayListById(idUtente);
 			    
-			    
-			    GruppoDAO gruppoDAO = new GruppoDAO(conn);
+	
 			    Gruppo gruppo = gruppoDAO.getGruppoFromArrayListById(idGruppo);
 			    
-			    AmministratoreDAO amministratoreDAO = new AmministratoreDAO(conn);
+		
 			    Amministratore amministratore = amministratoreDAO.getAmministratoreFromArrayListById(idGruppo);
 			    
 			    listaCreatoriGruppi.add(new CreatoreGruppo (utente.getIdUtente(),utente.getNomeUtente(),utente.getCognomeUtente(),

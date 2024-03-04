@@ -3,21 +3,21 @@ package classiDAO;
 public class RichiestaDiAccesso {
 	private int idRichiesta;
 	private EnumStatiRichiesta statoRichiesta;
-	private int idUtenteRichiesta;
-	private int idCreatoreGruppo;
-	private int idGruppoAccesso;
-	private int idNotificaGenerata;
+	private Utente UtenteRichiesta;
+	private CreatoreGruppo CreatoreGruppoDiRichiesta;
+	private Gruppo GruppoAccesso;
+	private Notifica NotificaGenerata;
 	
 	
-	public RichiestaDiAccesso(int idRichiesta, EnumStatiRichiesta statoRichiesta, int utenteRichiesta,
-			int creatoreGruppo, int gruppoAccesso, int  idNG) {
+	public RichiestaDiAccesso(int idRichiesta, EnumStatiRichiesta statoRichiesta, Utente utenteRichiesta,
+		CreatoreGruppo creatoreGruppo, Gruppo gruppoAccesso, Notifica  notifGen) {
 		super();
 		this.idRichiesta = idRichiesta;
 		this.statoRichiesta = statoRichiesta;
-		this.idUtenteRichiesta = utenteRichiesta;
-		this.idCreatoreGruppo = creatoreGruppo;
-		this.idGruppoAccesso = gruppoAccesso;
-		this.idNotificaGenerata = idNG;
+		this.UtenteRichiesta = utenteRichiesta;
+		this.CreatoreGruppoDiRichiesta = creatoreGruppo;
+		this.GruppoAccesso = gruppoAccesso;
+		this.NotificaGenerata = notifGen;
 	}
 
 
@@ -41,45 +41,43 @@ public class RichiestaDiAccesso {
 	}
 
 
-
-	public int getIdCreatoreGruppo() {
-		return idCreatoreGruppo;
+	public Utente getUtenteRichiesta() {
+		return UtenteRichiesta;
 	}
 
 
-	public void setCreatoreGruppo(int idCreatoreGruppo) {
-		this.idCreatoreGruppo = idCreatoreGruppo;
+	public void setUtenteRichiesta(Utente utenteRichiesta) {
+		UtenteRichiesta = utenteRichiesta;
 	}
 
 
-	public int getIdGruppoAccesso() {
-		return idGruppoAccesso;
+	public CreatoreGruppo getCreatoreGruppoDiRichiesta() {
+		return CreatoreGruppoDiRichiesta;
 	}
 
 
-	public void setGruppoAccesso(int idGruppoAccesso) {
-		this.idGruppoAccesso = idGruppoAccesso;
+	public void setCreatoreGruppoDiRichiesta(CreatoreGruppo creatoreGruppoDiRichiesta) {
+		CreatoreGruppoDiRichiesta = creatoreGruppoDiRichiesta;
 	}
 
 
-	public int getIdNotificaGenerata() {
-		return idNotificaGenerata;
+	public Gruppo getGruppoAccesso() {
+		return GruppoAccesso;
 	}
 
 
-	public void setIdNotificaGenerata(int idNotificaGenerata) {
-		this.idNotificaGenerata = idNotificaGenerata;
-	}
-
-	public int getIdUtenteRichiesta() {
-		return idUtenteRichiesta;
+	public void setGruppoAccesso(Gruppo gruppoAccesso) {
+		GruppoAccesso = gruppoAccesso;
 	}
 
 
-	public void setIdUtenteRichiesta(int utenteRichiesta) {
-		this.idUtenteRichiesta = utenteRichiesta;
+	public Notifica getNotificaGenerata() {
+		return NotificaGenerata;
 	}
 
 
+	public void setNotificaGenerata(Notifica notificaGenerata) {
+		NotificaGenerata = notificaGenerata;
+	}
 	
 }
