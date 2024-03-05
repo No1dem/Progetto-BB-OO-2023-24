@@ -9,51 +9,193 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import java.awt.Font;
 
 public class ImpostazioniGUI extends JFrame {
 
     private JPanel contentPane;
-    private JTextField textField;
+    private JTextField urlFotoProfiloTextField;
+    private JTextField vecchioNickTextField;
+    private JTextField nuovoNickTextField;
+    private JPasswordField passwordModificaNickField;
+    private JTextField nickEliminaAccountTextField;
+    private JPasswordField passwordEliminaAccountField;
 
     public ImpostazioniGUI() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 403, 534);
+        setBounds(100, 100, 403, 561);
         contentPane = new JPanel();
         contentPane.setBackground(new Color(226, 235, 248));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-
-        textField = new JTextField();
-        textField.setBounds(75, 47, 199, 24);
-        contentPane.add(textField);
-        textField.setColumns(10);
-
-        JButton modificaImmagineButton = new JButton("Carica");
-        modificaImmagineButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-           
-                String imageUrl = textField.getText();
-                try {
-                
-                    URL url = new URL(imageUrl);
-                    
-                    String nicknameUtente = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getNickname(); 
-                    
-                    Controller.utenteDAO.updateUrlFotoProfiloByNickname(nicknameUtente, imageUrl);
-                    
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Impossibile caricare l'immagine dall'URL fornito.\n "
-                    		+ "Verifica la tua connessione ad internet.", "Errore", JOptionPane.ERROR_MESSAGE);
-                }
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(148, 190, 233));
+        panel.setBounds(26, 170, 325, 190);
+        contentPane.add(panel);
+        panel.setLayout(null);
+        
+        JButton modificaNicknameButton = new JButton("Modifica Nickname");
+        modificaNicknameButton.setBounds(66, 156, 200, 24);
+        panel.add(modificaNicknameButton);
+        modificaNicknameButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+        
+        vecchioNickTextField = new JTextField();
+        vecchioNickTextField.setBounds(132, 82, 169, 19);
+        panel.add(vecchioNickTextField);
+        vecchioNickTextField.setColumns(10);
+        
+        nuovoNickTextField = new JTextField();
+        nuovoNickTextField.setColumns(10);
+        nuovoNickTextField.setBounds(132, 42, 169, 19);
+        panel.add(nuovoNickTextField);
+        
+        JLabel lblModificaNickname = new JLabel("MODIFICA NICKNAME");
+        lblModificaNickname.setHorizontalAlignment(SwingConstants.CENTER);
+        lblModificaNickname.setFont(new Font("Arial", Font.BOLD, 15));
+        lblModificaNickname.setBounds(26, 10, 275, 18);
+        panel.add(lblModificaNickname);
+        
+        JLabel lbNewLabel_7 = new JLabel("Nuovo Nicnkname:");
+        lbNewLabel_7.setFont(new Font("Arial", Font.BOLD, 12));
+        lbNewLabel_7.setBounds(16, 45, 106, 13);
+        panel.add(lbNewLabel_7);
+        
+        JLabel lblNewLabel_1 = new JLabel("Vecchio Nickname:");
+        lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 12));
+        lblNewLabel_1.setBounds(10, 85, 112, 13);
+        panel.add(lblNewLabel_1);
+        
+        JLabel lblNewLabel_2 = new JLabel("Password:");
+        lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 12));
+        lblNewLabel_2.setBounds(62, 124, 60, 13);
+        panel.add(lblNewLabel_2);
+        
+        passwordModificaNickField = new JPasswordField();
+        passwordModificaNickField.setBounds(132, 121, 169, 19);
+        panel.add(passwordModificaNickField);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBackground(new Color(148, 190, 233));
+        panel_1.setBounds(26, 10, 325, 138);
+        contentPane.add(panel_1);
+                panel_1.setLayout(null);
+        
+                urlFotoProfiloTextField = new JTextField();
+                urlFotoProfiloTextField.setBounds(22, 38, 275, 19);
+                panel_1.add(urlFotoProfiloTextField);
+                urlFotoProfiloTextField.setColumns(10);
+        
+                JButton modificaImmagineButton = new JButton("Carica");
+                modificaImmagineButton.setBounds(197, 67, 100, 27);
+                panel_1.add(modificaImmagineButton);
+                modificaImmagineButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+                modificaImmagineButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                   
+                        String imageUrl = urlFotoProfiloTextField.getText();
+                        try {
+                        
+                            URL url = new URL(imageUrl);
+                            
+                            String nicknameUtente = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getNickname(); 
+                            
+                            Controller.utenteDAO.updateUrlFotoProfiloByNickname(nicknameUtente, imageUrl);
+                            
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                            JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Impossibile caricare l'immagine dall'URL fornito.\n "
+                            		+ "Verifica la tua connessione ad internet.", "Errore", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
+        
+        JLabel titoloModificaUrlLabel = new JLabel("MODIFICA IMMAGINE DEL PROFILO :");
+        titoloModificaUrlLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titoloModificaUrlLabel.setBounds(22, 10, 275, 18);
+        panel_1.add(titoloModificaUrlLabel);
+        titoloModificaUrlLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        
+        JButton eliminaImmagineProfiloButton = new JButton("Elimina");
+        eliminaImmagineProfiloButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String Nickname = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getNickname();
+        		Controller.utenteDAO.updateUrlFotoProfiloByNickname(Nickname,"");
+                JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Eliminazione avvenuta con successo", "Eliminazione foto profilo", JOptionPane.INFORMATION_MESSAGE);
+        	}
+        });
+        eliminaImmagineProfiloButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+        eliminaImmagineProfiloButton.setBounds(197, 104, 100, 25);
+        panel_1.add(eliminaImmagineProfiloButton);
+        
+        JLabel lblNewLabel = new JLabel("Cancella la foto profilo:");
+        lblNewLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        lblNewLabel.setBounds(57, 111, 130, 13);
+        panel_1.add(lblNewLabel);
+        
+        JLabel lblNewLabel_3 = new JLabel("Carica l'URL:");
+        lblNewLabel_3.setFont(new Font("Arial", Font.BOLD, 12));
+        lblNewLabel_3.setBounds(113, 75, 74, 13);
+        panel_1.add(lblNewLabel_3);
+        
+        JPanel panel_2 = new JPanel();
+        panel_2.setBackground(new Color(148, 190, 233));
+        panel_2.setBounds(25, 382, 326, 132);
+        contentPane.add(panel_2);
+        panel_2.setLayout(null);
+        
+        JLabel titoloEliminaAccountLabel = new JLabel("ELIMINA ACCOUNT");
+        titoloEliminaAccountLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        titoloEliminaAccountLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titoloEliminaAccountLabel.setBounds(88, 10, 157, 13);
+        panel_2.add(titoloEliminaAccountLabel);
+        
+        nickEliminaAccountTextField = new JTextField();
+        nickEliminaAccountTextField.setBounds(136, 33, 165, 19);
+        panel_2.add(nickEliminaAccountTextField);
+        nickEliminaAccountTextField.setColumns(10);
+        
+        passwordEliminaAccountField = new JPasswordField();
+        passwordEliminaAccountField.setBounds(136, 62, 165, 19);
+        panel_2.add(passwordEliminaAccountField);
+        
+        JLabel lblNewLabel_4 = new JLabel("Nickname:");
+        lblNewLabel_4.setFont(new Font("Arial", Font.BOLD, 12));
+        lblNewLabel_4.setBounds(61, 36, 65, 13);
+        panel_2.add(lblNewLabel_4);
+        
+        JLabel lblNewLabel_5 = new JLabel("Password:");
+        lblNewLabel_5.setFont(new Font("Arial", Font.BOLD, 12));
+        lblNewLabel_5.setBounds(61, 65, 65, 13);
+        panel_2.add(lblNewLabel_5);
+        
+        JButton eliminaImmagineProfiloButton_1 = new JButton("Elimina");
+        eliminaImmagineProfiloButton_1.setFont(new Font("Arial Black", Font.PLAIN, 12));
+        eliminaImmagineProfiloButton_1.setBounds(112, 97, 100, 25);
+        panel_2.add(eliminaImmagineProfiloButton_1);
+        modificaNicknameButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        
+        
+        
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
+        addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                super.windowClosed(e);
+                HomeGUI homeGUI = new HomeGUI(); 
+                homeGUI.setVisible(true); 
             }
         });
-        modificaImmagineButton.setBounds(75, 80, 199, 27);
-        contentPane.add(modificaImmagineButton);
+        
+        setLocationRelativeTo(null); 
     }
 
     public static void main(String[] args) {
