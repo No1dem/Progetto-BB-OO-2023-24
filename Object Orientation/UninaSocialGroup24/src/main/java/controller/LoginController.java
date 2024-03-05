@@ -11,7 +11,6 @@ public class LoginController {
 	public boolean login(String Nickname, String password , Connection conn){
 		try {
 			UtenteDAO utenteDAO = new UtenteDAO(conn);
-			utenteDAO.stampaListaUtenti();
 			Utente ut = utenteDAO.getUtenteFromArrayListByNickname(Nickname);
 			
 			if (ut == null) {

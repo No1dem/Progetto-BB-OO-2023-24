@@ -125,9 +125,9 @@ public class GruppoDAO {
 	 
 	 
 	 
-     public List<Gruppo> cercaGruppiPerNomeOTag(String Ricerca) {
-	        List<Gruppo> risultati = new LinkedList<>();
-	        String query = "SELECT * FROM Gruppo WHERE nomeGruppo LIKE '%'|| ? ||'%' OR tagGruppo LIKE '%'|| ? ||'%'";
+     public LinkedList<Gruppo> cercaGruppiPerNomeOTag(String Ricerca) {
+	        LinkedList<Gruppo> risultati = new LinkedList<>();
+	        String query = "SELECT * FROM Gruppo WHERE UPPER(nomeGruppo) LIKE '%'|| UPPER(?) ||'%' OR UPPER(tagGruppo) LIKE '%'|| UPPER(?) ||'%'";
 	        try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
 	            pstmt.setString(1, Ricerca);
 	            pstmt.setString(2, Ricerca);
@@ -203,6 +203,18 @@ public class GruppoDAO {
 	 
 	 public LinkedList<Gruppo> getListaGruppi(){
 		 return listaGruppi;
+	 }
+	 
+	 public void stampaListaGruppi(LinkedList<Gruppo> listaGruppi) {
+		for (Gruppo gruppo : listaGruppi) {
+		        System.out.println("ID Gruppo: " + gruppo.getIdGruppo());
+		        System.out.println("Nome Gruppo: " + gruppo.getNomeGruppo());
+		        System.out.println("Tag Gruppo: " + gruppo.getTagGruppo());
+		        System.out.println("Descrizione Gruppo: " + gruppo.getDescrizioneGruppo());
+		        System.out.println("Numero Iscritti: " + gruppo.getNumeroIscritti());
+		        System.out.println("------------------------------------");
+		}
+			
 	 }
 	 
 }

@@ -13,12 +13,11 @@ import classiDAO.LikeDAO;
 import classiDAO.NotificaDAO;
 import classiDAO.PostDAO;
 import classiDAO.RichiestaDiAccessoDAO;
-import classiDAO.Utente;
 import classiDAO.UtenteDAO;
-import dataBaseConnection.ConnectDB;
 import guiUninaSocialGroup.loginGUI;
 
 public class Controller {
+	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
     public static AmministratoreDAO amministratoreDAO;
@@ -26,27 +25,31 @@ public class Controller {
     public static PostDAO postDAO ;
     public static NotificaDAO notificaDAO;
     public static LikeDAO likeDAO ;
-    public static RichiestaDiAccessoDAO rdaDAO;
+    public static RichiestaDiAccessoDAO richiestaDiAccessoDAO;
     public static CommentoDAO commentoDAO;
+    
+    public static Connection Connessione;
+    
+    public static int myIdUtente;
 
 	public static void main(String[] args) {
 		loginGUI log = new loginGUI();
 		log.setVisible(true);
 	}
 
-	
-	
-	public static void checkDataBase(Connection conn)throws SQLException {
+	public static void checkDataBase(Connection conn) throws SQLException {
+		Connessione=conn;
 	    try {
 	        utenteDAO = new UtenteDAO(conn);
 	        gruppoDAO = new GruppoDAO(conn);
+	        gruppoDAO.stampaListaGruppi(gruppoDAO.getListaGruppi());
 	        amministratoreDAO = new AmministratoreDAO(conn,gruppoDAO,utenteDAO);
 	        creatoreGruppoDAO = new CreatoreGruppoDAO(conn,gruppoDAO,amministratoreDAO,utenteDAO);
 	        postDAO = new PostDAO(conn,utenteDAO,gruppoDAO);
 	        commentoDAO = new CommentoDAO(conn,postDAO);
 	        likeDAO = new LikeDAO(conn,postDAO,commentoDAO,utenteDAO);
 	        notificaDAO = new NotificaDAO(conn,postDAO,likeDAO,commentoDAO);
-	        rdaDAO = new RichiestaDiAccessoDAO(conn,utenteDAO,creatoreGruppoDAO,gruppoDAO,notificaDAO);
+	        richiestaDiAccessoDAO = new RichiestaDiAccessoDAO(conn,utenteDAO,creatoreGruppoDAO,gruppoDAO,notificaDAO);
 	              
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -55,13 +58,11 @@ public class Controller {
 	}
 	
 	
+	public static void getMyIdUtenteByNickname(String Nickname) {
+		myIdUtente = utenteDAO.getUtenteFromArrayListByNickname(Nickname).getIdUtente();
+	}
 	
 	
 	
-			
 		
-		
-	
-	
-	
 }
