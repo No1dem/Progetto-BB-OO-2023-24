@@ -53,6 +53,7 @@ public class loginGUI extends JFrame {
 		contentPane.setBackground(new Color(64, 64, 64));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
