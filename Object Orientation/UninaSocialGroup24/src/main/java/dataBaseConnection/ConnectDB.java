@@ -6,7 +6,7 @@ public class ConnectDB{
 	private static Connection myConn;
 	
 	static {
-		try {     //Inizializzazione delle connessione
+		try {      //Inizializzazione delle connessione
 			String url = "jdbc:postgresql://localhost:5432/DBUninaSG";
 		    String username = "postgres";
 		    String password = "postgres";
