@@ -5,18 +5,31 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import classiDAO.UtenteDAO;
+
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
+
+import controller.Controller;
+import controller.LoginController;
+import dataBaseConnection.ConnectDB;
 
 public class loginGUI extends JFrame {
 
@@ -31,6 +44,7 @@ public class loginGUI extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+			
 				try {
 					loginGUI frame = new loginGUI();
 					frame.setVisible(true);
@@ -50,7 +64,7 @@ public class loginGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 360);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(64, 64, 64));
+		contentPane.setBackground(new Color(148, 190, 233));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		
@@ -63,15 +77,16 @@ public class loginGUI extends JFrame {
 		nickTextField.setColumns(10);
 		
 		JLabel NickLabel = new JLabel("Nickname");
-		NickLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		NickLabel.setForeground(Color.LIGHT_GRAY);
+		NickLabel.setBackground(new Color(0, 0, 0));
+		NickLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		NickLabel.setForeground(new Color(0, 0, 0));
 		NickLabel.setBounds(107, 90, 91, 20);
 		contentPane.add(NickLabel);
 		
 		JLabel passwordLabel = new JLabel("Password");
-		passwordLabel.setForeground(Color.LIGHT_GRAY);
+		passwordLabel.setForeground(new Color(0, 0, 0));
 		passwordLabel.setBackground(new Color(192, 192, 192));
-		passwordLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		passwordLabel.setFont(new Font("Arial", Font.BOLD, 15));
 		passwordLabel.setBounds(107, 153, 91, 20);
 		contentPane.add(passwordLabel);
 		
@@ -83,30 +98,76 @@ public class loginGUI extends JFrame {
 		passwordDimenticataButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		passwordDimenticataButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+		
 			}
 		});
-		passwordDimenticataButton.setBounds(107, 220, 163, 23);
+		passwordDimenticataButton.setBounds(107, 199, 163, 23);
 		contentPane.add(passwordDimenticataButton);
 		
 		JButton LoginButton = new JButton("Login");
 		LoginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 String nickname = nickTextField.getText();
+			     String password = new String(passwordField.getPassword());
+			     
+			     if (nickname.isEmpty() || password.isEmpty()) {
+			            JOptionPane.showMessageDialog(contentPane, "Inserisci nickname e password.", "Errore di accesso", JOptionPane.ERROR_MESSAGE);
+			            return; 
+			     }
+			     
+			     new ConnectDB();
+			     Connection conn = ConnectDB.getConnection();
+			           
+			     boolean loginCorretto = new LoginController().login(nickname, password, conn);
+			        
+			     if (loginCorretto) {
+			    	 
+			    	 try {	
+			    		 	setVisible(false);
+			    		 	
+			    		 	Controller.checkDataBase(conn);
+			    		 	Controller.getMyIdUtenteByNickname(nickname);
+			    		 	
+			   
+							HomeGUI home = new HomeGUI();
+							home.setVisible(true);
+			    		 
+							
+							
+							
+					 } catch (SQLException exc) {
+							exc.printStackTrace();
+					   }
+		
+			     } else {
+			    	 JOptionPane.showMessageDialog(contentPane, "Credenziali non valide. Riprova.", "Errore di accesso", JOptionPane.ERROR_MESSAGE);
+			       }
 			}
 		});
 		LoginButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		LoginButton.setBounds(296, 221, 89, 23);
+		LoginButton.setBounds(296, 199, 89, 23);
 		contentPane.add(LoginButton);
 		
 		JLabel imgPWLabel = new JLabel("");
-		Image imgPassword = new ImageIcon(this.getClass().getResource("/user.png")).getImage();
+		Image imgPassword = new ImageIcon(this.getClass().getResource("/chiaveLucchetto.png")).getImage();
 		imgPWLabel.setIcon(new ImageIcon(imgPassword));
 		imgPWLabel.setBounds(65, 143, 32, 30);
 		contentPane.add(imgPWLabel);
 		
 		JLabel imgUserLabel = new JLabel("");
-		Image imgUser = new ImageIcon(this.getClass().getResource("/chiaveLucchetto.png")).getImage();
+		Image imgUser = new ImageIcon(this.getClass().getResource("/user.png")).getImage();
 		imgUserLabel.setIcon(new ImageIcon(imgUser));
 		imgUserLabel.setBounds(65, 83, 32, 29);
 		contentPane.add(imgUserLabel);
+		
+		JButton registrazioneButton = new JButton("Registrati");
+		registrazioneButton.setToolTipText("Clicca qui se non sei iscritto ad Unina Social Group");
+		registrazioneButton.setFont(new Font("Arial", Font.PLAIN, 10));
+		registrazioneButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		registrazioneButton.setBounds(431, 292, 85, 21);
+		contentPane.add(registrazioneButton);
 	}
 }

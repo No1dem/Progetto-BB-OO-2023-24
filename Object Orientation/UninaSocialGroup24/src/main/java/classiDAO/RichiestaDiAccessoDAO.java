@@ -11,24 +11,31 @@ public class RichiestaDiAccessoDAO {
 	private Connection connessioneDB;
 	private LinkedList<RichiestaDiAccesso> listaRichiesteDiAccesso;
 	
-	public void listaRichiesteDiAccessoDao (Connection conn) {
+	public RichiestaDiAccessoDAO (Connection conn,UtenteDAO utenteDAO,CreatoreGruppoDAO creatoreDAO ,
+			GruppoDAO gruppoDAO,NotificaDAO notificaDAO) throws SQLException {
 		String query="SELECT * FROM RichiestaDiAccesso";
+		connessioneDB=conn;
 		listaRichiesteDiAccesso = new LinkedList<RichiestaDiAccesso>();
+		
 		try(Statement stmt=conn.createStatement()){
 			ResultSet res=stmt.executeQuery(query);
+			
 			while(res.next()) {
-				Utente utenteRichiesta = new UtenteDAO().getUtenteFromArrayListById(res.getInt("IdUtenteRichiesta"));
-				CreatoreGruppo creatoreGruppo = new CreatoreGruppoDAO().getCreatoreGruppoFromArrayListById(res.getInt("IdCreatore"));
-				Gruppo gruppoRichiesta = new GruppoDAO().getGruppoFromArrayListById(res.getInt("IdGruppoRichiesta"));
-				Notifica notificaRichiesta = new NotificaDAO().getNotificaFromArrayListById(res.getInt("IdNotificaGenerata"));
+				Utente utenteRichiesta = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtenteRichiesta"));
+				
+				CreatoreGruppo creatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListById(res.getInt("IdCreatore"));
+				
+				Gruppo gruppoRichiesta = gruppoDAO.getGruppoFromArrayListById(res.getInt("IdGruppoRichiesta"));
+				
+				Notifica notificaGenerata = notificaDAO.getNotificaFromArrayListById(res.getInt("IdNotificaGenerata"));
 				
 				String statoRichiestaString = res.getString("StatoRichiesta");
 	            EnumStatiRichiesta statoRichiesta = EnumStatiRichiesta.valueOf(statoRichiestaString);
 	            
 			    listaRichiesteDiAccesso.add(new RichiestaDiAccesso(res.getInt("IdRichiesta"),statoRichiesta,
-											utenteRichiesta,creatoreGruppo,gruppoRichiesta,notificaRichiesta));  				
+											utenteRichiesta,creatoreGruppo,gruppoRichiesta,notificaGenerata));  				
 			}
-			connessioneDB=conn;
+			
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -37,10 +44,12 @@ public class RichiestaDiAccessoDAO {
 	
 	public void insertRichiestaDiAccesso(RichiestaDiAccesso rds) {
 		String query = "INSERT INTO RichiestaDiAccesso (IdUtenteRichiesta,IdCreatore,IdGruppoRichiesta) VALUES (?, ?, ?)";
+		
 	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
-	        pstmt.setInt(1, rds.getIdUtenteRichiesta());
-	        pstmt.setInt(2, rds.getIdCreatoreGruppo()); 
-	        pstmt.setInt(3, rds.getIdGruppoAccesso());
+	    	
+	        pstmt.setInt(1, rds.getUtenteRichiesta().getIdUtente());
+	        pstmt.setInt(2, rds.getCreatoreGruppoDiRichiesta().getIdCreatoreGruppo());
+	        pstmt.setInt(3, rds.getGruppoAccesso().getIdGruppo());
 	        
 	        pstmt.executeUpdate();
 	        

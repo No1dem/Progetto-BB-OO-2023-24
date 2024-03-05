@@ -14,7 +14,7 @@ public class NotificaDAO {
 	private LinkedList<Notifica> listaNotifiche;
 	
 	
-	public void listaNotificheDao(Connection conn) {
+	public NotificaDAO(Connection conn,PostDAO postDAO ,LikeDAO likeDAO, CommentoDAO commentoDAO) throws SQLException {
 		String query="SELECT * FROM Notifica";
 		listaNotifiche = new LinkedList<Notifica>();
 		
@@ -22,12 +22,17 @@ public class NotificaDAO {
 			ResultSet res=stmt.executeQuery(query);
 			while(res.next()) {
 				
-				Commento commento = new CommentoDAO().getCommentoFromArrayListById(res.getInt("IdCommento"));
-                Post post = new PostDAO().getPostFromArrayListById(res.getInt("IdPost"));
-                Like like = new LikeDAO().getLikeFromArrayListByIdLike(res.getInt("IdLike"));
+//				CommentoDAO commentoDAO = new CommentoDAO(conn);
+				Commento commento = commentoDAO.getCommentoFromArrayListById(res.getInt("IdNuovoCommento"));
 				
-				listaNotifiche.add(new Notifica(res.getInt("IdNotifica"),  res.getDate("dataInvio").toLocalDate(), res.getTime("oraInvio").toLocalTime(),
-						res.getString("testoNotifica"),EnumTipoNotifica.valueOf(res.getString("tipoNotifica")) ,post ,like ,commento ));  				
+//                PostDAO postDAO = new PostDAO(conn);
+                Post post = postDAO.getPostFromArrayListById(res.getInt("IdNuovoPost"));
+                
+//                LikeDAO likeDAO = new LikeDAO(conn); 
+                Like like = likeDAO.getLikeFromArrayListByIdLike(res.getInt("IdNuovoLike"));
+				
+				listaNotifiche.add(new Notifica(res.getInt("IdNotifica"), res.getDate("dataInvio").toLocalDate(), res.getTime("oraInvio").toLocalTime(),
+								   				res.getString("testoNotifica"),EnumTipoNotifica.valueOf(res.getString("tipoNotifica")) ,post ,like ,commento ));  				
 			}
 			connessioneDB=conn;
 		}
@@ -48,9 +53,9 @@ public class NotificaDAO {
 	        pstmt.setString(5, notifica.getTipoNotifica().toString());
 
 	        
-	        pstmt.setInt(6, notifica.getIdPost()); 
-	        pstmt.setInt(7, notifica.getIdLike()); 
-	        pstmt.setInt(8, notifica.getIdCommento());
+	        pstmt.setInt(6, notifica.getPost().getIdPost()); 
+	        pstmt.setInt(7, notifica.getLike().getIdLike()); 
+	        pstmt.setInt(8, notifica.getCommento().getIdCommento());
 	        pstmt.executeUpdate();
 	        listaNotifiche.add(notifica); 
 	    } catch (SQLException e) {

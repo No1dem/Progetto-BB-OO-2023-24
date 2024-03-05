@@ -13,14 +13,16 @@ public class UtenteDAO {
 	private Connection connessioneDB; 
 	private LinkedList<Utente> listaUtente;
 	
-	public void listaUtenteDao(Connection conn) {
+	public UtenteDAO(Connection conn) throws SQLException {
 		String query="SELECT * FROM Utente";
 		listaUtente = new LinkedList<Utente>();
+		
 		try(Statement stmt=conn.createStatement()){
 			ResultSet res=stmt.executeQuery(query);
+			
 			while(res.next()) {
-				listaUtente.add(new Utente(res.getInt("IdUtente"),res.getString("NomeUtente"),res.getString("CognomeUtente"),res.getString("Nickname"),
-										   res.getString("Email"),res.getString("Password"),res.getString("Biografia"),res.getString("URLFotoProfilo")));  				
+				listaUtente.add(new Utente(res.getInt("IdUtente"),res.getString("NomeUtente"),res.getString("CognomeUtente"),res.getString("Email"),
+										   res.getString("Nickname"),res.getString("Password"),res.getString("Biografia"),res.getString("URLFotoProfilo")));  				
 			}
 			connessioneDB=conn;
 		}
@@ -164,6 +166,21 @@ public class UtenteDAO {
 	public boolean utenteExistInArrayList(Utente ut) {
 		return listaUtente.contains(ut);
 	}
-
+	
+	public void stampaListaUtenti() {
+        for (Utente utente : listaUtente) {
+            System.out.println("ID: " + utente.getIdUtente());
+            System.out.println("Nome: " + utente.getNomeUtente());
+            System.out.println("Cognome: " + utente.getCognomeUtente());
+            System.out.println("Nickname: " + utente.getNickname());
+            System.out.println("Email: " + utente.getEmail());
+            System.out.println("Password: " + utente.getPassword());
+            System.out.println("Biografia: " + utente.getBiografia());
+            System.out.println("URL Foto Profilo: " + utente.getUrlFotoProfilo());
+            System.out.println("------------------------------------");
+        }
+    }
+	
+	
 	
 }

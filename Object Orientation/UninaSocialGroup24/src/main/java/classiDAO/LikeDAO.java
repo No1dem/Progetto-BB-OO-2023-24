@@ -16,12 +16,11 @@ public class LikeDAO {
 	
 	
 	
-	public void listaLikeDAO() {
+	public LikeDAO(Connection conn,PostDAO postDAO,CommentoDAO commentoDAO,UtenteDAO utenteDAO)throws SQLException {
 		String query = "SELECT * FROM Like_";
 		listaLikes = new LinkedList<Like>();
 		
-		try(Connection conn = ConnectDB.getConnection()){
-			Statement stmt=conn.createStatement();
+		try(Statement stmt=conn.createStatement();){
 			ResultSet res=stmt.executeQuery(query);
 			
 			while(res.next()) {
@@ -31,14 +30,13 @@ public class LikeDAO {
 	            int idCommento = res.getInt("IdCommento");
 	            int idPost = res.getInt("IdPost");
 
-	            UtenteDAO utenteDAO = new UtenteDAO();
 	            Utente utente = utenteDAO.getUtenteFromArrayListById(idUtente);
 	            
-	            CommentoDAO commentoDAO = new CommentoDAO();
-	            Commento commento = commentoDAO.getCommentoFromArrayListById(idCommento);
-	            
-	            PostDAO postDAO = new PostDAO();
+	      
 	            Post post = postDAO.getPostFromArrayListById(idPost); 
+	            
+	            
+	            Commento commento = commentoDAO.getCommentoFromArrayListById(idCommento);
 
 	            Like like = new Like(idLike, utente, commento, post);
 	            listaLikes.add(like);
