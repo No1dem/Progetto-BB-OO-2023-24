@@ -58,7 +58,8 @@ public class loginGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public loginGUI() {
+	public loginGUI() {		
+		setTitle("UninaSocialGroup-LogIn");
 		setBackground(new Color(240, 240, 240));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -168,5 +169,10 @@ public class loginGUI extends JFrame {
 		});
 		registrazioneButton.setBounds(431, 292, 85, 21);
 		contentPane.add(registrazioneButton);
+		
+		
+		
+		setLocationRelativeTo(null);   //Schermata al centro
+		
 	}
 }

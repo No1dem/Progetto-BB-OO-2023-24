@@ -101,7 +101,7 @@ public class UtenteDAO {
 	
 	
 	public void updateUrlFotoProfiloByNickname(String nickname,String url) {
-		String query="UPDATE FROM Utente SET URLFotoProfilo='"+url+"' WHERE Nickname='"+nickname+"'";
+		String query="UPDATE Utente SET URLFotoProfilo='"+url+"' WHERE Nickname='"+nickname+"'";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			pstmt.executeUpdate();
 			for (Utente ut : listaUtente) {  
