@@ -82,7 +82,7 @@ public class HomeGUI extends JFrame {
 	public HomeGUI() {
 		setTitle("UninaSocialGroup");
 		setResizable(false);
-		setBounds(100, 100, 950, 600);
+		setBounds(100, 100, 1000, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 240, 240));
@@ -94,7 +94,7 @@ public class HomeGUI extends JFrame {
 		JPanel navigazionePanel = new JPanel();
 		navigazionePanel.setBackground(new Color(70, 105, 227));
 		navigazionePanel.setForeground(new Color(0, 64, 128));
-		navigazionePanel.setBounds(0, 0, 937, 53);
+		navigazionePanel.setBounds(0, 0, 986, 53);
 		contentPane.add(navigazionePanel);
 		navigazionePanel.setLayout(null);
 		
@@ -109,7 +109,7 @@ public class HomeGUI extends JFrame {
 		barraDiRicercaTxtField.setForeground(new Color(192, 192, 192));
 		barraDiRicercaTxtField.setText("Barra di ricerca...");
 		barraDiRicercaTxtField.setHorizontalAlignment(SwingConstants.LEFT);
-		barraDiRicercaTxtField.setBounds(281, 17, 228, 21);
+		barraDiRicercaTxtField.setBounds(317, 14, 228, 28);
 		navigazionePanel.add(barraDiRicercaTxtField);
 		barraDiRicercaTxtField.setColumns(10);
 		
@@ -125,7 +125,7 @@ public class HomeGUI extends JFrame {
 			}
 		});
 		ricercaGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 10));
-		ricercaGruppoButton.setBounds(532, 17, 75, 21);
+		ricercaGruppoButton.setBounds(607, 17, 75, 21);
 		navigazionePanel.add(ricercaGruppoButton);
 		
 		barraDiRicercaTxtField.addFocusListener(new FocusListener() {
@@ -150,22 +150,15 @@ public class HomeGUI extends JFrame {
         });
 		JPanel esteticaPanel = new JPanel();
 		esteticaPanel.setBackground(new Color(0, 0, 160));
-		esteticaPanel.setBounds(0, 50, 937, 10);
+		esteticaPanel.setBounds(0, 50, 986, 10);
 		contentPane.add(esteticaPanel);
 		
 		
 		JPanel utentePanel = new JPanel();
 		utentePanel.setBackground(new Color(148, 190, 233));
-		utentePanel.setBounds(0, 60, 205, 503);
+		utentePanel.setBounds(0, 60, 216, 503);
 		contentPane.add(utentePanel);
 		utentePanel.setLayout(null);
-		
-		
-		JLabel imgProfiloLabel = new JLabel("imgProfilo");
-		imgProfiloLabel.setBackground(new Color(226, 235, 248));
-		imgProfiloLabel.setBounds(10, 5, 185, 185);
-		imgProfiloLabel.setBorder(BorderFactory.createLineBorder(new Color (0, 0, 160), 1));
-		utentePanel.add(imgProfiloLabel);
 		
 		 
         String urlImmagineProfilo = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getUrlFotoProfilo(); 
@@ -185,105 +178,136 @@ public class HomeGUI extends JFrame {
         } else {
             profileImageIcon = getDefaultProfileImageIcon();
         }
-        imgProfiloLabel.setIcon(profileImageIcon);
-        
-    
-        JLabel nicknameLabel = new JLabel(Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getNickname());
-        nicknameLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        nicknameLabel.setForeground(Color.BLACK);
-        nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        nicknameLabel.setBounds(10, 195, 185, 20);
-        utentePanel.add(nicknameLabel);
-		
-		JPanel sfondoDefaultPanel = new JPanel();
-		sfondoDefaultPanel.setBackground(new Color(226, 235, 248));
-		sfondoDefaultPanel.setBounds(10, 5, 185, 185);
-		utentePanel.add(sfondoDefaultPanel);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(124, 176, 228));
-		panel_3.setBounds(10, 254, 185, 239);
+		panel_3.setBounds(10, 254, 205, 239);
 		utentePanel.add(panel_3);
 		panel_3.setLayout(null);
 		
 		     
 				
-				JButton impostazioniButton = new JButton("Impostazioni");
-				impostazioniButton.setBounds(10, 10, 165, 21);
-				panel_3.add(impostazioniButton);
-				impostazioniButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						ImpostazioniGUI impostazioniGUI = new ImpostazioniGUI();
-						
-						setVisible(false);
-						impostazioniGUI.setVisible(true);
-				        
-					}
-				});
-				impostazioniButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-				impostazioniButton.setOpaque(false);
-				
-				JButton NotificheButton = new JButton("Notifiche");
-				NotificheButton.setBounds(10, 41, 165, 21);
-				panel_3.add(NotificheButton);
-				NotificheButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-				
-				JButton creaGruppoButton = new JButton("Crea gruppo");
-				creaGruppoButton.setBounds(10, 72, 165, 21);
-				panel_3.add(creaGruppoButton);
-				creaGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-				
-				JButton logOutButton = new JButton("Log out");
-				logOutButton.setBounds(10, 208, 165, 21);
-				panel_3.add(logOutButton);
-				logOutButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						setVisible(false);
-						loginGUI log = new loginGUI();;
-						log.setVisible(true);
-					}
-				});
-				logOutButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		JButton impostazioniButton = new JButton("Impostazioni");
+		impostazioniButton.setBounds(20, 10, 165, 21);
+		panel_3.add(impostazioniButton);
+		impostazioniButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ImpostazioniGUI impostazioniGUI = new ImpostazioniGUI();
+					
+					setVisible(false);
+					impostazioniGUI.setVisible(true);
+				       
+				}
+			});
+		impostazioniButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		impostazioniButton.setOpaque(false);
+			
 		
-		risultatiRicercaPanel = new JPanel();
-		risultatiRicercaPanel.setBackground(new Color(226, 235, 248));
-		risultatiRicercaPanel.setBounds(644, 86, 282, 331);
-		contentPane.add(risultatiRicercaPanel);
-		risultatiRicercaPanel.setLayout(new BoxLayout(risultatiRicercaPanel, BoxLayout.Y_AXIS));
+		JButton NotificheButton = new JButton("Notifiche");
+		NotificheButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NotificheGUI notificheGUI = new NotificheGUI();
+				notificheGUI.setVisible(true);
+			}
+		});
+		NotificheButton.setBounds(20, 41, 165, 21);
+		panel_3.add(NotificheButton);
+		NotificheButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		
+		
+		JButton creaGruppoButton = new JButton("Crea gruppo");
+		creaGruppoButton.setBounds(20, 75, 165, 21);
+		panel_3.add(creaGruppoButton);
+		creaGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		
+		
+		JButton logOutButton = new JButton("Log out");
+		logOutButton.setBounds(20, 208, 165, 21);
+		panel_3.add(logOutButton);
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				loginGUI log = new loginGUI();;
+				log.setVisible(true);
+			}
+		});
+		logOutButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+				
+		JPanel panel_6 = new JPanel();
+		panel_6.setBackground(new Color(124, 176, 228));
+		panel_6.setBounds(10, 10, 205, 234);
+		utentePanel.add(panel_6);
+		panel_6.setLayout(null);
+				
+		JPanel sfondoDefaultPanel = new JPanel();
+		sfondoDefaultPanel.setBounds(10, 10, 185, 185);
+		panel_6.add(sfondoDefaultPanel);
+		sfondoDefaultPanel.setBackground(new Color(255, 255, 255));
+		sfondoDefaultPanel.setLayout(null);
+		
+			
+		JLabel imgProfiloLabel = new JLabel("imgProfilo");
+		imgProfiloLabel.setBounds(0, 0, 185, 185);
+		imgProfiloLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		sfondoDefaultPanel.add(imgProfiloLabel);
+		imgProfiloLabel.setBackground(new Color(226, 235, 248));
+		imgProfiloLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		imgProfiloLabel.setIcon(profileImageIcon);
+				
+    
+		JLabel nicknameLabel = new JLabel(Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getNickname());
+		nicknameLabel.setBounds(20, 214, 165, 20);
+		panel_6.add(nicknameLabel);
+		nicknameLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		nicknameLabel.setForeground(Color.BLACK);
+		nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(148, 190, 233));
-		panel_1.setBounds(205, 59, 429, 504);
+		panel_1.setBounds(207, 59, 444, 504);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(226, 235, 248));
-		panel_2.setBounds(10, 27, 409, 236);
-		panel_1.add(panel_2);
-		
-		JLabel lblElencoGruppiIscritti = new JLabel();
-		lblElencoGruppiIscritti.setText("GRUPPI A CUI SEI ISCRITTO");
-		lblElencoGruppiIscritti.setFont(new Font("Arial", Font.BOLD, 18));
-		lblElencoGruppiIscritti.setBackground(new Color(148, 190, 233));
-		lblElencoGruppiIscritti.setBounds(90, 5, 253, 20);
-		panel_1.add(lblElencoGruppiIscritti);
-		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(124, 176, 228));
-		panel_4.setBounds(0, 5, 429, 269);
+		panel_4.setBounds(20, 10, 426, 288);
 		panel_1.add(panel_4);
 		panel_4.setLayout(null);
 		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(10, 42, 406, 236);
+		panel_4.add(panel_2);
+		panel_2.setBackground(new Color(226, 235, 248));
+		
+		JLabel lblElencoGruppiIscritti = new JLabel();
+		lblElencoGruppiIscritti.setBounds(81, 10, 253, 20);
+		panel_4.add(lblElencoGruppiIscritti);
+		lblElencoGruppiIscritti.setHorizontalAlignment(SwingConstants.CENTER);
+		lblElencoGruppiIscritti.setText("GRUPPI A CUI SEI ISCRITTO");
+		lblElencoGruppiIscritti.setFont(new Font("Arial", Font.BOLD, 18));
+		lblElencoGruppiIscritti.setBackground(new Color(148, 190, 233));
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(148, 190, 233));
-		panel.setBounds(631, 58, 306, 505);
+		panel.setBounds(631, 58, 355, 505);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(new Color(124, 176, 228));
+		panel_5.setBounds(30, 10, 315, 485);
+		panel.add(panel_5);
+		panel_5.setLayout(null);
+		
+		risultatiRicercaPanel = new JPanel();
+		risultatiRicercaPanel.setBounds(10, 41, 295, 434);
+		panel_5.add(risultatiRicercaPanel);
+		risultatiRicercaPanel.setBackground(new Color(226, 235, 248));
+		risultatiRicercaPanel.setLayout(new BoxLayout(risultatiRicercaPanel, BoxLayout.Y_AXIS));
+		
 		JLabel titoloRicercaLabel = new JLabel();
-		titoloRicercaLabel.setBounds(74, 5, 158, 22);
-		panel.add(titoloRicercaLabel);
+		titoloRicercaLabel.setBounds(80, 9, 158, 22);
+		panel_5.add(titoloRicercaLabel);
 		titoloRicercaLabel.setBackground(new Color(148, 190, 233));
 		titoloRicercaLabel.setText("RICERCA GRUPPI");
 		titoloRicercaLabel.setFont(new Font("Arial", Font.BOLD, 18));

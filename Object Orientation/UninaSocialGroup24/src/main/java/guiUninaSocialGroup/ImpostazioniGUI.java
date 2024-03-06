@@ -108,6 +108,8 @@ public class ImpostazioniGUI extends JFrame {
                             
                             Controller.utenteDAO.updateUrlFotoProfiloByNickname(nicknameUtente, imageUrl);
                             
+                            JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Immagine caricata con successo.","Caricamento Immagine", JOptionPane.INFORMATION_MESSAGE);
+                            
                         } catch (IOException ex) {
                             ex.printStackTrace();
                             JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Impossibile caricare l'immagine dall'URL fornito.\n "
@@ -181,6 +183,12 @@ public class ImpostazioniGUI extends JFrame {
         panel_2.add(eliminaImmagineProfiloButton_1);
         modificaNicknameButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		String nuovoNick = nuovoNickTextField.getText();
+        		if (nuovoNick.length()>12) {
+                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname deve contenere massimo 12 caratteri", "Errore lunghezza Nickname", JOptionPane.ERROR_MESSAGE);
+
+        		}
+        			
         	}
         });
         

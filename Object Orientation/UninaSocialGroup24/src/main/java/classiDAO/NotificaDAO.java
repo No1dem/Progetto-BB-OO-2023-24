@@ -22,13 +22,12 @@ public class NotificaDAO {
 			ResultSet res=stmt.executeQuery(query);
 			while(res.next()) {
 				
-//				CommentoDAO commentoDAO = new CommentoDAO(conn);
 				Commento commento = commentoDAO.getCommentoFromArrayListById(res.getInt("IdNuovoCommento"));
 				
-//                PostDAO postDAO = new PostDAO(conn);
+
                 Post post = postDAO.getPostFromArrayListById(res.getInt("IdNuovoPost"));
                 
-//                LikeDAO likeDAO = new LikeDAO(conn); 
+                
                 Like like = likeDAO.getLikeFromArrayListByIdLike(res.getInt("IdNuovoLike"));
 				
 				listaNotifiche.add(new Notifica(res.getInt("IdNotifica"), res.getDate("dataInvio").toLocalDate(), res.getTime("oraInvio").toLocalTime(),
@@ -74,7 +73,27 @@ public class NotificaDAO {
 	    
 	    return null;
 	}
+	
+	
+	public LinkedList<Notifica> getListaNotificheByIdUtente(int idUtente) {
+		LinkedList<Notifica> listaNotificheUtente = new LinkedList<>();
+		String query = "SELECT IdNotifica FROM Ricevere WHERE IdUtente = "+idUtente;
+		
+		try(Statement stmt = connessioneDB.createStatement()){
+			ResultSet res=stmt.executeQuery(query);
+			while(res.next()) {
+				listaNotificheUtente.add(getNotificaFromArrayListById(res.getInt("IdNotifica")));
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	    
+	    return listaNotificheUtente;
+	
 
 
+	
+	}
 	
 }
