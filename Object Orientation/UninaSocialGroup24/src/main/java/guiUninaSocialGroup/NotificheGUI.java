@@ -31,6 +31,7 @@ public class NotificheGUI extends JFrame {
     }
 
     public NotificheGUI() {
+    	setResizable(false);
         setTitle("UninaSocialGroup");
         setSize(412, 573);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,7 +125,7 @@ public class NotificheGUI extends JFrame {
         panelRichiesteDiAccesso.removeAll();
         for (Notifica notifica : listaNotifiche) {
             if (notifica.getTipoNotifica() == EnumTipoNotifica.Accesso) {
-                JPanel panelNotifica = creaPannelloNotifica(notifica);
+                JPanel panelNotifica = creaPannelloRichiestaAccesso(notifica);
                 panelRichiesteDiAccesso.add(panelNotifica);
             }
         }
@@ -149,12 +150,50 @@ public class NotificheGUI extends JFrame {
         JPanel panelNotifica = new JPanel();
         panelNotifica.setBackground(new Color(226, 235, 248));
         panelNotifica.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panelNotifica.setLayout(new BoxLayout(panelNotifica, BoxLayout.Y_AXIS));
+        
         JLabel labelData = new JLabel("Data: " + notifica.getDataInvio());
         JLabel labelTipo = new JLabel("Ora:" + notifica.getOraInvio());
-        JLabel labelText = new JLabel("Testo: " + notifica.getTestoNotifica());
+        JLabel labelText = new JLabel("<html><p style='width:280px;'>" + notifica.getTestoNotifica() + "</p></html>");
+       
         panelNotifica.add(labelData);
         panelNotifica.add(labelTipo);
         panelNotifica.add(labelText);
         return panelNotifica;
     }
+    
+    
+    private JPanel creaPannelloRichiestaAccesso(Notifica notifica) {
+        JPanel panelRichiestaAccesso = new JPanel();
+        panelRichiestaAccesso.setBackground(new Color(226, 235, 248));
+        panelRichiestaAccesso.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panelRichiestaAccesso.setLayout(new BoxLayout(panelRichiestaAccesso, BoxLayout.Y_AXIS));
+        panelRichiestaAccesso.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        JLabel labelData = new JLabel("Data: " + notifica.getDataInvio());
+        JLabel labelTipo = new JLabel("Tipo: " + notifica.getTipoNotifica());
+        JLabel labelText = new JLabel("<html><p style='width:280px;'>" + notifica.getTestoNotifica() + "</p></html>");
+        
+        JPanel panelBottoni = new JPanel();
+        panelBottoni.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelBottoni.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panelBottoni.setBackground(new Color(226, 235, 248));
+        
+        JButton accettaButton = new JButton("Accetta");
+        panelBottoni.add(accettaButton);
+
+        JButton rifiutaButton = new JButton("Rifiuta");
+        panelBottoni.add(rifiutaButton);
+        
+        panelRichiestaAccesso.add(labelData);
+        panelRichiestaAccesso.add(labelTipo);
+        panelRichiestaAccesso.add(labelText);
+        panelRichiestaAccesso.add(panelBottoni);
+
+        return panelRichiestaAccesso;
+    }
+
+	
+
+    
 }

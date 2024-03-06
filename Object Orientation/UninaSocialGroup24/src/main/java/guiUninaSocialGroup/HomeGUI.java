@@ -350,9 +350,9 @@ public class HomeGUI extends JFrame {
 	            // Elenco dei tag
 	            JLabel labelTag = new JLabel("Tag: " + String.join(", ", gruppo.getTagGruppo()));
 
-	            JLabel labelDescrizione = new JLabel("Descrizione: " + gruppo.getDescrizioneGruppo());
-	            labelDescrizione.setPreferredSize(new Dimension(300, labelDescrizione.getPreferredSize().height));
-	            labelDescrizione.setMaximumSize(new Dimension(300, labelDescrizione.getPreferredSize().height));
+	            
+	            JLabel labelDescrizione = new JLabel("<html><div style='width: 300px; text-align: justify'>" + gruppo.getDescrizioneGruppo() + "</div></html>");
+	           
 
 	            JLabel labelIscritti = new JLabel("Iscritti: " + gruppo.getNumeroIscritti());
 	            
