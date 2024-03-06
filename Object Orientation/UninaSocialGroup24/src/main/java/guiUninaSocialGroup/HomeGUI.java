@@ -82,7 +82,7 @@ public class HomeGUI extends JFrame {
 	public HomeGUI() {
 		setTitle("UninaSocialGroup");
 		setResizable(false);
-		setBounds(100, 100, 1000, 600);
+		setBounds(100, 100, 1000, 652);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 240, 240));
@@ -156,7 +156,7 @@ public class HomeGUI extends JFrame {
 		
 		JPanel utentePanel = new JPanel();
 		utentePanel.setBackground(new Color(148, 190, 233));
-		utentePanel.setBounds(0, 60, 216, 503);
+		utentePanel.setBounds(0, 60, 216, 545);
 		contentPane.add(utentePanel);
 		utentePanel.setLayout(null);
 		
@@ -181,7 +181,7 @@ public class HomeGUI extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(124, 176, 228));
-		panel_3.setBounds(10, 254, 205, 239);
+		panel_3.setBounds(10, 254, 205, 281);
 		utentePanel.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -222,7 +222,7 @@ public class HomeGUI extends JFrame {
 		
 		
 		JButton logOutButton = new JButton("Log out");
-		logOutButton.setBounds(20, 208, 165, 21);
+		logOutButton.setBounds(20, 250, 165, 21);
 		panel_3.add(logOutButton);
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -264,18 +264,18 @@ public class HomeGUI extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(148, 190, 233));
-		panel_1.setBounds(207, 59, 444, 504);
+		panel_1.setBounds(207, 59, 444, 546);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(124, 176, 228));
-		panel_4.setBounds(20, 10, 426, 288);
+		panel_4.setBounds(20, 10, 426, 269);
 		panel_1.add(panel_4);
 		panel_4.setLayout(null);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 42, 406, 236);
+		panel_2.setBounds(10, 42, 406, 217);
 		panel_4.add(panel_2);
 		panel_2.setBackground(new Color(226, 235, 248));
 		
@@ -287,9 +287,28 @@ public class HomeGUI extends JFrame {
 		lblElencoGruppiIscritti.setFont(new Font("Arial", Font.BOLD, 18));
 		lblElencoGruppiIscritti.setBackground(new Color(148, 190, 233));
 		
+		JPanel panel_4_1 = new JPanel();
+		panel_4_1.setLayout(null);
+		panel_4_1.setBackground(new Color(124, 176, 228));
+		panel_4_1.setBounds(20, 289, 426, 247);
+		panel_1.add(panel_4_1);
+		
+		JPanel panel_2_1 = new JPanel();
+		panel_2_1.setBackground(new Color(226, 235, 248));
+		panel_2_1.setBounds(10, 42, 406, 195);
+		panel_4_1.add(panel_2_1);
+		
+		JLabel lblGruppiCreati = new JLabel();
+		lblGruppiCreati.setText("GRUPPI CREATI");
+		lblGruppiCreati.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGruppiCreati.setFont(new Font("Arial", Font.BOLD, 18));
+		lblGruppiCreati.setBackground(new Color(148, 190, 233));
+		lblGruppiCreati.setBounds(81, 10, 253, 20);
+		panel_4_1.add(lblGruppiCreati);
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(148, 190, 233));
-		panel.setBounds(631, 58, 355, 505);
+		panel.setBounds(631, 58, 355, 547);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
