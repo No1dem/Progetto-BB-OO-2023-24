@@ -94,10 +94,12 @@ public class NotificheGUI extends JFrame {
         mainPanel.add(panelNotifiche);
         panelNotifiche.setLayout(new BoxLayout(panelNotifiche, BoxLayout.Y_AXIS));
         
+        
         panelRichiesteDiAccesso = new JPanel();
         panelRichiesteDiAccesso.setBackground(new Color(226, 235, 248));
         panelRichiesteDiAccesso.setBounds(10, 288, 378, 206);
         
+
         mainPanel.add(panelRichiesteDiAccesso);
         
         panelRichiesteDiAccesso.setLayout(new BoxLayout(panelRichiesteDiAccesso, BoxLayout.Y_AXIS));
@@ -112,7 +114,7 @@ public class NotificheGUI extends JFrame {
         
         mainPanel.add(btnNewButton);
 
-        new ArrayList<>(); //***
+        new ArrayList<>();
         
         LinkedList<Notifica> listaNotificheUtente = new LinkedList<>();
         listaNotificheUtente = Controller.notificaDAO.getListaNotificheByIdUtente(Controller.myIdUtente);
@@ -120,6 +122,7 @@ public class NotificheGUI extends JFrame {
         mostraNotifiche(listaNotificheUtente);
         mostraRichiesteAccesso(listaNotificheUtente);
     }
+   
 
     private void mostraRichiesteAccesso(List<Notifica> listaNotifiche) {
         panelRichiesteDiAccesso.removeAll();
@@ -141,6 +144,7 @@ public class NotificheGUI extends JFrame {
                 JPanel panelNotifica = creaPannelloNotifica(notifica);
                 panelNotifiche.add(panelNotifica);
             }
+             
         }
         panelNotifiche.revalidate();
         panelNotifiche.repaint();
@@ -170,6 +174,7 @@ public class NotificheGUI extends JFrame {
         panelRichiestaAccesso.setLayout(new BoxLayout(panelRichiestaAccesso, BoxLayout.Y_AXIS));
         panelRichiestaAccesso.setAlignmentX(Component.LEFT_ALIGNMENT);
         
+        
         JLabel labelData = new JLabel("Data: " + notifica.getDataInvio());
         JLabel labelTipo = new JLabel("Tipo: " + notifica.getTipoNotifica());
         JLabel labelText = new JLabel("<html><p style='width:280px;'>" + notifica.getTestoNotifica() + "</p></html>");
@@ -191,9 +196,5 @@ public class NotificheGUI extends JFrame {
         panelRichiestaAccesso.add(panelBottoni);
 
         return panelRichiestaAccesso;
-    }
-
-	
-
-    
+    } 
 }
