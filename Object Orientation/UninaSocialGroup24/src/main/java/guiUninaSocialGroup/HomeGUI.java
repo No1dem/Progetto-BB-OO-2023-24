@@ -34,6 +34,7 @@ import controller.Controller;
 import net.coobird.thumbnailator.Thumbnails;
 
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
@@ -64,6 +65,7 @@ public class HomeGUI extends JFrame {
 	private JTextField barraDiRicercaTxtField;
 	private JPanel risultatiRicercaPanel;
 	private JPanel gruppiIscrittoPanel;
+	private JPanel gruppiCreatiPanel;
 
 	/**
 	 * Launch the application.
@@ -153,6 +155,8 @@ public class HomeGUI extends JFrame {
             }
 			
         });
+		
+		
 		JPanel esteticaPanel = new JPanel();
 		esteticaPanel.setBackground(new Color(0, 0, 160));
 		esteticaPanel.setBounds(0, 50, 986, 10);
@@ -160,12 +164,13 @@ public class HomeGUI extends JFrame {
 		
 		
 		JPanel utentePanel = new JPanel();
-		utentePanel.setBackground(new Color(148, 190, 233));
+		utentePanel.setBackground(new Color(255, 255, 255));
 		utentePanel.setBounds(0, 60, 216, 545);
 		contentPane.add(utentePanel);
 		utentePanel.setLayout(null);
 		
-		 
+		//***Immagine del profilo 
+		
         String urlImmagineProfilo = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getUrlFotoProfilo(); 
         
         // Caricamento e impostazione dell'immagine del profilo
@@ -220,13 +225,7 @@ public class HomeGUI extends JFrame {
 		NotificheButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		
 		
-		JButton creaGruppoButton = new JButton("Crea gruppo"); 
-		creaGruppoButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                CreazioneGruppoGUI creazioneGruppoGUI = new CreazioneGruppoGUI();
-                creazioneGruppoGUI.setVisible(true);
-            }
-        });
+		JButton creaGruppoButton = new JButton("Crea gruppo");
 		creaGruppoButton.setBounds(20, 75, 165, 21);
 		panel_3.add(creaGruppoButton);
 		creaGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
@@ -274,7 +273,7 @@ public class HomeGUI extends JFrame {
 		nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(148, 190, 233));
+		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setBounds(207, 59, 444, 546);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -289,6 +288,8 @@ public class HomeGUI extends JFrame {
 		gruppiIscrittoPanel.setBounds(10, 42, 406, 217);
 		panel_4.add(gruppiIscrittoPanel);
 		gruppiIscrittoPanel.setBackground(new Color(226, 235, 248));
+		gruppiIscrittoPanel.setLayout(new BoxLayout(gruppiIscrittoPanel, BoxLayout.Y_AXIS));
+		
 		
 		JLabel lblElencoGruppiIscritti = new JLabel();
 		lblElencoGruppiIscritti.setBounds(81, 10, 253, 20);
@@ -304,9 +305,10 @@ public class HomeGUI extends JFrame {
 		panel_4_1.setBounds(20, 289, 426, 247);
 		panel_1.add(panel_4_1);
 		
-		JPanel gruppiCreatiPanel = new JPanel();
+		gruppiCreatiPanel = new JPanel();
 		gruppiCreatiPanel.setBackground(new Color(226, 235, 248));
 		gruppiCreatiPanel.setBounds(10, 42, 406, 195);
+		gruppiCreatiPanel.setLayout(new BoxLayout(gruppiCreatiPanel, BoxLayout.Y_AXIS));
 		panel_4_1.add(gruppiCreatiPanel);
 		
 		JLabel lblGruppiCreati = new JLabel();
@@ -318,7 +320,7 @@ public class HomeGUI extends JFrame {
 		panel_4_1.add(lblGruppiCreati);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(148, 190, 233));
+		panel.setBackground(new Color(255, 255, 255));
 		panel.setBounds(631, 58, 355, 547);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -348,9 +350,11 @@ public class HomeGUI extends JFrame {
 		mostraGruppiIscritto(listaGruppiUtenteIscritto);
 		
 		setLocationRelativeTo(null); 
-		
-		
+			
 	}
+	
+	
+	
 	
 	private ImageIcon getDefaultProfileImageIcon() {
 	    
@@ -358,28 +362,29 @@ public class HomeGUI extends JFrame {
 	    return defaultProfileImageIcon;
 	}
 	
+	
+	
+	
 	private void aggiornaRisultati(LinkedList<Gruppo> listaGruppiRicerca) {
 	  
 	    risultatiRicercaPanel.removeAll();
 
 	   
 	    if (listaGruppiRicerca.isEmpty()) {
-	 			
-	        JLabel labelMessaggio = new JLabel("Non sono stati trovati gruppi.");
-	        labelMessaggio.setForeground(Color.BLACK); // Imposta il colore del testo
-	        risultatiRicercaPanel.add(labelMessaggio);
+	    	JOptionPane.showMessageDialog(HomeGUI.this, "Nessun gruppo trovato.", "Ricerca gruppi", JOptionPane.WARNING_MESSAGE);
 	    } else {
-	    	
 	   
 	        JPanel panelGruppi = new JPanel();
 	        panelGruppi.setLayout(new BoxLayout(panelGruppi, BoxLayout.Y_AXIS));
+	        panelGruppi.setBackground(new Color(226, 235, 248));
 	        
 
 	        for (Gruppo gruppo : listaGruppiRicerca) {
 	            JPanel panelGruppo = new JPanel();
 	            panelGruppo.setLayout(new BoxLayout(panelGruppo, BoxLayout.Y_AXIS));
 	            panelGruppo.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Aggiungi una linea al pannello del gruppo
-
+	            panelGruppo.setBackground(new Color(226, 235, 248));
+	            
 	            JLabel labelNomeGruppo = new JLabel("Nome: " + gruppo.getNomeGruppo());
 
 	            // Elenco dei tag
@@ -392,7 +397,6 @@ public class HomeGUI extends JFrame {
 	            JLabel labelIscritti = new JLabel("Iscritti: " + gruppo.getNumeroIscritti());
 	            
 	            CreatoreGruppo creatoreGruppo = Controller.creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(gruppo.getIdGruppo());
-	            
 	            JLabel labelCreatore = new JLabel("Creatore: " + creatoreGruppo.getNomeUtente()+" "+creatoreGruppo.getCognomeUtente());
 
 	            panelGruppo.add(labelNomeGruppo);
@@ -412,15 +416,14 @@ public class HomeGUI extends JFrame {
 
 	            panelGruppi.add(panelGruppo);
 
-	            // riga di separazione
-	            panelGruppi.add(Box.createRigidArea(new Dimension(0, 10))); // Spazio vuoto verticale per separare i gruppi
-	            panelGruppi.add(new JSeparator(SwingConstants.HORIZONTAL));
-	            panelGruppi.add(Box.createRigidArea(new Dimension(0, 10))); // Spazio vuoto verticale dopo la riga di separazione
+	   
 	        }
 
 	        JScrollPane scrollPane = new JScrollPane(panelGruppi);
 	        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	        scrollPane.setOpaque(false);
+	        scrollPane.setBackground(new Color(192, 192, 192, 150));
 
 	       
 	        risultatiRicercaPanel.removeAll();
@@ -441,21 +444,33 @@ public class HomeGUI extends JFrame {
 	private void mostraGruppiIscritto(LinkedList<Gruppo> listaGruppiIscritto) {
         gruppiIscrittoPanel.removeAll();  
         
+        JPanel panelGruppi = new JPanel();
+        panelGruppi.setLayout(new BoxLayout(panelGruppi, BoxLayout.Y_AXIS));
+        panelGruppi.setBackground(new Color(226, 235, 248));
+        
         for (Gruppo gruppo : listaGruppiIscritto) {
-            JPanel panelGruppo = creaPannelloGruppiIscritto(gruppo);
-            gruppiIscrittoPanel.add(panelGruppo);
+            JPanel gruppoPanel = creaPannelloGruppoIscritto(gruppo);
+            panelGruppi.add(gruppoPanel);
         }
-           
+        
+        JScrollPane scrollPane = new JScrollPane(panelGruppi);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(10, 42, 406, 217);
+        
+  
+        gruppiIscrittoPanel.removeAll();
+        gruppiIscrittoPanel.add(scrollPane);
         gruppiIscrittoPanel.revalidate();
         gruppiIscrittoPanel.repaint();
     }
 	
 	
-	private JPanel creaPannelloGruppiIscritto(Gruppo g) {
-        JPanel gruppiPanel = new JPanel();
-        gruppiPanel.setBackground(new Color(226, 235, 248));
-        gruppiPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        gruppiPanel.setLayout(new BoxLayout(gruppiPanel, BoxLayout.Y_AXIS));
+	private JPanel creaPannelloGruppoIscritto(Gruppo g) {
+        JPanel gruppoPanel = new JPanel();
+        gruppoPanel.setBackground(new Color(226, 235, 248));
+        gruppoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        gruppoPanel.setLayout(new BoxLayout(gruppoPanel, BoxLayout.Y_AXIS));
         
         CreatoreGruppo cg = Controller.creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(g.getIdGruppo());
         String nickname = cg.getNickname();
@@ -465,11 +480,58 @@ public class HomeGUI extends JFrame {
         JLabel labelCreatore = new JLabel("Gruppo creato da: "+ nickname);
         JLabel labelNumeroIscritti = new JLabel("Numero iscritti: " + g.getNumeroIscritti());
        
-        gruppiPanel.add(labelNome);
-        gruppiPanel.add(labelDescrizione);
-        gruppiPanel.add(labelCreatore);
-        gruppiPanel.add(labelNumeroIscritti);
-        return gruppiPanel;
+        gruppoPanel.add(labelNome);
+        gruppoPanel.add(labelDescrizione);
+        gruppoPanel.add(labelCreatore);
+        gruppoPanel.add(labelNumeroIscritti);
+        return gruppoPanel;
+    }
+	
+	
+	private void mostraGruppiCreati(LinkedList<Gruppo> listaGruppiCreati) {
+        gruppiCreatiPanel.removeAll();  
+        
+        JPanel panelGruppi = new JPanel();
+        panelGruppi.setLayout(new BoxLayout(panelGruppi, BoxLayout.Y_AXIS));
+        panelGruppi.setBackground(new Color(226, 235, 248));
+        
+        for (Gruppo gruppo : listaGruppiCreati) {
+            JPanel gruppoPanel = creaPannelloGruppoCreato(gruppo);
+            panelGruppi.add(gruppoPanel);
+        }
+        
+        JScrollPane scrollPane = new JScrollPane(panelGruppi);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(10, 42, 406, 217);
+        
+  
+        gruppiCreatiPanel.removeAll();
+        gruppiCreatiPanel.add(scrollPane);
+        gruppiCreatiPanel.revalidate();
+        gruppiCreatiPanel.repaint();
+    }
+	
+	
+	private JPanel creaPannelloGruppoCreato(Gruppo g) {
+        JPanel gruppoPanel = new JPanel();
+        gruppoPanel.setBackground(new Color(226, 235, 248));
+        gruppoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        gruppoPanel.setLayout(new BoxLayout(gruppoPanel, BoxLayout.Y_AXIS));
+        
+        CreatoreGruppo cg = Controller.creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(g.getIdGruppo());
+        String nickname = cg.getNickname();
+        
+        JLabel labelNome= new JLabel("Nome gruppo: " + g.getNomeGruppo());
+        JLabel labelDescrizione = new JLabel("<html><p style='width:280px;'>" + g.getDescrizioneGruppo() + "</p></html>");
+        JLabel labelCreatore = new JLabel("Gruppo creato da: "+ nickname);
+        JLabel labelNumeroIscritti = new JLabel("Numero iscritti: " + g.getNumeroIscritti());
+       
+        gruppoPanel.add(labelNome);
+        gruppoPanel.add(labelDescrizione);
+        gruppoPanel.add(labelCreatore);
+        gruppoPanel.add(labelNumeroIscritti);
+        return gruppoPanel;
     }
 	
 		
