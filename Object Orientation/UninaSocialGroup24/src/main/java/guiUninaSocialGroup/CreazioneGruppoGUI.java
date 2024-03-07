@@ -47,7 +47,7 @@ public class CreazioneGruppoGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public CreazioneGruppoGUI() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 570, 371);
         contentPane = new JPanel();
         contentPane.setBackground(new Color(148, 190, 233));
@@ -94,7 +94,7 @@ public class CreazioneGruppoGUI extends JFrame {
                 String descrizioneGruppo = textField_1.getText();
                 String tagGruppo = textField_2.getText();
                 if (nomeGruppo.isEmpty() || descrizioneGruppo.isEmpty() || tagGruppo.isEmpty()) {
-		            JOptionPane.showMessageDialog(contentPane, "Inserire tutti i dati necessari.", "Errore creazione", JOptionPane.ERROR_MESSAGE);
+		            JOptionPane.showMessageDialog(contentPane, "Inserire tutti i dati necessari.", "Errore creazione", JOptionPane.WARNING_MESSAGE);
 		            return; 
 		     }
                 

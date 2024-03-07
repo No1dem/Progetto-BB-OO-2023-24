@@ -1,61 +1,29 @@
 package guiUninaSocialGroup;
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
-
-import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
-
 import classiDAO.CreatoreGruppo;
-import classiDAO.EnumTipoNotifica;
 import classiDAO.Gruppo;
-import classiDAO.Notifica;
-import classiDAO.Utente;
 import controller.Controller;
-import net.coobird.thumbnailator.Thumbnails;
-
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedList;
-import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.Dialog.ModalExclusionType;
-import java.awt.Dimension;
-import java.awt.Window.Type;
 import java.awt.Font;
-import java.awt.Graphics;
 import javax.swing.BoxLayout;
-import javax.swing.JFormattedTextField;
 import javax.swing.border.LineBorder;
 
 public class HomeGUI extends JFrame {
@@ -89,7 +57,7 @@ public class HomeGUI extends JFrame {
 	public HomeGUI() {
 		setTitle("UninaSocialGroup");
 		setResizable(false);
-		setBounds(100, 100, 1000, 652);
+		setBounds(100, 100, 1000, 642);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 240, 240));
@@ -164,7 +132,7 @@ public class HomeGUI extends JFrame {
 		
 		
 		JPanel utentePanel = new JPanel();
-		utentePanel.setBackground(new Color(255, 255, 255));
+		utentePanel.setBackground(new Color(226, 235, 248));
 		utentePanel.setBounds(0, 60, 216, 545);
 		contentPane.add(utentePanel);
 		utentePanel.setLayout(null);
@@ -226,6 +194,14 @@ public class HomeGUI extends JFrame {
 		
 		
 		JButton creaGruppoButton = new JButton("Crea gruppo");
+		creaGruppoButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+	                CreazioneGruppoGUI creazioneGruppoGUI = new CreazioneGruppoGUI();
+	                creazioneGruppoGUI.setVisible(true);
+	            
+			}
+		});
 		creaGruppoButton.setBounds(20, 75, 165, 21);
 		panel_3.add(creaGruppoButton);
 		creaGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
@@ -273,7 +249,7 @@ public class HomeGUI extends JFrame {
 		nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setBackground(new Color(226, 235, 248));
 		panel_1.setBounds(207, 59, 444, 546);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -320,19 +296,19 @@ public class HomeGUI extends JFrame {
 		panel_4_1.add(lblGruppiCreati);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
+		panel.setBackground(new Color(226, 235, 248));
 		panel.setBounds(631, 58, 355, 547);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(124, 176, 228));
-		panel_5.setBounds(30, 10, 315, 485);
+		panel_5.setBounds(30, 10, 315, 527);
 		panel.add(panel_5);
 		panel_5.setLayout(null);
 		
 		risultatiRicercaPanel = new JPanel();
-		risultatiRicercaPanel.setBounds(10, 41, 295, 434);
+		risultatiRicercaPanel.setBounds(10, 41, 295, 476);
 		panel_5.add(risultatiRicercaPanel);
 		risultatiRicercaPanel.setBackground(new Color(226, 235, 248));
 		risultatiRicercaPanel.setLayout(new BoxLayout(risultatiRicercaPanel, BoxLayout.Y_AXIS));
@@ -348,8 +324,13 @@ public class HomeGUI extends JFrame {
 		
 		LinkedList<Gruppo> listaGruppiUtenteIscritto = Controller.getListaGruppiUtenteIscrittoById(Controller.myIdUtente);
 		mostraGruppiIscritto(listaGruppiUtenteIscritto);
+		 
 		
-		setLocationRelativeTo(null); 
+		LinkedList<Gruppo> listaGruppiCreati = Controller.creatoreGruppoDAO.getListaGruppiCreatiFromArrayListByIdUtente(Controller.myIdUtente,Controller.gruppoDAO);
+		mostraGruppiCreati(listaGruppiCreati);
+		
+		
+		setLocationRelativeTo(null);
 			
 	}
 	
@@ -519,17 +500,13 @@ public class HomeGUI extends JFrame {
         gruppoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         gruppoPanel.setLayout(new BoxLayout(gruppoPanel, BoxLayout.Y_AXIS));
         
-        CreatoreGruppo cg = Controller.creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(g.getIdGruppo());
-        String nickname = cg.getNickname();
         
         JLabel labelNome= new JLabel("Nome gruppo: " + g.getNomeGruppo());
         JLabel labelDescrizione = new JLabel("<html><p style='width:280px;'>" + g.getDescrizioneGruppo() + "</p></html>");
-        JLabel labelCreatore = new JLabel("Gruppo creato da: "+ nickname);
         JLabel labelNumeroIscritti = new JLabel("Numero iscritti: " + g.getNumeroIscritti());
        
         gruppoPanel.add(labelNome);
         gruppoPanel.add(labelDescrizione);
-        gruppoPanel.add(labelCreatore);
         gruppoPanel.add(labelNumeroIscritti);
         return gruppoPanel;
     }

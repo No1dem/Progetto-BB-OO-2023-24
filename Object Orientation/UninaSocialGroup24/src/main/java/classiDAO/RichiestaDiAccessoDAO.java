@@ -23,7 +23,7 @@ public class RichiestaDiAccessoDAO {
 			while(res.next()) {
 				Utente utenteRichiesta = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtenteRichiesta"));
 				
-				CreatoreGruppo creatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListById(res.getInt("IdCreatore"));
+				CreatoreGruppo creatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListByIdCreatore(res.getInt("IdCreatore"));
 				
 				Gruppo gruppoRichiesta = gruppoDAO.getGruppoFromArrayListById(res.getInt("IdGruppoRichiesta"));
 				

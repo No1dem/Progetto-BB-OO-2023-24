@@ -84,7 +84,9 @@ public class Controller {
 			e.printStackTrace();
 		}
 		return listaGruppiIscritto;
-}
+	}
+	
+
 	
 	public void creaGruppo() {
 		String query = "PERFORM CreaGruppo()";

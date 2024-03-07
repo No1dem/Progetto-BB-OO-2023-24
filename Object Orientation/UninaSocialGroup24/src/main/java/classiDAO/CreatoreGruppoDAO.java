@@ -66,9 +66,9 @@ public class CreatoreGruppoDAO {
 	}
 	
 	
-	public CreatoreGruppo getCreatoreGruppoFromArrayListById(int id) {
+	public CreatoreGruppo getCreatoreGruppoFromArrayListByIdCreatore(int idCreatore) {
 		for (CreatoreGruppo  cg : listaCreatoriGruppi) {  
-            if (cg.getIdCreatoreGruppo()==id){
+            if (cg.getIdCreatoreGruppo()==idCreatore){
                 return cg;
             }
         }
@@ -79,12 +79,26 @@ public class CreatoreGruppoDAO {
 
 	public  CreatoreGruppo getCreatoreGruppoFromArrayListByIdGruppo(int idGruppo) {
 		
-		 for (CreatoreGruppo creatoreGruppo : listaCreatoriGruppi) {
+		for (CreatoreGruppo creatoreGruppo : listaCreatoriGruppi) {
 		        if (creatoreGruppo.getIdGruppoAmministrato() == idGruppo) {
 		            return creatoreGruppo;
 		        }
 		    }
-		    return null;
+		return null;
 	}
+	
+	public LinkedList<Gruppo> getListaGruppiCreatiFromArrayListByIdUtente (int idUtente,GruppoDAO gruppoDAO) {
+		LinkedList<Gruppo> listaGruppi = new LinkedList<>();
+		
+		for (CreatoreGruppo  cg : listaCreatoriGruppi) {  
+            if (cg.getIdUtente()== idUtente){
+                Gruppo gruppo = gruppoDAO.getGruppoFromArrayListById(cg.getIdGruppoAmministrato());
+                listaGruppi.add(gruppo);
+            }
+        }
+		return listaGruppi;
+	}
+	
+	
 	
 }
