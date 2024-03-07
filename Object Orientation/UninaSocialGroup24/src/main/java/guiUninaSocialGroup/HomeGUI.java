@@ -26,7 +26,10 @@ import javax.swing.JLabel;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 import classiDAO.CreatoreGruppo;
+import classiDAO.EnumTipoNotifica;
 import classiDAO.Gruppo;
+import classiDAO.Notifica;
+import classiDAO.Utente;
 import controller.Controller;
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -43,6 +46,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.Dimension;
@@ -59,6 +63,7 @@ public class HomeGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField barraDiRicercaTxtField;
 	private JPanel risultatiRicercaPanel;
+	private JPanel gruppiIscrittoPanel;
 
 	/**
 	 * Launch the application.
@@ -274,10 +279,10 @@ public class HomeGUI extends JFrame {
 		panel_1.add(panel_4);
 		panel_4.setLayout(null);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 42, 406, 217);
-		panel_4.add(panel_2);
-		panel_2.setBackground(new Color(226, 235, 248));
+		gruppiIscrittoPanel = new JPanel();
+		gruppiIscrittoPanel.setBounds(10, 42, 406, 217);
+		panel_4.add(gruppiIscrittoPanel);
+		gruppiIscrittoPanel.setBackground(new Color(226, 235, 248));
 		
 		JLabel lblElencoGruppiIscritti = new JLabel();
 		lblElencoGruppiIscritti.setBounds(81, 10, 253, 20);
@@ -293,10 +298,10 @@ public class HomeGUI extends JFrame {
 		panel_4_1.setBounds(20, 289, 426, 247);
 		panel_1.add(panel_4_1);
 		
-		JPanel panel_2_1 = new JPanel();
-		panel_2_1.setBackground(new Color(226, 235, 248));
-		panel_2_1.setBounds(10, 42, 406, 195);
-		panel_4_1.add(panel_2_1);
+		JPanel gruppiCreatiPanel = new JPanel();
+		gruppiCreatiPanel.setBackground(new Color(226, 235, 248));
+		gruppiCreatiPanel.setBounds(10, 42, 406, 195);
+		panel_4_1.add(gruppiCreatiPanel);
 		
 		JLabel lblGruppiCreati = new JLabel();
 		lblGruppiCreati.setText("GRUPPI CREATI");
@@ -330,6 +335,11 @@ public class HomeGUI extends JFrame {
 		titoloRicercaLabel.setBackground(new Color(148, 190, 233));
 		titoloRicercaLabel.setText("RICERCA GRUPPI");
 		titoloRicercaLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		
+		
+		
+		LinkedList<Gruppo> listaGruppiUtenteIscritto = Controller.getListaGruppiUtenteIscrittoById(Controller.myIdUtente);
+		mostraGruppiIscritto(listaGruppiUtenteIscritto);
 		
 		setLocationRelativeTo(null); 
 		
@@ -419,5 +429,43 @@ public class HomeGUI extends JFrame {
 	    risultatiRicercaPanel.revalidate();
 	    risultatiRicercaPanel.repaint();
 	}
+	
+	
+	
+	private void mostraGruppiIscritto(LinkedList<Gruppo> listaGruppiIscritto) {
+        gruppiIscrittoPanel.removeAll();  
+        
+        for (Gruppo gruppo : listaGruppiIscritto) {
+            JPanel panelGruppo = creaPannelloGruppiIscritto(gruppo);
+            gruppiIscrittoPanel.add(panelGruppo);
+        }
+           
+        gruppiIscrittoPanel.revalidate();
+        gruppiIscrittoPanel.repaint();
+    }
+	
+	
+	private JPanel creaPannelloGruppiIscritto(Gruppo g) {
+        JPanel gruppiPanel = new JPanel();
+        gruppiPanel.setBackground(new Color(226, 235, 248));
+        gruppiPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        gruppiPanel.setLayout(new BoxLayout(gruppiPanel, BoxLayout.Y_AXIS));
+        
+        CreatoreGruppo cg = Controller.creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(g.getIdGruppo());
+        String nickname = cg.getNickname();
+        
+        JLabel labelNome= new JLabel("Nome gruppo: " + g.getNomeGruppo());
+        JLabel labelDescrizione = new JLabel("<html><p style='width:280px;'>" + g.getDescrizioneGruppo() + "</p></html>");
+        JLabel labelCreatore = new JLabel("Gruppo creato da: "+ nickname);
+        JLabel labelNumeroIscritti = new JLabel("Numero iscritti: " + g.getNumeroIscritti());
+       
+        gruppiPanel.add(labelNome);
+        gruppiPanel.add(labelDescrizione);
+        gruppiPanel.add(labelCreatore);
+        gruppiPanel.add(labelNumeroIscritti);
+        return gruppiPanel;
+    }
+	
+		
 }
 

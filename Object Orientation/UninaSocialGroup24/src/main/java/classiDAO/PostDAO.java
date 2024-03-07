@@ -145,7 +145,7 @@ public class PostDAO {
 	
 	
 	
-	public Post getPostConPiuLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {   //*** UtenteDAO in input forse
+	public Post getPostConPiuLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g,UtenteDAO utenteDAO) {   
 		String query = "SELECT * "
 					 + "FROM Post P "
 					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
@@ -168,7 +168,7 @@ public class PostDAO {
 				Time oraPost=res.getTime("OraPubblicazione");
 				LocalTime localOraPost=oraPost.toLocalTime();
 				
-				Utente utente = new UtenteDAO(connessioneDB).getUtenteFromArrayListById(res.getInt("IdUtente"));                
+				Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));                
                 
 				postConPiuLike = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
 								          res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g);
@@ -182,7 +182,7 @@ public class PostDAO {
 	
 	
 
-	public Post getPostConMenoLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
+	public Post getPostConMenoLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g,UtenteDAO utenteDAO) {
 		String query = "SELECT * "
 					 + "FROM Post P "
 					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
@@ -205,7 +205,7 @@ public class PostDAO {
 				Time oraPost = res.getTime("OraPubblicazione");
 				LocalTime localOraPost = oraPost.toLocalTime();
 				
-				Utente utente = new UtenteDAO(connessioneDB).getUtenteFromArrayListById(res.getInt("IdUtente"));
+				Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));
                 
                 
                 postConMenoLike = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
@@ -222,7 +222,7 @@ public class PostDAO {
 	
 	
 	
-	public Post getPostConPiuCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
+	public Post getPostConPiuCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g,UtenteDAO utenteDAO) {
 		String query = "SELECT * "
 					 + "FROM Post P "
 					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
@@ -244,7 +244,7 @@ public class PostDAO {
 				LocalDate localDataPost = dataPost.toLocalDate();
 				Time oraPost = res.getTime("OraPubblicazione");
 				LocalTime localOraPost = oraPost.toLocalTime();
-				Utente utente = new UtenteDAO(connessioneDB).getUtenteFromArrayListById(res.getInt("IdUtente"));
+				Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));
                 
                 
                 postConPiuCommenti = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
@@ -259,7 +259,7 @@ public class PostDAO {
 	
 	
 	
-	public Post getPostConMenoCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g) {
+	public Post getPostConMenoCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g,UtenteDAO utenteDAO) {
 		String query = "SELECT * "
 					 + "FROM Post P "
 					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
@@ -281,7 +281,7 @@ public class PostDAO {
 				LocalDate localDataPost = dataPost.toLocalDate();
 				Time oraPost = res.getTime("OraPubblicazione");
 				LocalTime localOraPost = oraPost.toLocalTime();
-				Utente utente = new UtenteDAO(connessioneDB).getUtenteFromArrayListById(res.getInt("IdUtente"));
+				Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));
 
                 
                 postConMenoCommenti = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,

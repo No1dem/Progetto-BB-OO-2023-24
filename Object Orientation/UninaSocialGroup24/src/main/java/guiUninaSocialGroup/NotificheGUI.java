@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import classiDAO.EnumTipoNotifica;
 import classiDAO.Notifica;
+import classiDAO.RichiestaDiAccesso;
 import controller.Controller;
 
 import java.awt.*;
@@ -105,12 +106,17 @@ public class NotificheGUI extends JFrame {
         panelRichiesteDiAccesso.setLayout(new BoxLayout(panelRichiesteDiAccesso, BoxLayout.Y_AXIS));
         
         JButton btnNewButton = new JButton("Aggiorna");
-        btnNewButton.setFont(new Font("Arial Black", Font.PLAIN, 10));
+        btnNewButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		LinkedList<Notifica> listaNotificheUtente = new LinkedList<>();
+        		
+                listaNotificheUtente = Controller.notificaDAO.getListaNotificheByIdUtente(Controller.myIdUtente);
+                
+        		mostraRichiesteAccesso(listaNotificheUtente);
         	}
         });
-        btnNewButton.setBounds(303, 511, 85, 21);
+        btnNewButton.setBounds(285, 511, 103, 21);
         
         mainPanel.add(btnNewButton);
 
@@ -128,17 +134,17 @@ public class NotificheGUI extends JFrame {
         panelRichiesteDiAccesso.removeAll();
         for (Notifica notifica : listaNotifiche) {
             if (notifica.getTipoNotifica() == EnumTipoNotifica.Accesso) {
-                JPanel panelNotifica = creaPannelloRichiestaAccesso(notifica);
-                panelRichiesteDiAccesso.add(panelNotifica);
+            	RichiestaDiAccesso rda ;
+            //  rda = Controller.richiestaDiAccessoDAO.get..
+            //	if ()
+                	JPanel panelNotifica = creaPannelloRichiestaAccesso(notifica);
+                	panelRichiesteDiAccesso.add(panelNotifica);
             }
         }
     }
 
     private void mostraNotifiche(List<Notifica> listaNotifiche) {
-    	if(panelRichiesteDiAccesso.getComponentCount() > 0) {
-            panelRichiesteDiAccesso.removeAll();
-        }
-  
+        panelNotifiche.removeAll();  
         for (Notifica notifica : listaNotifiche) {
             if (notifica.getTipoNotifica() != EnumTipoNotifica.Accesso) {
                 JPanel panelNotifica = creaPannelloNotifica(notifica);

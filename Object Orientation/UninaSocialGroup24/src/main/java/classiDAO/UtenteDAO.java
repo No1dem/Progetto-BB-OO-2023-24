@@ -13,9 +13,11 @@ public class UtenteDAO {
 	private Connection connessioneDB; 
 	private LinkedList<Utente> listaUtente;
 	
+	
 	public UtenteDAO(Connection conn) throws SQLException {
 		String query="SELECT * FROM Utente";
 		listaUtente = new LinkedList<Utente>();
+		
 		
 		try(Statement stmt=conn.createStatement()){
 			ResultSet res=stmt.executeQuery(query);
@@ -172,6 +174,7 @@ public class UtenteDAO {
 	public boolean utenteExistInArrayList(Utente ut) {
 		return listaUtente.contains(ut);
 	}
+	
 	
 	public void stampaListaUtenti() {
         for (Utente utente : listaUtente) {

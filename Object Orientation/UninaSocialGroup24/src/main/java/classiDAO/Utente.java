@@ -1,5 +1,7 @@
 package classiDAO;
 
+import java.util.LinkedList;
+
 public class Utente {
 	private int idUtente;
 	private String nomeUtente;
@@ -9,6 +11,7 @@ public class Utente {
 	private String password;
 	private String urlFotoProfilo;
 	private String biografia;
+	
 	
 	//Costruttori 
 	
@@ -21,6 +24,7 @@ public class Utente {
 		password=Pass;
 		biografia=bio;
 		urlFotoProfilo=urlfp;
+		
 	}
 	
 	//Getters e Setters

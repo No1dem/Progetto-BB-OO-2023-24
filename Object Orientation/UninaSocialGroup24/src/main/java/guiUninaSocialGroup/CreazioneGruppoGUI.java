@@ -82,7 +82,7 @@ public class CreazioneGruppoGUI extends JFrame {
         textField_1.setColumns(10);
 
         textField_2 = new JTextField();
-        textField_2.setBounds(237, 110, 250, 20);
+        textField_2.setBounds(237, 112, 250, 20);
         contentPane.add(textField_2);
         textField_2.setColumns(10);
 

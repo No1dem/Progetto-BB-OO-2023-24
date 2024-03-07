@@ -34,7 +34,7 @@ public class AmministratoreDAO {
                               
                 listaAmministratori.add(new Amministratore(utente.getIdUtente(),utente.getNomeUtente(),utente.getCognomeUtente(),
 					    							 	   utente.getEmail(),utente.getNickname(),utente.getPassword(),utente.getBiografia(),
-					    								   utente.getUrlFotoProfilo() , idAmministratore, gruppoAmministrato));
+					    								   utente.getUrlFotoProfilo(),idAmministratore, gruppoAmministrato));
             }
         } catch (SQLException e) {
             e.printStackTrace();

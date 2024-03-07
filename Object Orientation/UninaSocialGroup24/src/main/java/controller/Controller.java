@@ -1,13 +1,17 @@
 package controller;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
 import classiDAO.AmministratoreDAO;
 import classiDAO.CommentoDAO;
 import classiDAO.CreatoreGruppoDAO;
+import classiDAO.Gruppo;
 import classiDAO.GruppoDAO;
 import classiDAO.LikeDAO;
 import classiDAO.NotificaDAO;
@@ -40,7 +44,7 @@ public class Controller {
 	public static void checkDataBase(Connection conn) throws SQLException {
 		Connessione=conn;
 	    try {
-	        utenteDAO = new UtenteDAO(conn);
+	    	utenteDAO = new UtenteDAO(conn);
 	        gruppoDAO = new GruppoDAO(conn);
 	        gruppoDAO.stampaListaGruppi(gruppoDAO.getListaGruppi());
 	        amministratoreDAO = new AmministratoreDAO(conn,gruppoDAO,utenteDAO);
@@ -62,6 +66,29 @@ public class Controller {
 		myIdUtente = utenteDAO.getUtenteFromArrayListByNickname(Nickname).getIdUtente();
 	}
 	
+	
+	
+	public static LinkedList<Gruppo> getListaGruppiUtenteIscrittoById(int idUtente){
+		LinkedList<Gruppo> listaGruppiIscritto = new LinkedList<Gruppo>();
+		String query = "SELECT IdGruppo FROM Iscrizione WHERE IdUtente = "+idUtente;
+			
+		try(Statement stmt=Connessione.createStatement()){
+			ResultSet res=stmt.executeQuery(query);
+			
+			while(res.next()) {
+				  	listaGruppiIscritto.add(gruppoDAO.getGruppoFromArrayListById(res.getInt("IdGruppo")));			
+			}
+			stmt.close();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return listaGruppiIscritto;
+}
+	
+	public void creaGruppo() {
+		String query = "PERFORM CreaGruppo()";
+	}
 	
 	
 		
