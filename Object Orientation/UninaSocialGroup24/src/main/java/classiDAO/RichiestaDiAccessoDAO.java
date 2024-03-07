@@ -87,6 +87,15 @@ public class RichiestaDiAccessoDAO {
 	    }
 	}
 	
+	public RichiestaDiAccesso getRichiestaFromArrayListByNotifica(Notifica notifica) {
+	    for (RichiestaDiAccesso richiesta : listaRichiesteDiAccesso) {
+	        if (richiesta.getNotificaGenerata().equals(notifica)) {
+	            return richiesta;
+	        }
+	    }
+	    return null;
+	}
+
 	
 	
 }
