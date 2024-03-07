@@ -220,7 +220,13 @@ public class HomeGUI extends JFrame {
 		NotificheButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		
 		
-		JButton creaGruppoButton = new JButton("Crea gruppo");
+		JButton creaGruppoButton = new JButton("Crea gruppo"); 
+		creaGruppoButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CreazioneGruppoGUI creazioneGruppoGUI = new CreazioneGruppoGUI();
+                creazioneGruppoGUI.setVisible(true);
+            }
+        });
 		creaGruppoButton.setBounds(20, 75, 165, 21);
 		panel_3.add(creaGruppoButton);
 		creaGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
