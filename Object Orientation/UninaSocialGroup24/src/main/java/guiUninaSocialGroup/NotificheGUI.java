@@ -2,6 +2,7 @@ package guiUninaSocialGroup;
 
 import javax.swing.*;
 
+import classiDAO.EnumStatiRichiesta;
 import classiDAO.EnumTipoNotifica;
 import classiDAO.Notifica;
 import classiDAO.RichiestaDiAccesso;
@@ -81,6 +82,10 @@ public class NotificheGUI extends JFrame {
         
         mainPanel.add(titoloRichiesteDiAccessoPanel);
         
+        
+       
+        
+        
         JLabel richiesteAccessoLabel = new JLabel("RICHIESTE DI ACCESSO");
         richiesteAccessoLabel.setBounds(58, 0, 269, 19);
         titoloRichiesteDiAccessoPanel.add(richiesteAccessoLabel);
@@ -88,20 +93,36 @@ public class NotificheGUI extends JFrame {
         richiesteAccessoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         getContentPane().add(mainPanel);
+       
+        
+        JScrollPane scrollPaneNotifiche = new JScrollPane();
+        scrollPaneNotifiche.setBounds(10, 39, 378, 206);
+        scrollPaneNotifiche.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPaneNotifiche.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        mainPanel.add(scrollPaneNotifiche); 
+
         
         panelNotifiche = new JPanel();
         panelNotifiche.setBackground(new Color(226, 235, 248));
         panelNotifiche.setBounds(10, 39, 378, 206);
-        mainPanel.add(panelNotifiche);
+        scrollPaneNotifiche.setViewportView(panelNotifiche);
         panelNotifiche.setLayout(new BoxLayout(panelNotifiche, BoxLayout.Y_AXIS));
+        
+        
+        JScrollPane scrollPaneRichieste = new JScrollPane();
+        scrollPaneRichieste.setBounds(10, 288, 378, 206);
+        scrollPaneRichieste.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPaneRichieste.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        mainPanel.add(scrollPaneRichieste);
         
         
         panelRichiesteDiAccesso = new JPanel();
         panelRichiesteDiAccesso.setBackground(new Color(226, 235, 248));
+        scrollPaneRichieste.setViewportView(panelRichiesteDiAccesso);
         panelRichiesteDiAccesso.setBounds(10, 288, 378, 206);
         
 
-        mainPanel.add(panelRichiesteDiAccesso);
+  
         
         panelRichiesteDiAccesso.setLayout(new BoxLayout(panelRichiesteDiAccesso, BoxLayout.Y_AXIS));
         
@@ -120,7 +141,6 @@ public class NotificheGUI extends JFrame {
         
         mainPanel.add(btnNewButton);
 
-        new ArrayList<>();
         
         LinkedList<Notifica> listaNotificheUtente = new LinkedList<>();
         listaNotificheUtente = Controller.notificaDAO.getListaNotificheByIdUtente(Controller.myIdUtente);
@@ -135,10 +155,11 @@ public class NotificheGUI extends JFrame {
         for (Notifica notifica : listaNotifiche) {
             if (notifica.getTipoNotifica() == EnumTipoNotifica.Accesso) {
             	RichiestaDiAccesso rda ;
-            //  rda = Controller.richiestaDiAccessoDAO.get..
-            //	if ()
+                 rda = Controller.richiestaDiAccessoDAO.getRichiestaFromArrayListByNotifica(notifica);
+            	if (rda.getStatoRichiesta()== EnumStatiRichiesta.In_attesa) {
                 	JPanel panelNotifica = creaPannelloRichiestaAccesso(notifica);
                 	panelRichiesteDiAccesso.add(panelNotifica);
+            	}
             }
         }
     }
@@ -164,7 +185,7 @@ public class NotificheGUI extends JFrame {
         
         JLabel labelData = new JLabel("Data: " + notifica.getDataInvio());
         JLabel labelTipo = new JLabel("Ora:" + notifica.getOraInvio());
-        JLabel labelText = new JLabel("<html><p style='width:280px;'>" + notifica.getTestoNotifica() + "</p></html>");
+        JLabel labelText = new JLabel("<html><p style='width:250px;'>" + notifica.getTestoNotifica() + "</p></html>");
        
         panelNotifica.add(labelData);
         panelNotifica.add(labelTipo);
@@ -182,8 +203,7 @@ public class NotificheGUI extends JFrame {
         
         
         JLabel labelData = new JLabel("Data: " + notifica.getDataInvio());
-        JLabel labelTipo = new JLabel("Tipo: " + notifica.getTipoNotifica());
-        JLabel labelText = new JLabel("<html><p style='width:280px;'>" + notifica.getTestoNotifica() + "</p></html>");
+        JLabel labelText = new JLabel("<html><p style='width:250px;'>" + notifica.getTestoNotifica() + "</p></html>");
         
         JPanel panelBottoni = new JPanel();
         panelBottoni.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -197,7 +217,6 @@ public class NotificheGUI extends JFrame {
         panelBottoni.add(rifiutaButton);
         
         panelRichiestaAccesso.add(labelData);
-        panelRichiestaAccesso.add(labelTipo);
         panelRichiestaAccesso.add(labelText);
         panelRichiestaAccesso.add(panelBottoni);
 
