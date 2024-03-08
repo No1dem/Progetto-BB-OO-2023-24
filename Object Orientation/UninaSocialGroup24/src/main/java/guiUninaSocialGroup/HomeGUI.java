@@ -19,6 +19,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.LinkedList;
 import java.awt.event.ActionEvent;
@@ -452,6 +454,24 @@ public class HomeGUI extends JFrame {
         gruppoPanel.setBackground(new Color(226, 235, 248));
         gruppoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         gruppoPanel.setLayout(new BoxLayout(gruppoPanel, BoxLayout.Y_AXIS));
+        gruppoPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Azioni da eseguire quando il pannello viene cliccato
+                JOptionPane.showMessageDialog(null, "Hai cliccato sul pannello!");
+            }
+            
+            public void mouseEntered(MouseEvent e) {
+                // Cambia il colore del pannello quando il cursore del mouse entra
+                gruppoPanel.setBackground(Color.WHITE);
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Cambia il colore del pannello quando il cursore del mouse esce
+                gruppoPanel.setBackground(new Color (226, 235, 248));
+            }
+        });
         
         CreatoreGruppo cg = Controller.creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(g.getIdGruppo());
         String nickname = cg.getNickname();
