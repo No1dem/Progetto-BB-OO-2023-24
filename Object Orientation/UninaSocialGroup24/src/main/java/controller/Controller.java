@@ -12,12 +12,15 @@ import javax.swing.JOptionPane;
 import classiDAO.AmministratoreDAO;
 import classiDAO.CommentoDAO;
 import classiDAO.CreatoreGruppoDAO;
+import classiDAO.EnumStatiRichiesta;
 import classiDAO.Gruppo;
 import classiDAO.GruppoDAO;
 import classiDAO.LikeDAO;
 import classiDAO.NotificaDAO;
 import classiDAO.PostDAO;
+import classiDAO.RichiestaDiAccesso;
 import classiDAO.RichiestaDiAccessoDAO;
+import classiDAO.Utente;
 import classiDAO.UtenteDAO;
 import guiUninaSocialGroup.loginGUI;
 
@@ -85,25 +88,56 @@ public class Controller {
 			e.printStackTrace();
 		}
 		return listaGruppiIscritto;
-}
-	
-	public static boolean creaGruppo(int idUtente, String nomeGruppo, String tagGruppo, String descrizioneGruppo) {
-		 String query = "PERFORM CreaGruppo(?, ?, ?, ?)";
-		try(PreparedStatement stmt = Connessione.prepareStatement(query)){
-			stmt.setInt(1, idUtente);
-			stmt.setString(2, nomeGruppo);
-			stmt.setString(3, tagGruppo);
-			stmt.setString(4, descrizioneGruppo);
+		
+	}
+		
+		public static boolean creaGruppo(int idUtente, String nomeGruppo, String tagGruppo, String descrizioneGruppo) {
+			 String query = "SELECT CreaGruppo(?, ?, ?, ?)";
+			try(PreparedStatement pstmt = Connessione.prepareStatement(query)){
+				
+				pstmt.setInt(1, idUtente);
+				pstmt.setString(2, nomeGruppo);
+				pstmt.setString(3, tagGruppo);
+				pstmt.setString(4, descrizioneGruppo);
+				
+				pstmt.execute();
+				
+			}
+			catch(SQLException e) {
+				e.printStackTrace();
+				return false;
+			} 
 			return true;
 		}
-		catch(SQLException e) {
-			e.printStackTrace();
+		
+		
+		public static boolean controlloEsistenzaIscrizioneGruppo(Gruppo g) {
+			for (Utente utente : g.getListaUtentiIscritti()) {
+				if (utente.getIdUtente() == myIdUtente) {
+					return true;
+				}
+			}
+			return false;	
+		}
+		
+		
+		
+		public static boolean controlloEsistenzaRichiestaDiAccessoGruppoInAttesa (Gruppo g) {
+			for (RichiestaDiAccesso rda : richiestaDiAccessoDAO.getListaRichiesteUtenteFromArrayListByIdUtente(myIdUtente)) {
+				
+				if (rda.getGruppoAccesso().equals(g) && rda.getStatoRichiesta() == EnumStatiRichiesta.In_attesa)
+					return true;
+			}
 			return false;
-		} 
-	}
+		}
+		
+		
+}
+	
+	
 	
 	
 	
 	
 		
-}
+

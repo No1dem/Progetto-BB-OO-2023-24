@@ -290,7 +290,7 @@ public class HomeGUI extends JFrame {
 		panel_4_1.add(gruppiCreatiPanel);
 		
 		JLabel lblGruppiCreati = new JLabel();
-		lblGruppiCreati.setText("GRUPPI CREATI");
+		lblGruppiCreati.setText("GRUPPI CREATI\r\n");
 		lblGruppiCreati.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGruppiCreati.setFont(new Font("Arial", Font.BOLD, 18));
 		lblGruppiCreati.setBackground(new Color(148, 190, 233));
@@ -365,7 +365,7 @@ public class HomeGUI extends JFrame {
 	        for (Gruppo gruppo : listaGruppiRicerca) {
 	            JPanel panelGruppo = new JPanel();
 	            panelGruppo.setLayout(new BoxLayout(panelGruppo, BoxLayout.Y_AXIS));
-	            panelGruppo.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Aggiungi una linea al pannello del gruppo
+	            panelGruppo.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
 	            panelGruppo.setBackground(new Color(226, 235, 248));
 	            
 	            JLabel labelNomeGruppo = new JLabel("Nome: " + gruppo.getNomeGruppo());
@@ -389,13 +389,40 @@ public class HomeGUI extends JFrame {
 	            panelGruppo.add(labelCreatore);
 
 	   
-	            JButton buttonIscriviti = new JButton("Iscriviti");
-	            buttonIscriviti.addActionListener(new ActionListener() {
-	                public void actionPerformed(ActionEvent e) {
-	               
+	            panelGruppo.addMouseListener(new MouseAdapter() {
+	                @Override
+	                public void mouseClicked(MouseEvent e) {
+	                	
+	                	if (Controller.controlloEsistenzaRichiestaDiAccessoGruppoInAttesa(gruppo))
+	                		JOptionPane.showMessageDialog(panelGruppi, "Richiesta di accesso in attesa.");
+	                	else if (!Controller.controlloEsistenzaIscrizioneGruppo(gruppo)) {
+	                			String messaggio = "Per accedere al gruppo devi prima inviare la richiesta di iscrizione.";
+	                			int choice = JOptionPane.showOptionDialog(null, messaggio, "Richiesta di accesso", JOptionPane.YES_NO_OPTION,
+	                        	
+	                			JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Invia", "Annulla"}, "default");
+
+	                			if (choice == JOptionPane.YES_OPTION) {
+	                				// ******
+	                				// Invia richiesta
+	                			} 
+	                	}
+	                	else {
+	                		//*******
+	                		//Apri schermata Gruppo
+	                	}
+	                		
+	                }
+	                
+	                @Override
+	                public void mouseEntered(MouseEvent e) {
+	                    panelGruppo.setBackground(Color.WHITE);
+	                }
+	                
+	                @Override
+	                public void mouseExited(MouseEvent e) {
+	                    panelGruppo.setBackground(new Color (226, 235, 248));
 	                }
 	            });
-	            panelGruppo.add(buttonIscriviti);
 
 	            panelGruppi.add(panelGruppo);
 
@@ -457,18 +484,18 @@ public class HomeGUI extends JFrame {
         gruppoPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Azioni da eseguire quando il pannello viene cliccato
+            	
                 JOptionPane.showMessageDialog(null, "Hai cliccato sul pannello!");
             }
             
             public void mouseEntered(MouseEvent e) {
-                // Cambia il colore del pannello quando il cursore del mouse entra
+                
                 gruppoPanel.setBackground(Color.WHITE);
             }
             
             @Override
             public void mouseExited(MouseEvent e) {
-                // Cambia il colore del pannello quando il cursore del mouse esce
+                
                 gruppoPanel.setBackground(new Color (226, 235, 248));
             }
         });
@@ -519,6 +546,24 @@ public class HomeGUI extends JFrame {
         gruppoPanel.setBackground(new Color(226, 235, 248));
         gruppoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         gruppoPanel.setLayout(new BoxLayout(gruppoPanel, BoxLayout.Y_AXIS));
+        
+        gruppoPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+   
+                JOptionPane.showMessageDialog(null, "Hai cliccato sul pannello!");
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                gruppoPanel.setBackground(Color.WHITE);
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                gruppoPanel.setBackground(new Color (226, 235, 248));
+            }
+        });
         
         
         JLabel labelNome= new JLabel("Nome gruppo: " + g.getNomeGruppo());
