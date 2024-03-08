@@ -33,10 +33,10 @@ public class NotificheGUI extends JFrame {
     }
 
     public NotificheGUI() {
+    	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	setResizable(false);
         setTitle("UninaSocialGroup");
         setSize(412, 573);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
         mainPanel = new JPanel();
