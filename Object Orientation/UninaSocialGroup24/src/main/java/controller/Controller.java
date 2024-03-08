@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,16 +89,22 @@ public class Controller {
 }
 	
 	public static boolean creaGruppo(int idUtente, String nomeGruppo, String tagGruppo, String descrizioneGruppo) {
-		 String query = "PERFORM CreaGruppo(?, ?, ?, ?)";
+		 String query = "SELECT CreaGruppo(?, ?, ?, ?)";
 		try(PreparedStatement stmt = Connessione.prepareStatement(query)){
 			stmt.setInt(1, idUtente);
 			stmt.setString(2, nomeGruppo);
 			stmt.setString(3, tagGruppo);
 			stmt.setString(4, descrizioneGruppo);
+			stmt.execute();
+			//Controller.creatoreGruppoDAO.(idUtente);
+			
 			return true;
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+			 System.err.println("Errore durante l'esecuzione della query: " + e.getMessage());
+			 System.err.println("Codice SQL: " + e.getSQLState());
+	         System.err.println("Codice errore: " + e.getErrorCode());
 			return false;
 		} 
 	}
