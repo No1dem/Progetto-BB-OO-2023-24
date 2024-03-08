@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,25 +89,20 @@ public class Controller {
 			e.printStackTrace();
 		}
 		return listaGruppiIscritto;
-		
-	}
-		
-		public static boolean creaGruppo(int idUtente, String nomeGruppo, String tagGruppo, String descrizioneGruppo) {
-			 String query = "SELECT CreaGruppo(?, ?, ?, ?)";
-			try(PreparedStatement pstmt = Connessione.prepareStatement(query)){
-				
-				pstmt.setInt(1, idUtente);
-				pstmt.setString(2, nomeGruppo);
-				pstmt.setString(3, tagGruppo);
-				pstmt.setString(4, descrizioneGruppo);
-				
-				pstmt.execute();
-				
-			}
-			catch(SQLException e) {
-				e.printStackTrace();
-				return false;
-			} 
+}public static boolean creaGruppo(int idUtente, String nomeGruppo, String tagGruppo, String descrizioneGruppo) {
+		 String query = "SELECT CreaGruppo(?, ?, ?, ?)";
+		try(PreparedStatement stmt = Connessione.prepareStatement(query)){
+			stmt.setInt(1, idUtente);
+			stmt.setString(2, nomeGruppo);
+			stmt.setString(3, tagGruppo);
+			stmt.setString(4, descrizioneGruppo);			stmt.execute();
+			//Controller.creatoreGruppoDAO.(idUtente);
+
+
+
+
+
+	
 			return true;
 		}
 		
@@ -128,6 +124,9 @@ public class Controller {
 				if (rda.getGruppoAccesso().equals(g) && rda.getStatoRichiesta() == EnumStatiRichiesta.In_attesa)
 					return true;
 			}
+			 System.err.println("Errore durante l'esecuzione della query: " + e.getMessage());
+			 System.err.println("Codice SQL: " + e.getSQLState());
+	         System.err.println("Codice errore: " + e.getErrorCode());
 			return false;
 		}
 		
