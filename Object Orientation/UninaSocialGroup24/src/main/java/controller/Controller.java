@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import classiDAO.AmministratoreDAO;
 import classiDAO.CommentoDAO;
+import classiDAO.CreatoreGruppo;
 import classiDAO.CreatoreGruppoDAO;
 import classiDAO.EnumStatiRichiesta;
 import classiDAO.Gruppo;
@@ -23,9 +24,17 @@ import classiDAO.RichiestaDiAccesso;
 import classiDAO.RichiestaDiAccessoDAO;
 import classiDAO.Utente;
 import classiDAO.UtenteDAO;
+import guiUninaSocialGroup.CreazioneGruppoGUI;
+import guiUninaSocialGroup.HomeGUI;
+import guiUninaSocialGroup.NotificheGUI;
 import guiUninaSocialGroup.loginGUI;
 
 public class Controller {
+	
+	public static loginGUI login;
+	public static HomeGUI home;
+	public static NotificheGUI notifiche;
+	public static CreazioneGruppoGUI creazioneGruppo;
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -42,8 +51,8 @@ public class Controller {
     public static int myIdUtente;
 
 	public static void main(String[] args) {
-		loginGUI log = new loginGUI();
-		log.setVisible(true);
+		login = new loginGUI();
+		login.setVisible(true);
 	}
 
 	public static void checkDataBase(Connection conn) throws SQLException {
@@ -89,47 +98,89 @@ public class Controller {
 			e.printStackTrace();
 		}
 		return listaGruppiIscritto;
-}public static boolean creaGruppo(int idUtente, String nomeGruppo, String tagGruppo, String descrizioneGruppo) {
-		 String query = "SELECT CreaGruppo(?, ?, ?, ?)";
+	}
+	
+	
+	public static boolean creaGruppo(int idUtente, String nomeGruppo, String tagGruppo, String descrizioneGruppo) {
+		String query = "SELECT CreaGruppo(?, ?, ?, ?)";		
 		try(PreparedStatement stmt = Connessione.prepareStatement(query)){
 			stmt.setInt(1, idUtente);
 			stmt.setString(2, nomeGruppo);
 			stmt.setString(3, tagGruppo);
-			stmt.setString(4, descrizioneGruppo);			stmt.execute();
-			//Controller.creatoreGruppoDAO.(idUtente);
-
-
-
-
-
-	
-			return true;
+			stmt.setString(4, descrizioneGruppo);
+			stmt.execute();
+			
+			gruppoDAO = new GruppoDAO(Connessione);
+			amministratoreDAO = new AmministratoreDAO(Connessione,gruppoDAO,utenteDAO);
+	        creatoreGruppoDAO = new CreatoreGruppoDAO(Connessione,gruppoDAO,amministratoreDAO,utenteDAO);
+	        
 		}
-		
-		
-		public static boolean controlloEsistenzaIscrizioneGruppo(Gruppo g) {
-			for (Utente utente : g.getListaUtentiIscritti()) {
-				if (utente.getIdUtente() == myIdUtente) {
-					return true;
-				}
-			}
-			return false;	
-		}
-		
-		
-		
-		public static boolean controlloEsistenzaRichiestaDiAccessoGruppoInAttesa (Gruppo g) {
-			for (RichiestaDiAccesso rda : richiestaDiAccessoDAO.getListaRichiesteUtenteFromArrayListByIdUtente(myIdUtente)) {
-				
-				if (rda.getGruppoAccesso().equals(g) && rda.getStatoRichiesta() == EnumStatiRichiesta.In_attesa)
-					return true;
-			}
-			 System.err.println("Errore durante l'esecuzione della query: " + e.getMessage());
-			 System.err.println("Codice SQL: " + e.getSQLState());
-	         System.err.println("Codice errore: " + e.getErrorCode());
+		catch(SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
+		return true;
+	}
+	
 		
+		
+	public static boolean controlloEsistenzaIscrizioneGruppo(Gruppo g) {
+		for (Utente utente : g.getListaUtentiIscritti()) {
+			if (utente.getIdUtente() == myIdUtente) {
+				return true;
+			}
+		}
+		return false;	
+	}
+		
+		
+	
+	public static boolean controlloEsistenzaRichiestaDiAccessoGruppoInAttesa (Gruppo g) {
+		for (RichiestaDiAccesso rda : richiestaDiAccessoDAO.getListaRichiesteUtenteFromArrayListByIdUtente(myIdUtente)) {	
+			if (rda.getGruppoAccesso().equals(g) && rda.getStatoRichiesta() == EnumStatiRichiesta.In_attesa)
+				return true;
+		}
+		return false;
+	}
+	
+	
+	
+	public void tornaAllaSchermataLogin() {
+		home.setVisible(false);
+		login.setVisible(true);
+		home = null;
+	}
+		
+	
+	
+	public void apriHome() {
+		home.setVisible(true);
+		login.setVisible(false);
+		
+	}
+	
+	
+	public void aggiornaHome() {
+		home.revalidate();
+		home.repaint();
+	}
+	
+	
+	public void apriCreazioneGruppo() {
+		creazioneGruppo.setVisible(true);	
+	}
+	
+	
+	public void apriNotifiche() {
+		notifiche.setVisible(true);
+		
+	}
+	
+	
+	public void aggiornaNotifiche() {
+		notifiche.revalidate();
+		notifiche.repaint();
+	}
 		
 }
 	

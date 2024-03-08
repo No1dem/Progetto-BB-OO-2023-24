@@ -199,8 +199,9 @@ public class HomeGUI extends JFrame {
 		creaGruppoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-	                CreazioneGruppoGUI creazioneGruppoGUI = new CreazioneGruppoGUI();
+	                CreazioneGruppoGUI creazioneGruppoGUI = new CreazioneGruppoGUI(Controller.home);
 	                creazioneGruppoGUI.setVisible(true);
+	                
 	            
 			}
 		});
@@ -244,7 +245,7 @@ public class HomeGUI extends JFrame {
 				
     
 		JLabel nicknameLabel = new JLabel(Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getNickname());
-		nicknameLabel.setBounds(20, 214, 165, 20);
+		nicknameLabel.setBounds(20, 204, 165, 20);
 		panel_6.add(nicknameLabel);
 		nicknameLabel.setFont(new Font("Arial", Font.BOLD, 15));
 		nicknameLabel.setForeground(Color.BLACK);
@@ -294,7 +295,7 @@ public class HomeGUI extends JFrame {
 		lblGruppiCreati.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGruppiCreati.setFont(new Font("Arial", Font.BOLD, 18));
 		lblGruppiCreati.setBackground(new Color(148, 190, 233));
-		lblGruppiCreati.setBounds(81, 10, 253, 20);
+		lblGruppiCreati.setBounds(116, 10, 183, 20);
 		panel_4_1.add(lblGruppiCreati);
 		
 		JPanel panel = new JPanel();

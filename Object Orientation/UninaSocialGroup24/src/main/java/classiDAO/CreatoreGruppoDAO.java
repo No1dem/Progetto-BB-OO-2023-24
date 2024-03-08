@@ -42,6 +42,12 @@ public class CreatoreGruppoDAO {
 		}
 	}
 	
+	
+	public void insertCreatoreGruppo(CreatoreGruppo cg) {
+		listaCreatoriGruppi.add(cg);
+	}
+	
+	
 	public void deleteCreatoreGruppo(CreatoreGruppo cg) {
 		String query = "DELETE FROM CreatoreGruppo WHERE idCreatore = ? ";
 		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
@@ -78,7 +84,6 @@ public class CreatoreGruppoDAO {
 
 
 	public  CreatoreGruppo getCreatoreGruppoFromArrayListByIdGruppo(int idGruppo) {
-		
 		for (CreatoreGruppo creatoreGruppo : listaCreatoriGruppi) {
 		        if (creatoreGruppo.getIdGruppoAmministrato() == idGruppo) {
 		            return creatoreGruppo;
@@ -98,8 +103,6 @@ public class CreatoreGruppoDAO {
         }
 		return listaGruppi;
 	}
-	
-	
 	
 	
 }

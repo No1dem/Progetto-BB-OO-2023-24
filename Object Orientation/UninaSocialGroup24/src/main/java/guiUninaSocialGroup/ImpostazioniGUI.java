@@ -85,18 +85,18 @@ public class ImpostazioniGUI extends JFrame {
         panel_1.setBackground(new Color(148, 190, 233));
         panel_1.setBounds(26, 10, 325, 138);
         contentPane.add(panel_1);
-                panel_1.setLayout(null);
+        panel_1.setLayout(null);
         
-                urlFotoProfiloTextField = new JTextField();
-                urlFotoProfiloTextField.setBounds(22, 38, 275, 19);
-                panel_1.add(urlFotoProfiloTextField);
-                urlFotoProfiloTextField.setColumns(10);
+        urlFotoProfiloTextField = new JTextField();
+        urlFotoProfiloTextField.setBounds(22, 38, 275, 19);
+        panel_1.add(urlFotoProfiloTextField);
+        urlFotoProfiloTextField.setColumns(10);
         
-                JButton modificaImmagineButton = new JButton("Carica");
-                modificaImmagineButton.setBounds(197, 67, 100, 27);
-                panel_1.add(modificaImmagineButton);
-                modificaImmagineButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-                modificaImmagineButton.addActionListener(new ActionListener() {
+        JButton modificaImmagineButton = new JButton("Carica");
+        modificaImmagineButton.setBounds(197, 67, 100, 27);
+        panel_1.add(modificaImmagineButton);
+        modificaImmagineButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+        modificaImmagineButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                    
                         String imageUrl = urlFotoProfiloTextField.getText();
