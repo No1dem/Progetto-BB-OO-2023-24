@@ -26,6 +26,7 @@ import classiDAO.Utente;
 import classiDAO.UtenteDAO;
 import guiUninaSocialGroup.CreazioneGruppoGUI;
 import guiUninaSocialGroup.HomeGUI;
+import guiUninaSocialGroup.ImpostazioniGUI;
 import guiUninaSocialGroup.NotificheGUI;
 import guiUninaSocialGroup.loginGUI;
 
@@ -35,6 +36,7 @@ public class Controller {
 	public static HomeGUI home;
 	public static NotificheGUI notifiche;
 	public static CreazioneGruppoGUI creazioneGruppo;
+	public static ImpostazioniGUI impostazioni;
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -145,7 +147,7 @@ public class Controller {
 	
 	
 	
-	public void tornaAllaSchermataLogin() {
+	public static void tornaAllaSchermataLogin() {
 		home.setVisible(false);
 		login.setVisible(true);
 		home = null;
@@ -153,35 +155,61 @@ public class Controller {
 		
 	
 	
-	public void apriHome() {
+	public static void apriHome() {
+		home = new HomeGUI();
+		creazioneGruppo = new CreazioneGruppoGUI();
+		notifiche = new NotificheGUI();
+		impostazioni = new ImpostazioniGUI();
 		home.setVisible(true);
 		login.setVisible(false);
 		
+		
 	}
 	
 	
-	public void aggiornaHome() {
-		home.revalidate();
-		home.repaint();
+	public static void aggiornaHome() {
+		
+		home.gruppiIscrittoPanel.revalidate();
+		home.gruppiIscrittoPanel.repaint();
+		home.gruppiCreatiPanel.removeAll();
+		home.mostraGruppiIscritto(getListaGruppiUtenteIscrittoById(Controller.myIdUtente));
+		home.mostraGruppiCreati(Controller.creatoreGruppoDAO.getListaGruppiCreatiFromArrayListByIdUtente(Controller.myIdUtente,Controller.gruppoDAO));
+		
 	}
 	
 	
-	public void apriCreazioneGruppo() {
+	public static void apriCreazioneGruppo() {
 		creazioneGruppo.setVisible(true);	
 	}
 	
+
 	
-	public void apriNotifiche() {
+	public static void apriNotifiche() {	
 		notifiche.setVisible(true);
-		
+			
 	}
 	
 	
-	public void aggiornaNotifiche() {
+	public static void aggiornaNotifiche() {
 		notifiche.revalidate();
 		notifiche.repaint();
 	}
+	
+	
+	public static void apriImpostazioni() {
+		notifiche.setVisible(false);
+		home.setVisible(false);
+		impostazioni.setVisible(true);
+	}
+	
+	
 		
+	public static void tornaAllaHome() {
+		home.setVisible(true);
+		impostazioni.setVisible(false);
+		//gruppo
+	}
+	
 }
 	
 	

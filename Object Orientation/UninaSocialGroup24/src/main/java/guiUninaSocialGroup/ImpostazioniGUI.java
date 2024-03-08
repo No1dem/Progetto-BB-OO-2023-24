@@ -198,8 +198,7 @@ public class ImpostazioniGUI extends JFrame {
         addWindowListener(new WindowAdapter() {
             public void windowClosed(WindowEvent e) {
                 super.windowClosed(e);
-                HomeGUI homeGUI = new HomeGUI(); 
-                homeGUI.setVisible(true); 
+                Controller.tornaAllaHome();
             }
         });
         

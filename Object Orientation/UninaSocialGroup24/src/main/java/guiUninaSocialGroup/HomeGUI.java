@@ -34,24 +34,8 @@ public class HomeGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField barraDiRicercaTxtField;
 	private JPanel risultatiRicercaPanel;
-	private JPanel gruppiIscrittoPanel;
-	private JPanel gruppiCreatiPanel;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HomeGUI frame = new HomeGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public JPanel gruppiIscrittoPanel;
+	public JPanel gruppiCreatiPanel;
 
 	/**
 	 * Create the frame.
@@ -171,12 +155,8 @@ public class HomeGUI extends JFrame {
 		impostazioniButton.setBounds(20, 10, 165, 21);
 		panel_3.add(impostazioniButton);
 		impostazioniButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ImpostazioniGUI impostazioniGUI = new ImpostazioniGUI();
-					
-					setVisible(false);
-					impostazioniGUI.setVisible(true);
-				       
+			public void actionPerformed(ActionEvent e) {	
+					Controller.apriImpostazioni();	       
 				}
 			});
 		impostazioniButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
@@ -186,8 +166,7 @@ public class HomeGUI extends JFrame {
 		JButton NotificheButton = new JButton("Notifiche");
 		NotificheButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NotificheGUI notificheGUI = new NotificheGUI();
-				notificheGUI.setVisible(true);
+				Controller.apriNotifiche();
 			}
 		});
 		NotificheButton.setBounds(20, 41, 165, 21);
@@ -198,11 +177,7 @@ public class HomeGUI extends JFrame {
 		JButton creaGruppoButton = new JButton("Crea gruppo");
 		creaGruppoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-	                CreazioneGruppoGUI creazioneGruppoGUI = new CreazioneGruppoGUI(Controller.home);
-	                creazioneGruppoGUI.setVisible(true);
-	                
-	            
+	                Controller.apriCreazioneGruppo();   
 			}
 		});
 		creaGruppoButton.setBounds(20, 75, 165, 21);
@@ -215,9 +190,7 @@ public class HomeGUI extends JFrame {
 		panel_3.add(logOutButton);
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				loginGUI log = new loginGUI();;
-				log.setVisible(true);
+				Controller.tornaAllaSchermataLogin();
 			}
 		});
 		logOutButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
@@ -251,16 +224,16 @@ public class HomeGUI extends JFrame {
 		nicknameLabel.setForeground(Color.BLACK);
 		nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(226, 235, 248));
-		panel_1.setBounds(207, 59, 444, 546);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
+		JPanel pannelloCentrale = new JPanel();
+		pannelloCentrale.setBackground(new Color(226, 235, 248));
+		pannelloCentrale.setBounds(207, 59, 444, 546);
+		contentPane.add(pannelloCentrale);
+		pannelloCentrale.setLayout(null);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(124, 176, 228));
 		panel_4.setBounds(20, 10, 426, 269);
-		panel_1.add(panel_4);
+		pannelloCentrale.add(panel_4);
 		panel_4.setLayout(null);
 		
 		gruppiIscrittoPanel = new JPanel();
@@ -282,7 +255,7 @@ public class HomeGUI extends JFrame {
 		panel_4_1.setLayout(null);
 		panel_4_1.setBackground(new Color(124, 176, 228));
 		panel_4_1.setBounds(20, 289, 426, 247);
-		panel_1.add(panel_4_1);
+		pannelloCentrale.add(panel_4_1);
 		
 		gruppiCreatiPanel = new JPanel();
 		gruppiCreatiPanel.setBackground(new Color(226, 235, 248));
@@ -298,16 +271,16 @@ public class HomeGUI extends JFrame {
 		lblGruppiCreati.setBounds(116, 10, 183, 20);
 		panel_4_1.add(lblGruppiCreati);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(226, 235, 248));
-		panel.setBounds(631, 58, 355, 547);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		JPanel ricercaPanel = new JPanel();
+		ricercaPanel.setBackground(new Color(226, 235, 248));
+		ricercaPanel.setBounds(631, 58, 355, 547);
+		contentPane.add(ricercaPanel);
+		ricercaPanel.setLayout(null);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(124, 176, 228));
 		panel_5.setBounds(30, 10, 315, 527);
-		panel.add(panel_5);
+		ricercaPanel.add(panel_5);
 		panel_5.setLayout(null);
 		
 		risultatiRicercaPanel = new JPanel();
@@ -452,7 +425,7 @@ public class HomeGUI extends JFrame {
 	
 	
 	
-	private void mostraGruppiIscritto(LinkedList<Gruppo> listaGruppiIscritto) {
+	public void mostraGruppiIscritto(LinkedList<Gruppo> listaGruppiIscritto) {
         gruppiIscrittoPanel.removeAll();  
         
         JPanel panelGruppi = new JPanel();
@@ -517,7 +490,7 @@ public class HomeGUI extends JFrame {
     }
 	
 	
-	private void mostraGruppiCreati(LinkedList<Gruppo> listaGruppiCreati) {
+	public void mostraGruppiCreati(LinkedList<Gruppo> listaGruppiCreati) {
         gruppiCreatiPanel.removeAll();  
         
         JPanel panelGruppi = new JPanel();

@@ -29,25 +29,9 @@ public class CreazioneGruppoGUI extends JFrame {
 	private JTextField textField_2;
 
 	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					CreazioneGruppoGUI frame = new CreazioneGruppoGUI();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
 	 * Create the frame.
 	 */
-	public CreazioneGruppoGUI(HomeGUI Home) {
+	public CreazioneGruppoGUI() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 570, 371);
         contentPane = new JPanel();
@@ -105,8 +89,7 @@ public class CreazioneGruppoGUI extends JFrame {
                 if (creazioneRiuscita) {
                     JOptionPane.showMessageDialog(contentPane, "Gruppo creato con successo", "Conferma", JOptionPane.INFORMATION_MESSAGE);
                   
-                    Home.revalidate();
-                    Home.repaint();
+                    Controller.aggiornaHome();
                     
                     setVisible(false);
                     
