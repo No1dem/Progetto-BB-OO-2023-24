@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.Controller;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -47,7 +48,7 @@ public class CreazioneGruppoGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public CreazioneGruppoGUI() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 570, 371);
         contentPane = new JPanel();
         contentPane.setBackground(new Color(148, 190, 233));
@@ -94,19 +95,20 @@ public class CreazioneGruppoGUI extends JFrame {
                 String descrizioneGruppo = textField_1.getText();
                 String tagGruppo = textField_2.getText();
                 if (nomeGruppo.isEmpty() || descrizioneGruppo.isEmpty() || tagGruppo.isEmpty()) {
-		            JOptionPane.showMessageDialog(contentPane, "Inserire tutti i dati necessari.", "Errore creazione", JOptionPane.WARNING_MESSAGE);
+		            JOptionPane.showMessageDialog(contentPane, "Inserire tutti i dati necessari.", "Errore creazione", JOptionPane.ERROR_MESSAGE);
 		            return; 
 		     }
                 
-			           
-//                boolean creazioneRiuscita = new CreazioneGruppoController().creaGruppo(nomeGruppo, descrizioneGruppo, tagGruppo);
-//                
-//                if (creazioneRiuscita) {
-//                    JOptionPane.showMessageDialog(contentPane, "Gruppo creato con successo", "Conferma", JOptionPane.INFORMATION_MESSAGE);
-//                } 
-//                else {
-//                    JOptionPane.showMessageDialog(contentPane, "Errore durante la creazione del gruppo.", "Errore", JOptionPane.ERROR_MESSAGE);
-//                }
+			    
+                boolean creazioneRiuscita = Controller.creaGruppo(Controller.myIdUtente, nomeGruppo, tagGruppo, descrizioneGruppo);
+                
+                if (creazioneRiuscita) {
+                    JOptionPane.showMessageDialog(contentPane, "Gruppo creato con successo", "Conferma", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                } 
+                else {
+                    JOptionPane.showMessageDialog(contentPane, "Errore durante la creazione del gruppo.", "Errore", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         btnConferma.setBounds(450, 301, 96, 23);

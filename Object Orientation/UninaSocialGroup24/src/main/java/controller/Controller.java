@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -84,13 +85,24 @@ public class Controller {
 			e.printStackTrace();
 		}
 		return listaGruppiIscritto;
+}
+	
+	public static boolean creaGruppo(int idUtente, String nomeGruppo, String tagGruppo, String descrizioneGruppo) {
+		 String query = "PERFORM CreaGruppo(?, ?, ?, ?)";
+		try(PreparedStatement stmt = Connessione.prepareStatement(query)){
+			stmt.setInt(1, idUtente);
+			stmt.setString(2, nomeGruppo);
+			stmt.setString(3, tagGruppo);
+			stmt.setString(4, descrizioneGruppo);
+			return true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		} 
 	}
 	
-
 	
-	public void creaGruppo() {
-		String query = "PERFORM CreaGruppo()";
-	}
 	
 	
 		
