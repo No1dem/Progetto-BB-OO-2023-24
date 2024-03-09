@@ -41,7 +41,7 @@ BEGIN
 
 	--Creazione e popolamento gruppi
 	--------------------------
-	SELECT CreaGruppo(RecuperaIdUtenteConNickname('giorginho01'),'Tifosi della Juve ITA','Sport,Calcio','Gruppo italiano per i tifosi della Juventus') INTO varIdGruppo;
+	SELECT CreaGruppo(RecuperaIdUtenteConNickname('giorginho01'),'Tifosi della Juve ITA','SPORT,CALCIO','Gruppo italiano per i tifosi della Juventus') INTO varIdGruppo;
 	SELECT RecuperaIdCreatoreConNickname('giorginho01',varIdGruppo) INTO varIdCreatore;
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('No1dem'),varIdCreatore,varIdGruppo) ;
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('DaviGatta'),varIdCreatore,varIdGruppo);
@@ -71,7 +71,7 @@ BEGIN
 	
 	---------------------------
 	
-	SELECT CreaGruppo(RecuperaIdUtenteConNickname('Charlie789'),'Studenti Informatica Unina','Istruzione,Università','Gruppo studio degli studenti di informatica.') INTO varIdGruppo;
+	SELECT CreaGruppo(RecuperaIdUtenteConNickname('Charlie789'),'Studenti Informatica Unina','ISTRUZIONE,UNIVERSITÀ','Gruppo studio degli studenti di informatica.') INTO varIdGruppo;
 	SELECT RecuperaIdCreatoreConNickname('Charlie789',varIdGruppo) INTO varIdCreatore;
 
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('No1dem'),varIdCreatore,varIdGruppo) ;
@@ -111,7 +111,7 @@ BEGIN
 	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('lello00'), varIdCommento);
 	
 	---------------------------
-	SELECT CreaGruppo(RecuperaIdUtenteConNickname('Eva1213'),'Passione Cucina','Cucina,Cibo','Benvenuti nel nostro gruppo di appassionati di cucina.') INTO varIdGruppo;
+	SELECT CreaGruppo(RecuperaIdUtenteConNickname('Eva1213'),'Passione Cucina','CUCINA,CIBO','Benvenuti nel nostro gruppo di appassionati di cucina.') INTO varIdGruppo;
 	SELECT RecuperaIdCreatoreConNickname('Eva1213',varIdGruppo) INTO varIdCreatore;
 
 	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('LukeScotti'),varIdCreatore,varIdGruppo) ;
@@ -150,7 +150,7 @@ BEGIN
 	
 	
 	---------------------------
-	SELECT CreaGruppo(RecuperaIdUtenteConNickname('LukeScotti'),'Hall of Series','Intrattenimento,SerieTV','Community amanti serie TV.') INTO varIdGruppo;
+	SELECT CreaGruppo(RecuperaIdUtenteConNickname('LukeScotti'),'Hall of Series','INTRATTENIMENTO,SERIETV','Community amanti serie TV.') INTO varIdGruppo;
 	SELECT RecuperaIdCreatoreConNickname('LukeScotti',varIdGruppo) INTO varIdCreatore;
 
 
@@ -195,7 +195,7 @@ BEGIN
 	
 	
 	---------------------------
-	SELECT CreaGruppo(RecuperaIdUtenteConNickname('No1dem'),'Tifosi del Napoli','Calcio,Sport','Gruppo italiano per i tifosi del Napoli.') INTO varIdGruppo;
+	SELECT CreaGruppo(RecuperaIdUtenteConNickname('No1dem'),'Tifosi del Napoli','CALCIO,SPORT','Gruppo italiano per i tifosi del Napoli.') INTO varIdGruppo;
 	SELECT RecuperaIdCreatoreConNickname('No1dem',varIdGruppo) INTO varIdCreatore;
 
     	PERFORM IscriviUtente(RecuperaIdUtenteConNickname('DaviGatta'),varIdCreatore,varIdGruppo);
@@ -232,7 +232,7 @@ BEGIN
 	
 	
 	---------------------------
-	SELECT CreaGruppo(RecuperaIdUtenteConNickname('Charlie789'),'NEWS H24','Attualità,Politica,Sport','Gruppo per discutere sulle notizie del giorno.') INTO varIdGruppo;
+	SELECT CreaGruppo(RecuperaIdUtenteConNickname('Charlie789'),'NEWS H24','ATTUALITÀ,POLITICA,SPORT','Gruppo per discutere sulle notizie del giorno.') INTO varIdGruppo;
 	SELECT RecuperaIdCreatoreConNickname('Charlie789',varIdGruppo) INTO varIdCreatore;
 	
 
