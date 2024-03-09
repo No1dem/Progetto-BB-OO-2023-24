@@ -129,7 +129,7 @@ CREATE TABLE Ricevere (
 
 CREATE TABLE RichiestaDiAccesso (
 	IdRichiesta SERIAL PRIMARY KEY,
-	StatoRichiesta EnumStati DEFAULT 'In attesa',
+	StatoRichiesta EnumStati DEFAULT 'In_attesa',
 	IdUtenteRichiesta INT NOT NULL,
 	IdCreatore INT NOT NULL,
 	IdGruppoRichiesta INT NOT NULL,
