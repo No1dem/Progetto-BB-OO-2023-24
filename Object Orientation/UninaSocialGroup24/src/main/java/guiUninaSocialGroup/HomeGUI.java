@@ -163,7 +163,7 @@ public class HomeGUI extends JFrame {
 	                Controller.apriCreazioneGruppo();   
 			}
 		});
-		creaGruppoButton.setBounds(20, 75, 165, 21);
+		creaGruppoButton.setBounds(20, 72, 165, 21);
 		panel_3.add(creaGruppoButton);
 		creaGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		
@@ -191,7 +191,7 @@ public class HomeGUI extends JFrame {
 		sfondoDefaultPanel.setLayout(null);
 		
 			
-		imgProfiloLabel = new JLabel("imgProfilo");
+		imgProfiloLabel = new JLabel("");
 		imgProfiloLabel.setBounds(0, 0, 185, 185);
 		imgProfiloLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		sfondoDefaultPanel.add(imgProfiloLabel);
@@ -358,8 +358,10 @@ public class HomeGUI extends JFrame {
 	                			JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Invia", "Annulla"}, "default");
 
 	                			if (choice == JOptionPane.YES_OPTION) {
-	                				// ******
-	                				// Invia richiesta
+	                				int idGruppo = gruppo.getIdGruppo();
+	                				CreatoreGruppo cg = Controller.creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(idGruppo);
+	             
+	                				Controller.richiestaDiAccessoDAO.insertRichiestaDiAccesso(Controller.myIdUtente,cg.getIdCreatoreGruppo(),idGruppo);
 	                			} 
 	                	}
 	                	else {

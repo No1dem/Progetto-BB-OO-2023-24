@@ -75,7 +75,7 @@ public class AmministratoreDAO {
 
 	
 		
-	public Amministratore getAmministratoreFromArrayListById(int idAmministratore) {
+	public Amministratore getAmministratoreFromArrayListByIdAmministratore(int idAmministratore) {
 	    for (Amministratore admin : listaAmministratori) {
 	        if (admin.getIdAmministratore() == idAmministratore) {
 	            return admin;
@@ -83,7 +83,26 @@ public class AmministratoreDAO {
 	    }
 	    return null;
 	}
+	
+	public Amministratore getAmministratoreFromArrayListByIdGruppoIdUtente(int idGruppo,int idUtente) {
+	    for (Amministratore admin : listaAmministratori) {
+	        if (admin.getIdUtente() == idUtente && admin.getIdGruppoAmministrato() == idGruppo) {
+	            return admin;
+	        }
+	    }
+	    return null;
+	}
 
+	
+	public void stampaLista(LinkedList<Amministratore> listaAmministratori) {
+	    for (Amministratore admin : listaAmministratori) {
+	        System.out.println("ID Amministratore: " + admin.getIdAmministratore());
+	        System.out.println("ID Utente: " + admin.getIdUtente());
+	        System.out.println("ID Gruppo Amministrato: " + admin.getIdGruppoAmministrato());
+	   
+	        System.out.println("------------------------------------------");
+	    }
+	}
 	
 
 }

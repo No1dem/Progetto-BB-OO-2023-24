@@ -52,8 +52,8 @@ public class UtenteDAO {
 		}
 	}
 	
-	public void deleteUtenteByNickname(Utente ut) {
-		String query="DELETE FROM Utente WHERE Nickname='?'";
+	public void deleteUtente(Utente ut) {
+		String query="DELETE FROM Utente WHERE Nickname=?";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			pstmt.setString(1,ut.getNickname());
 			pstmt.executeUpdate();		
@@ -127,12 +127,29 @@ public class UtenteDAO {
 	
 	
 	public void updatePasswordUtenteByNickname(String nickname,String password ) {
-		String query="UPDATE FROM Utente SET Password='"+password+"' WHERE Nickname='"+nickname+"'";
+		String query="UPDATE Utente SET Password='"+password+"' WHERE Nickname='"+nickname+"'";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			pstmt.executeUpdate();
 			for (Utente ut : listaUtente) {  
 	            if (ut.getNickname().equals(nickname)){
 	                ut.setPassword(password);
+	                break;
+	            }
+	        }
+			pstmt.close();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateNicknameByIdUtente(String nickname, int idUtente) {
+		String query = "UPDATE Utente SET Nickname = '"+nickname+"' WHERE IdUtente ="+idUtente;
+		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
+			pstmt.executeUpdate();
+			for (Utente ut : listaUtente) {  
+	            if (ut.getIdUtente() == idUtente){
+	                ut.setNickname(nickname);
 	                break;
 	            }
 	        }

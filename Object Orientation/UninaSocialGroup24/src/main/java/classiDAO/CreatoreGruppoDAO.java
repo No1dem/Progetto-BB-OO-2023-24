@@ -29,7 +29,7 @@ public class CreatoreGruppoDAO {
 			    Gruppo gruppo = gruppoDAO.getGruppoFromArrayListById(idGruppo);
 			    
 		
-			    Amministratore amministratore = amministratoreDAO.getAmministratoreFromArrayListById(idGruppo);
+			    Amministratore amministratore = amministratoreDAO.getAmministratoreFromArrayListByIdGruppoIdUtente(idGruppo,idUtente);
 			    
 			    listaCreatoriGruppi.add(new CreatoreGruppo (utente.getIdUtente(),utente.getNomeUtente(),utente.getCognomeUtente(),
 			    										    utente.getEmail(),utente.getNickname(),utente.getPassword(),utente.getBiografia(),
@@ -104,5 +104,13 @@ public class CreatoreGruppoDAO {
 		return listaGruppi;
 	}
 	
+	public void stampaLista(LinkedList<CreatoreGruppo> listaCreatori) {
+	    for (CreatoreGruppo cg : listaCreatori) {
+	        System.out.println("ID Creatore Gruppo: " + cg.getIdCreatoreGruppo());
+	        System.out.println("ID Utente: " + cg.getIdUtente());
+	        System.out.println("ID Gruppo Amministrato: " + cg.getIdGruppoAmministrato());
+	        System.out.println("------------------------------------------");
+	    }
+	}
 	
 }

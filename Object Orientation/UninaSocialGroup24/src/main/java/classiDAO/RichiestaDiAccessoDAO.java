@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.LinkedList;
+
+import controller.Controller;
 
 public class RichiestaDiAccessoDAO {
 	private Connection connessioneDB;
@@ -42,19 +45,16 @@ public class RichiestaDiAccessoDAO {
 		}
 	}
 	
-	public void insertRichiestaDiAccesso(RichiestaDiAccesso rds) {
+	public void insertRichiestaDiAccesso(int idUtente, int idCreatoreGruppo, int idGruppoRichiesta) {
 		String query = "INSERT INTO RichiestaDiAccesso (IdUtenteRichiesta,IdCreatore,IdGruppoRichiesta) VALUES (?, ?, ?)";
 		
 	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
 	    	
-	        pstmt.setInt(1, rds.getUtenteRichiesta().getIdUtente());
-	        pstmt.setInt(2, rds.getCreatoreGruppoDiRichiesta().getIdCreatoreGruppo());
-	        pstmt.setInt(3, rds.getGruppoAccesso().getIdGruppo());
+	        pstmt.setInt(1, idUtente);
+	        pstmt.setInt(2, idCreatoreGruppo);
+	        pstmt.setInt(3, idGruppoRichiesta);
 	        
-	        pstmt.executeUpdate();
-	        
-	        listaRichiesteDiAccesso.add(rds); 
-	        
+	        pstmt.executeUpdate();        
 	        pstmt.close();
 	        
 	    } catch (SQLException e) {
@@ -62,21 +62,25 @@ public class RichiestaDiAccessoDAO {
 	    }
 	}
 	
-	public void updateRichiestaDiAccesso(RichiestaDiAccesso rds,EnumStatiRichiesta statoRichiesta) {
-		String query = "UPDATE FROM RichiestaDiAccesso SET StatoRichiesta='?' WHERE IdRichiesta = ?";
+	public void updateRichiestaDiAccesso(RichiestaDiAccesso rds,EnumStatiRichiesta statoRichiesta, NotificaDAO notificaDAO) {
+		String query = "UPDATE RichiestaDiAccesso SET StatoRichiesta = ? WHERE IdRichiesta = ?";
 	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
 	    
-	        pstmt.setString(1,statoRichiesta.toString());
+	        pstmt.setObject(1,statoRichiesta,Types.OTHER);
 	        pstmt.setInt(2,rds.getIdRichiesta());
 	        
 	        pstmt.executeUpdate();
 	        
 	        for ( RichiestaDiAccesso currRds : listaRichiesteDiAccesso) {  
 	            if (currRds.getIdRichiesta() == rds.getIdRichiesta()){
-	                if (statoRichiesta == EnumStatiRichiesta.Rifiutato)
+	                if (statoRichiesta == EnumStatiRichiesta.Rifiutato) {
 	                	listaRichiesteDiAccesso.remove(rds);
-	                else if (statoRichiesta == EnumStatiRichiesta.Accettato)
+	                	//notificaDAO.deleteNotificaFromArrayListByIdNotifica(rds.getNotificaGenerata().getIdNotifica());
+	                }
+	                else if (statoRichiesta == EnumStatiRichiesta.Accettato) {
 	                	rds.setStatoRichiesta(statoRichiesta);
+	                	//notificaDAO.deleteNotificaFromArrayListByIdNotifica(rds.getNotificaGenerata().getIdNotifica());
+	                }
 	                break;
 	            }
 	        }
@@ -95,7 +99,8 @@ public class RichiestaDiAccessoDAO {
 	    }
 	    return null;
 	}
-
+	
+	
 	
 	public LinkedList<RichiestaDiAccesso> getListaRichiesteUtenteFromArrayListByIdUtente(int idUtente) {
 		LinkedList<RichiestaDiAccesso> listaRichiesteUtente = new LinkedList<RichiestaDiAccesso>();
@@ -106,6 +111,9 @@ public class RichiestaDiAccessoDAO {
 	    }
 	    return listaRichiesteUtente;
 	}
+	
+	
+	
 
 	
 	

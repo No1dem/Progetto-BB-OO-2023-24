@@ -176,7 +176,7 @@ public class loginGUI extends JFrame {
 			    		 
 			    		 	nickTextField.setText("");
 			    		 	passwordField.setText("");
-			    		 	setVisible(false);
+			    		 	
 			    		 	
 			    		 	Controller.checkDataBase(conn);
 			    		 	Controller.getMyIdUtenteByNickname(nickname);

@@ -38,6 +38,7 @@ public class CreazioneGruppoGUI extends JFrame {
 	public CreazioneGruppoGUI() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 570, 324);
+		setTitle("Creazione Gruppo");
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(148, 190, 233));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,7 +73,7 @@ public class CreazioneGruppoGUI extends JFrame {
 		textField.setColumns(10);
 
 		JLabel lblNewLabel_4 = new JLabel("(Max 30 car.)");
-		lblNewLabel_4.setBounds(223, 101, 114, 13);
+		lblNewLabel_4.setBounds(223, 103, 114, 13);
 		creazionePanel.add(lblNewLabel_4);
 		lblNewLabel_4.setFont(new Font("Arial", Font.BOLD, 10));
 
@@ -92,12 +93,12 @@ public class CreazioneGruppoGUI extends JFrame {
 		tagField.setColumns(10);
 
 		JButton btnAggiungiTag = new JButton("Aggiungi");
-		btnAggiungiTag.setBounds(383, 186, 90, 22);
+		btnAggiungiTag.setBounds(376, 186, 97, 22);
 		creazionePanel.add(btnAggiungiTag);
 		btnAggiungiTag.setFont(new Font("Arial Black", Font.PLAIN, 12));
 
 		JButton btnConferma = new JButton("Conferma");
-		btnConferma.setBounds(430, 235, 96, 23);
+		btnConferma.setBounds(421, 235, 105, 23);
 		creazionePanel.add(btnConferma);
 		btnConferma.setFont(new Font("Arial Black", Font.PLAIN, 12));
 
@@ -123,6 +124,8 @@ public class CreazioneGruppoGUI extends JFrame {
 				String nomeGruppo = textField.getText();
 				String descrizioneGruppo = textField_1.getText();
 				StringBuilder tagBuilder = new StringBuilder();
+				
+				
 				for (String tag : tagSet) {
 					tagBuilder.append(tag).append(","); 
 				}
@@ -130,8 +133,12 @@ public class CreazioneGruppoGUI extends JFrame {
 				if (tagGruppo.endsWith(",")) {
 					tagGruppo = tagGruppo.substring(0, tagGruppo.length() - 1); 
 				}
-				if (nomeGruppo.isEmpty() || descrizioneGruppo.isEmpty() || tagGruppo.isEmpty()) {
+				if (nomeGruppo.isEmpty() || descrizioneGruppo.isEmpty() ) {
 					JOptionPane.showMessageDialog(contentPane, "Inserire tutti i dati necessari.", "Errore creazione", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else if (tagSet.isEmpty()) {
+					JOptionPane.showMessageDialog(contentPane, "Inserire almeno un tag.", "Errore creazione", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 
@@ -159,8 +166,15 @@ public class CreazioneGruppoGUI extends JFrame {
 		btnAggiungiTag.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nuovoTag = tagField.getText().toUpperCase(); 
-				if (!nuovoTag.matches("^[A-Z]+$")) { 
-					JOptionPane.showMessageDialog(contentPane, "Il tag deve contenere solo lettere maiuscole.", "Errore", JOptionPane.ERROR_MESSAGE);
+				if (nuovoTag.isEmpty()) {
+					if (tagSet.isEmpty()) {
+						JOptionPane.showMessageDialog(contentPane, "Inserire almeno un tag.", "Errore creazione", JOptionPane.ERROR_MESSAGE);
+						return;	
+					}
+				}
+				
+				if (!nuovoTag.matches("^.*$")) { 
+					JOptionPane.showMessageDialog(contentPane, "Il tag deve contenere solo caratteri.", "Errore", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 

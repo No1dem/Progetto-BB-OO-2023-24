@@ -3,6 +3,7 @@ package guiUninaSocialGroup;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import classiDAO.Utente;
 import controller.Controller;
 
 import java.awt.Color;
@@ -20,15 +21,16 @@ public class ImpostazioniGUI extends JFrame {
 
     private JPanel contentPane;
     private JTextField urlFotoProfiloTextField;
-    private JTextField vecchioNickTextField;
     private JTextField nuovoNickTextField;
     private JPasswordField passwordModificaNickField;
     private JTextField nickEliminaAccountTextField;
     private JPasswordField passwordEliminaAccountField;
 
     public ImpostazioniGUI() {
+    	setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 403, 561);
+        setBounds(100, 100, 403, 535);
+        setTitle("Impostazioni Utente");
         contentPane = new JPanel();
         contentPane.setBackground(new Color(226, 235, 248));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -37,19 +39,14 @@ public class ImpostazioniGUI extends JFrame {
         
         JPanel panel = new JPanel();
         panel.setBackground(new Color(148, 190, 233));
-        panel.setBounds(26, 170, 325, 190);
+        panel.setBounds(26, 170, 325, 162);
         contentPane.add(panel);
         panel.setLayout(null);
         
         JButton modificaNicknameButton = new JButton("Modifica Nickname");
-        modificaNicknameButton.setBounds(66, 156, 200, 24);
+        modificaNicknameButton.setBounds(66, 129, 200, 24);
         panel.add(modificaNicknameButton);
         modificaNicknameButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-        
-        vecchioNickTextField = new JTextField();
-        vecchioNickTextField.setBounds(132, 82, 169, 19);
-        panel.add(vecchioNickTextField);
-        vecchioNickTextField.setColumns(10);
         
         nuovoNickTextField = new JTextField();
         nuovoNickTextField.setColumns(10);
@@ -62,23 +59,18 @@ public class ImpostazioniGUI extends JFrame {
         lblModificaNickname.setBounds(26, 10, 275, 18);
         panel.add(lblModificaNickname);
         
-        JLabel lbNewLabel_7 = new JLabel("Nuovo Nicnkname:");
+        JLabel lbNewLabel_7 = new JLabel("Nuovo Nickname:");
         lbNewLabel_7.setFont(new Font("Arial", Font.BOLD, 12));
         lbNewLabel_7.setBounds(16, 45, 106, 13);
         panel.add(lbNewLabel_7);
         
-        JLabel lblNewLabel_1 = new JLabel("Vecchio Nickname:");
-        lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 12));
-        lblNewLabel_1.setBounds(10, 85, 112, 13);
-        panel.add(lblNewLabel_1);
-        
         JLabel lblNewLabel_2 = new JLabel("Password:");
         lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 12));
-        lblNewLabel_2.setBounds(62, 124, 60, 13);
+        lblNewLabel_2.setBounds(66, 85, 60, 13);
         panel.add(lblNewLabel_2);
         
         passwordModificaNickField = new JPasswordField();
-        passwordModificaNickField.setBounds(132, 121, 169, 19);
+        passwordModificaNickField.setBounds(132, 82, 169, 19);
         panel.add(passwordModificaNickField);
         
         JPanel panel_1 = new JPanel();
@@ -152,7 +144,7 @@ public class ImpostazioniGUI extends JFrame {
         
         JPanel panel_2 = new JPanel();
         panel_2.setBackground(new Color(148, 190, 233));
-        panel_2.setBounds(25, 382, 326, 132);
+        panel_2.setBounds(26, 355, 326, 132);
         contentPane.add(panel_2);
         panel_2.setLayout(null);
         
@@ -182,16 +174,62 @@ public class ImpostazioniGUI extends JFrame {
         panel_2.add(lblNewLabel_5);
         
         JButton eliminaImmagineProfiloButton_1 = new JButton("Elimina");
+        eliminaImmagineProfiloButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		String nickname = nickEliminaAccountTextField.getText();
+        		String password = new String (passwordEliminaAccountField.getPassword());
+        		Utente utente = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente);
+        		
+        		if (nickname.isEmpty() || password.isEmpty()) {
+		            JOptionPane.showMessageDialog(contentPane, "Inserisci nickname e password.", "Errore di accesso", JOptionPane.ERROR_MESSAGE);
+		            return; 
+        		}
+        		
+        		if (nickname.equals(utente.getNickname())&& password.equals(utente.getPassword())) {
+		            JOptionPane.showMessageDialog(contentPane, "Utente eliminato con successo", "Eliminazione utente", JOptionPane.INFORMATION_MESSAGE);
+        			Controller.utenteDAO.deleteUtente(utente);
+        			Controller.tornaAllaSchermataLogin();
+        		}
+        		else {
+		            JOptionPane.showMessageDialog(contentPane, "I dati inseriti non sono corretti.", "Errore eliminazione", JOptionPane.ERROR_MESSAGE);
+        		}
+        			
+        	}
+        });
         eliminaImmagineProfiloButton_1.setFont(new Font("Arial Black", Font.PLAIN, 12));
         eliminaImmagineProfiloButton_1.setBounds(112, 97, 100, 25);
         panel_2.add(eliminaImmagineProfiloButton_1);
         modificaNicknameButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		String nuovoNick = nuovoNickTextField.getText();
-        		if (nuovoNick.length()>12) {
-                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname deve contenere massimo 12 caratteri", "Errore lunghezza Nickname", JOptionPane.ERROR_MESSAGE);
-
+        		String password = new String (passwordModificaNickField.getPassword());
+        		Utente utente = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente);        		
+        	
+        		if (nuovoNick.isEmpty() || password.isEmpty()) {
+        			JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Inserire tutti i dati", "Errore inserimento", JOptionPane.ERROR_MESSAGE);
+                    return;
         		}
+        		
+        		if (nuovoNick.length() > 12) {
+                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname deve contenere massimo 12 caratteri", "Errore lunghezza Nickname", JOptionPane.ERROR_MESSAGE);
+                    return;
+        		}
+        		
+        		if (nuovoNick.length() < 5) {
+                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname deve contenere almeno 5 caratteri", "Errore lunghezza Nickname", JOptionPane.ERROR_MESSAGE);
+                    return;
+        		}
+        		
+        		if (password.equals(utente.getPassword())){
+        			Controller.utenteDAO.updateNicknameByIdUtente(nuovoNick, Controller.myIdUtente);
+                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname è stato modificato con successo.\nVerrai reindirizzato alla schermata di login.", "Modifica effettuata Nickname", JOptionPane.INFORMATION_MESSAGE);
+        			Controller.tornaAllaSchermataLogin();
+        		}
+        		else
+                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Password errata!", "Errore inserimento", JOptionPane.ERROR_MESSAGE);
+
+        		
+        		 
         			
         	}
         });

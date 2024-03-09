@@ -62,7 +62,13 @@ public class NotificaDAO {
 	    }
 	}
 
-
+	public void deleteNotificaFromArrayListByIdNotifica(int idNotifica) {
+		for(Notifica n : listaNotifiche) {
+			if (n.getIdNotifica() == idNotifica) {
+				listaNotifiche.remove(n);
+			}
+		}
+	}
 		
 	public Notifica getNotificaFromArrayListById(int idNotifica) {
 	    for (Notifica notifica : listaNotifiche) {

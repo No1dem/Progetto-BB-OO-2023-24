@@ -27,15 +27,15 @@ public class NotificheGUI extends JFrame {
 
   
     public NotificheGUI() {
-    	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	setResizable(false);
+    	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("UninaSocialGroup");
-        setSize(412, 573);
+        setSize(412, 555);
         getContentPane().setLayout(null);
 
         mainPanel = new JPanel();
         mainPanel.setBackground(new Color(148, 190, 233));
-        mainPanel.setBounds(0, 0, 398, 542);
+        mainPanel.setBounds(0, 0, 398, 526);
         mainPanel.setLayout(null);
         
         titoloNotifichePanel = new JPanel();
@@ -77,9 +77,6 @@ public class NotificheGUI extends JFrame {
         mainPanel.add(titoloRichiesteDiAccessoPanel);
         
         
-       
-        
-        
         JLabel richiesteAccessoLabel = new JLabel("RICHIESTE DI ACCESSO");
         richiesteAccessoLabel.setBounds(58, 0, 269, 19);
         titoloRichiesteDiAccessoPanel.add(richiesteAccessoLabel);
@@ -114,26 +111,7 @@ public class NotificheGUI extends JFrame {
         panelRichiesteDiAccesso.setBackground(new Color(226, 235, 248));
         scrollPaneRichieste.setViewportView(panelRichiesteDiAccesso);
         panelRichiesteDiAccesso.setBounds(10, 288, 378, 206);
-        
-
-  
-        
         panelRichiesteDiAccesso.setLayout(new BoxLayout(panelRichiesteDiAccesso, BoxLayout.Y_AXIS));
-        
-        JButton btnNewButton = new JButton("Aggiorna");
-        btnNewButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-        btnNewButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		LinkedList<Notifica> listaNotificheUtente = new LinkedList<>();
-        		
-                listaNotificheUtente = Controller.notificaDAO.getListaNotificheByIdUtente(Controller.myIdUtente);
-                
-        		mostraRichiesteAccesso(listaNotificheUtente);
-        	}
-        });
-        btnNewButton.setBounds(285, 511, 103, 21);
-        
-        mainPanel.add(btnNewButton);
 
         
         LinkedList<Notifica> listaNotificheUtente = new LinkedList<>();
@@ -206,9 +184,31 @@ public class NotificheGUI extends JFrame {
         
         JButton accettaButton = new JButton("Accetta");
         panelBottoni.add(accettaButton);
+        accettaButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		RichiestaDiAccesso rda = Controller.richiestaDiAccessoDAO.getRichiestaFromArrayListByNotifica(notifica);
+        		Controller.richiestaDiAccessoDAO.updateRichiestaDiAccesso(rda, EnumStatiRichiesta.Accettato,Controller.notificaDAO);
+        		
+        		panelRichiesteDiAccesso.remove(panelRichiestaAccesso);
+               
+                panelRichiesteDiAccesso.revalidate();
+                panelRichiesteDiAccesso.repaint();
+        	}
+        });
 
         JButton rifiutaButton = new JButton("Rifiuta");
         panelBottoni.add(rifiutaButton);
+        rifiutaButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		RichiestaDiAccesso rda = Controller.richiestaDiAccessoDAO.getRichiestaFromArrayListByNotifica(notifica);
+        		Controller.richiestaDiAccessoDAO.updateRichiestaDiAccesso(rda, EnumStatiRichiesta.Rifiutato,Controller.notificaDAO);
+        		
+        		panelRichiesteDiAccesso.remove(panelRichiestaAccesso);
+                
+                panelRichiesteDiAccesso.revalidate();
+                panelRichiesteDiAccesso.repaint();
+        	}
+        });
         
         panelRichiestaAccesso.add(labelData);
         panelRichiestaAccesso.add(labelText);

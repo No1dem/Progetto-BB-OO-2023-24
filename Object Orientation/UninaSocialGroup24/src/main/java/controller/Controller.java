@@ -61,8 +61,8 @@ public class Controller {
 		Connessione=conn;
 	    try {
 	    	utenteDAO = new UtenteDAO(conn);
+	    	utenteDAO.stampaListaUtenti();
 	        gruppoDAO = new GruppoDAO(conn);
-	        gruppoDAO.stampaListaGruppi(gruppoDAO.getListaGruppi());
 	        amministratoreDAO = new AmministratoreDAO(conn,gruppoDAO,utenteDAO);
 	        creatoreGruppoDAO = new CreatoreGruppoDAO(conn,gruppoDAO,amministratoreDAO,utenteDAO);
 	        postDAO = new PostDAO(conn,utenteDAO,gruppoDAO);
@@ -151,8 +151,8 @@ public class Controller {
 		home.setVisible(false);
 		notifiche.setVisible(false);
 		creazioneGruppo.setVisible(false);
+		impostazioni.setVisible(false);
 		login.setVisible(true);
-		home = null;
 	}
 		
 	
