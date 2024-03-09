@@ -110,6 +110,8 @@ public class ImpostazioniGUI extends JFrame {
                             
                             JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Immagine caricata con successo.","Caricamento Immagine", JOptionPane.INFORMATION_MESSAGE);
                             
+                            Controller.aggiornaHome();
+                            
                         } catch (IOException ex) {
                             ex.printStackTrace();
                             JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Impossibile caricare l'immagine dall'URL fornito.\n "
@@ -127,9 +129,11 @@ public class ImpostazioniGUI extends JFrame {
         JButton eliminaImmagineProfiloButton = new JButton("Elimina");
         eliminaImmagineProfiloButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		
         		String Nickname = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getNickname();
         		Controller.utenteDAO.updateUrlFotoProfiloByNickname(Nickname,"");
                 JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Eliminazione avvenuta con successo", "Eliminazione foto profilo", JOptionPane.INFORMATION_MESSAGE);
+                Controller.aggiornaHome();
         	}
         });
         eliminaImmagineProfiloButton.setFont(new Font("Arial Black", Font.PLAIN, 12));

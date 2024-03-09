@@ -149,6 +149,8 @@ public class Controller {
 	
 	public static void tornaAllaSchermataLogin() {
 		home.setVisible(false);
+		notifiche.setVisible(false);
+		creazioneGruppo.setVisible(false);
 		login.setVisible(true);
 		home = null;
 	}
@@ -162,19 +164,13 @@ public class Controller {
 		impostazioni = new ImpostazioniGUI();
 		home.setVisible(true);
 		login.setVisible(false);
-		
-		
 	}
 	
 	
 	public static void aggiornaHome() {
-		
-		home.gruppiIscrittoPanel.revalidate();
-		home.gruppiIscrittoPanel.repaint();
-		home.gruppiCreatiPanel.removeAll();
+		home.caricaImmagineDelProfilo();
 		home.mostraGruppiIscritto(getListaGruppiUtenteIscrittoById(Controller.myIdUtente));
-		home.mostraGruppiCreati(Controller.creatoreGruppoDAO.getListaGruppiCreatiFromArrayListByIdUtente(Controller.myIdUtente,Controller.gruppoDAO));
-		
+		home.mostraGruppiCreati(Controller.creatoreGruppoDAO.getListaGruppiCreatiFromArrayListByIdUtente(Controller.myIdUtente,Controller.gruppoDAO));	
 	}
 	
 	
@@ -185,30 +181,34 @@ public class Controller {
 
 	
 	public static void apriNotifiche() {	
-		notifiche.setVisible(true);
-			
+		notifiche.setVisible(true);	
 	}
 	
 	
 	public static void aggiornaNotifiche() {
-		notifiche.revalidate();
-		notifiche.repaint();
+		notifiche.mostraNotifiche(notificaDAO.getListaNotificheByIdUtente(Controller.myIdUtente));
+		notifiche.mostraRichiesteAccesso(notificaDAO.getListaNotificheByIdUtente(Controller.myIdUtente));
 	}
 	
 	
 	public static void apriImpostazioni() {
 		notifiche.setVisible(false);
 		home.setVisible(false);
-		impostazioni.setVisible(true);
+		impostazioni.setVisible(true); 
+		creazioneGruppo.setVisible(false);
 	}
 	
 	
 		
 	public static void tornaAllaHome() {
 		home.setVisible(true);
-		impostazioni.setVisible(false);
-		//gruppo
+	    aggiornaHome();
+		creazioneGruppo.setVisible(false);
+		//gruppo.setVisible(false);
 	}
+	
+	
+	
 	
 }
 	

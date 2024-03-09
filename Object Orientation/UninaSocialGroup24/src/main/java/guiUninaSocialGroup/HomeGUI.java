@@ -36,6 +36,7 @@ public class HomeGUI extends JFrame {
 	private JPanel risultatiRicercaPanel;
 	public JPanel gruppiIscrittoPanel;
 	public JPanel gruppiCreatiPanel;
+	private static JLabel imgProfiloLabel;
 
 	/**
 	 * Create the frame.
@@ -123,25 +124,7 @@ public class HomeGUI extends JFrame {
 		contentPane.add(utentePanel);
 		utentePanel.setLayout(null);
 		
-		//***Immagine del profilo 
-		
-        String urlImmagineProfilo = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getUrlFotoProfilo(); 
-        
-        // Caricamento e impostazione dell'immagine del profilo
-        
-        ImageIcon profileImageIcon;
-        if (urlImmagineProfilo != null) {
-            try {
-           
-				URL url = new URL(urlImmagineProfilo);
-                Image profileImage = ImageIO.read(url);
-                profileImageIcon = new ImageIcon(profileImage);
-            } catch (Exception e) {
-                profileImageIcon = getDefaultProfileImageIcon();
-            }
-        } else {
-            profileImageIcon = getDefaultProfileImageIcon();
-        }
+	
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(124, 176, 228));
@@ -208,14 +191,13 @@ public class HomeGUI extends JFrame {
 		sfondoDefaultPanel.setLayout(null);
 		
 			
-		JLabel imgProfiloLabel = new JLabel("imgProfilo");
+		imgProfiloLabel = new JLabel("imgProfilo");
 		imgProfiloLabel.setBounds(0, 0, 185, 185);
 		imgProfiloLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		sfondoDefaultPanel.add(imgProfiloLabel);
 		imgProfiloLabel.setBackground(new Color(226, 235, 248));
 		imgProfiloLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		imgProfiloLabel.setIcon(profileImageIcon);
-				
+		caricaImmagineDelProfilo();
     
 		JLabel nicknameLabel = new JLabel(Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getNickname());
 		nicknameLabel.setBounds(20, 204, 165, 20);
@@ -226,13 +208,13 @@ public class HomeGUI extends JFrame {
 		
 		JPanel pannelloCentrale = new JPanel();
 		pannelloCentrale.setBackground(new Color(226, 235, 248));
-		pannelloCentrale.setBounds(207, 59, 444, 546);
+		pannelloCentrale.setBounds(214, 59, 437, 546);
 		contentPane.add(pannelloCentrale);
 		pannelloCentrale.setLayout(null);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(124, 176, 228));
-		panel_4.setBounds(20, 10, 426, 269);
+		panel_4.setBounds(10, 10, 426, 269);
 		pannelloCentrale.add(panel_4);
 		panel_4.setLayout(null);
 		
@@ -254,7 +236,7 @@ public class HomeGUI extends JFrame {
 		JPanel panel_4_1 = new JPanel();
 		panel_4_1.setLayout(null);
 		panel_4_1.setBackground(new Color(124, 176, 228));
-		panel_4_1.setBounds(20, 289, 426, 247);
+		panel_4_1.setBounds(10, 289, 426, 247);
 		pannelloCentrale.add(panel_4_1);
 		
 		gruppiCreatiPanel = new JPanel();
@@ -264,7 +246,7 @@ public class HomeGUI extends JFrame {
 		panel_4_1.add(gruppiCreatiPanel);
 		
 		JLabel lblGruppiCreati = new JLabel();
-		lblGruppiCreati.setText("GRUPPI CREATI\r\n");
+		lblGruppiCreati.setText("I TUOI GRUPPI \r\n");
 		lblGruppiCreati.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGruppiCreati.setFont(new Font("Arial", Font.BOLD, 18));
 		lblGruppiCreati.setBackground(new Color(148, 190, 233));
@@ -315,7 +297,7 @@ public class HomeGUI extends JFrame {
 	
 	private ImageIcon getDefaultProfileImageIcon() {
 	    
-	    ImageIcon defaultProfileImageIcon = new ImageIcon(getClass().getResource("/defaultFotoProfilo3.jpg"));
+	    ImageIcon defaultProfileImageIcon = new ImageIcon(getClass().getResource("/defaultFotoProfiloUser3.png"));
 	    return defaultProfileImageIcon;
 	}
 	
@@ -550,6 +532,26 @@ public class HomeGUI extends JFrame {
         return gruppoPanel;
     }
 	
+	
+	public void caricaImmagineDelProfilo() { 
+        String urlImmagineProfilo = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getUrlFotoProfilo(); 
+        ImageIcon profileImageIcon;
+        if (urlImmagineProfilo != null) {
+            try {
+				URL url = new URL(urlImmagineProfilo);
+                Image profileImage = ImageIO.read(url);
+                profileImageIcon = new ImageIcon(profileImage);
+                imgProfiloLabel.setIcon(profileImageIcon);
+               
+            } catch (Exception e) {
+                profileImageIcon = getDefaultProfileImageIcon();
+                imgProfiloLabel.setIcon(profileImageIcon);
+            }
+        } else {
+            profileImageIcon = getDefaultProfileImageIcon();
+            imgProfiloLabel.setIcon(profileImageIcon);
+        }
+	}
 		
 }
 

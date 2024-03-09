@@ -150,7 +150,7 @@ public class NotificheGUI extends JFrame {
     }
    
 
-    private void mostraRichiesteAccesso(List<Notifica> listaNotifiche) {
+    public void mostraRichiesteAccesso(List<Notifica> listaNotifiche) {
         panelRichiesteDiAccesso.removeAll();
         for (Notifica notifica : listaNotifiche) {
             if (notifica.getTipoNotifica() == EnumTipoNotifica.Accesso) {
@@ -164,7 +164,7 @@ public class NotificheGUI extends JFrame {
         }
     }
 
-    private void mostraNotifiche(List<Notifica> listaNotifiche) {
+    public void mostraNotifiche(List<Notifica> listaNotifiche) {
         panelNotifiche.removeAll();  
         for (Notifica notifica : listaNotifiche) {
             if (notifica.getTipoNotifica() != EnumTipoNotifica.Accesso) {
