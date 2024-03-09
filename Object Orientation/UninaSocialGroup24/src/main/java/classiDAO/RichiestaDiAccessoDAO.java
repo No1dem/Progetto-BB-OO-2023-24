@@ -97,5 +97,16 @@ public class RichiestaDiAccessoDAO {
 	}
 
 	
+	public LinkedList<RichiestaDiAccesso> getListaRichiesteUtenteFromArrayListByIdUtente(int idUtente) {
+		LinkedList<RichiestaDiAccesso> listaRichiesteUtente = new LinkedList<RichiestaDiAccesso>();
+	    for (RichiestaDiAccesso richiesta : listaRichiesteDiAccesso) {
+	        if (richiesta.getUtenteRichiesta().getIdUtente() == idUtente) {
+	        	listaRichiesteUtente.add(richiesta);
+	        }
+	    }
+	    return listaRichiesteUtente;
+	}
+
+	
 	
 }

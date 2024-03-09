@@ -173,18 +173,16 @@ public class loginGUI extends JFrame {
 			     if (loginCorretto) {
 			    	 
 			    	 try {	
+			    		 
+			    		 	nickTextField.setText("");
+			    		 	passwordField.setText("");
 			    		 	setVisible(false);
 			    		 	
 			    		 	Controller.checkDataBase(conn);
 			    		 	Controller.getMyIdUtenteByNickname(nickname);
 			    		 	
-			   
-							HomeGUI home = new HomeGUI();
-							home.setVisible(true);
-			    		 
-							
-							
-							
+							Controller.apriHome();
+								
 					 } catch (SQLException exc) {
 							exc.printStackTrace();
 					   }

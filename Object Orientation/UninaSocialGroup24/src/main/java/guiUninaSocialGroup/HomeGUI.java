@@ -34,24 +34,8 @@ public class HomeGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField barraDiRicercaTxtField;
 	private JPanel risultatiRicercaPanel;
-	private JPanel gruppiIscrittoPanel;
-	private JPanel gruppiCreatiPanel;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HomeGUI frame = new HomeGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public JPanel gruppiIscrittoPanel;
+	public JPanel gruppiCreatiPanel;
 
 	/**
 	 * Create the frame.
@@ -171,12 +155,8 @@ public class HomeGUI extends JFrame {
 		impostazioniButton.setBounds(20, 10, 165, 21);
 		panel_3.add(impostazioniButton);
 		impostazioniButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ImpostazioniGUI impostazioniGUI = new ImpostazioniGUI();
-					
-					setVisible(false);
-					impostazioniGUI.setVisible(true);
-				       
+			public void actionPerformed(ActionEvent e) {	
+					Controller.apriImpostazioni();	       
 				}
 			});
 		impostazioniButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
@@ -186,8 +166,7 @@ public class HomeGUI extends JFrame {
 		JButton NotificheButton = new JButton("Notifiche");
 		NotificheButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NotificheGUI notificheGUI = new NotificheGUI();
-				notificheGUI.setVisible(true);
+				Controller.apriNotifiche();
 			}
 		});
 		NotificheButton.setBounds(20, 41, 165, 21);
@@ -198,10 +177,7 @@ public class HomeGUI extends JFrame {
 		JButton creaGruppoButton = new JButton("Crea gruppo");
 		creaGruppoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-	                CreazioneGruppoGUI creazioneGruppoGUI = new CreazioneGruppoGUI();
-	                creazioneGruppoGUI.setVisible(true);
-	            
+	                Controller.apriCreazioneGruppo();   
 			}
 		});
 		creaGruppoButton.setBounds(20, 75, 165, 21);
@@ -214,9 +190,7 @@ public class HomeGUI extends JFrame {
 		panel_3.add(logOutButton);
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				loginGUI log = new loginGUI();;
-				log.setVisible(true);
+				Controller.tornaAllaSchermataLogin();
 			}
 		});
 		logOutButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
@@ -244,22 +218,22 @@ public class HomeGUI extends JFrame {
 				
     
 		JLabel nicknameLabel = new JLabel(Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getNickname());
-		nicknameLabel.setBounds(20, 214, 165, 20);
+		nicknameLabel.setBounds(20, 204, 165, 20);
 		panel_6.add(nicknameLabel);
 		nicknameLabel.setFont(new Font("Arial", Font.BOLD, 15));
 		nicknameLabel.setForeground(Color.BLACK);
 		nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(226, 235, 248));
-		panel_1.setBounds(207, 59, 444, 546);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
+		JPanel pannelloCentrale = new JPanel();
+		pannelloCentrale.setBackground(new Color(226, 235, 248));
+		pannelloCentrale.setBounds(207, 59, 444, 546);
+		contentPane.add(pannelloCentrale);
+		pannelloCentrale.setLayout(null);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(124, 176, 228));
 		panel_4.setBounds(20, 10, 426, 269);
-		panel_1.add(panel_4);
+		pannelloCentrale.add(panel_4);
 		panel_4.setLayout(null);
 		
 		gruppiIscrittoPanel = new JPanel();
@@ -281,7 +255,7 @@ public class HomeGUI extends JFrame {
 		panel_4_1.setLayout(null);
 		panel_4_1.setBackground(new Color(124, 176, 228));
 		panel_4_1.setBounds(20, 289, 426, 247);
-		panel_1.add(panel_4_1);
+		pannelloCentrale.add(panel_4_1);
 		
 		gruppiCreatiPanel = new JPanel();
 		gruppiCreatiPanel.setBackground(new Color(226, 235, 248));
@@ -290,23 +264,23 @@ public class HomeGUI extends JFrame {
 		panel_4_1.add(gruppiCreatiPanel);
 		
 		JLabel lblGruppiCreati = new JLabel();
-		lblGruppiCreati.setText("GRUPPI CREATI");
+		lblGruppiCreati.setText("GRUPPI CREATI\r\n");
 		lblGruppiCreati.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGruppiCreati.setFont(new Font("Arial", Font.BOLD, 18));
 		lblGruppiCreati.setBackground(new Color(148, 190, 233));
-		lblGruppiCreati.setBounds(81, 10, 253, 20);
+		lblGruppiCreati.setBounds(116, 10, 183, 20);
 		panel_4_1.add(lblGruppiCreati);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(226, 235, 248));
-		panel.setBounds(631, 58, 355, 547);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		JPanel ricercaPanel = new JPanel();
+		ricercaPanel.setBackground(new Color(226, 235, 248));
+		ricercaPanel.setBounds(631, 58, 355, 547);
+		contentPane.add(ricercaPanel);
+		ricercaPanel.setLayout(null);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(new Color(124, 176, 228));
 		panel_5.setBounds(30, 10, 315, 527);
-		panel.add(panel_5);
+		ricercaPanel.add(panel_5);
 		panel_5.setLayout(null);
 		
 		risultatiRicercaPanel = new JPanel();
@@ -365,7 +339,7 @@ public class HomeGUI extends JFrame {
 	        for (Gruppo gruppo : listaGruppiRicerca) {
 	            JPanel panelGruppo = new JPanel();
 	            panelGruppo.setLayout(new BoxLayout(panelGruppo, BoxLayout.Y_AXIS));
-	            panelGruppo.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Aggiungi una linea al pannello del gruppo
+	            panelGruppo.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
 	            panelGruppo.setBackground(new Color(226, 235, 248));
 	            
 	            JLabel labelNomeGruppo = new JLabel("Nome: " + gruppo.getNomeGruppo());
@@ -389,13 +363,40 @@ public class HomeGUI extends JFrame {
 	            panelGruppo.add(labelCreatore);
 
 	   
-	            JButton buttonIscriviti = new JButton("Iscriviti");
-	            buttonIscriviti.addActionListener(new ActionListener() {
-	                public void actionPerformed(ActionEvent e) {
-	               
+	            panelGruppo.addMouseListener(new MouseAdapter() {
+	                @Override
+	                public void mouseClicked(MouseEvent e) {
+	                	
+	                	if (Controller.controlloEsistenzaRichiestaDiAccessoGruppoInAttesa(gruppo))
+	                		JOptionPane.showMessageDialog(panelGruppi, "Richiesta di accesso in attesa.");
+	                	else if (!Controller.controlloEsistenzaIscrizioneGruppo(gruppo)) {
+	                			String messaggio = "Per accedere al gruppo devi prima inviare la richiesta di iscrizione.";
+	                			int choice = JOptionPane.showOptionDialog(null, messaggio, "Richiesta di accesso", JOptionPane.YES_NO_OPTION,
+	                        	
+	                			JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Invia", "Annulla"}, "default");
+
+	                			if (choice == JOptionPane.YES_OPTION) {
+	                				// ******
+	                				// Invia richiesta
+	                			} 
+	                	}
+	                	else {
+	                		//*******
+	                		//Apri schermata Gruppo
+	                	}
+	                		
+	                }
+	                
+	                @Override
+	                public void mouseEntered(MouseEvent e) {
+	                    panelGruppo.setBackground(Color.WHITE);
+	                }
+	                
+	                @Override
+	                public void mouseExited(MouseEvent e) {
+	                    panelGruppo.setBackground(new Color (226, 235, 248));
 	                }
 	            });
-	            panelGruppo.add(buttonIscriviti);
 
 	            panelGruppi.add(panelGruppo);
 
@@ -424,7 +425,7 @@ public class HomeGUI extends JFrame {
 	
 	
 	
-	private void mostraGruppiIscritto(LinkedList<Gruppo> listaGruppiIscritto) {
+	public void mostraGruppiIscritto(LinkedList<Gruppo> listaGruppiIscritto) {
         gruppiIscrittoPanel.removeAll();  
         
         JPanel panelGruppi = new JPanel();
@@ -457,18 +458,18 @@ public class HomeGUI extends JFrame {
         gruppoPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Azioni da eseguire quando il pannello viene cliccato
+            	
                 JOptionPane.showMessageDialog(null, "Hai cliccato sul pannello!");
             }
             
             public void mouseEntered(MouseEvent e) {
-                // Cambia il colore del pannello quando il cursore del mouse entra
+                
                 gruppoPanel.setBackground(Color.WHITE);
             }
             
             @Override
             public void mouseExited(MouseEvent e) {
-                // Cambia il colore del pannello quando il cursore del mouse esce
+                
                 gruppoPanel.setBackground(new Color (226, 235, 248));
             }
         });
@@ -489,7 +490,7 @@ public class HomeGUI extends JFrame {
     }
 	
 	
-	private void mostraGruppiCreati(LinkedList<Gruppo> listaGruppiCreati) {
+	public void mostraGruppiCreati(LinkedList<Gruppo> listaGruppiCreati) {
         gruppiCreatiPanel.removeAll();  
         
         JPanel panelGruppi = new JPanel();
@@ -519,6 +520,24 @@ public class HomeGUI extends JFrame {
         gruppoPanel.setBackground(new Color(226, 235, 248));
         gruppoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         gruppoPanel.setLayout(new BoxLayout(gruppoPanel, BoxLayout.Y_AXIS));
+        
+        gruppoPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+   
+                JOptionPane.showMessageDialog(null, "Hai cliccato sul pannello!");
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                gruppoPanel.setBackground(Color.WHITE);
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                gruppoPanel.setBackground(new Color (226, 235, 248));
+            }
+        });
         
         
         JLabel labelNome= new JLabel("Nome gruppo: " + g.getNomeGruppo());
