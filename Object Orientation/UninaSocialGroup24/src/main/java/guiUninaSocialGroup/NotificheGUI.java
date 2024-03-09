@@ -25,13 +25,7 @@ public class NotificheGUI extends JFrame {
     private JPanel panelNotifiche;
     private JPanel panelRichiesteDiAccesso;
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            NotificheGUI frame = new NotificheGUI();
-            frame.setVisible(true);
-        });
-    }
-
+  
     public NotificheGUI() {
     	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	setResizable(false);

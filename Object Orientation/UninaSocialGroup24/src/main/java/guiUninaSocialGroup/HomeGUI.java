@@ -297,7 +297,7 @@ public class HomeGUI extends JFrame {
 	
 	private ImageIcon getDefaultProfileImageIcon() {
 	    
-	    ImageIcon defaultProfileImageIcon = new ImageIcon(getClass().getResource("/defaultFotoProfiloUser3.png"));
+	    ImageIcon defaultProfileImageIcon = new ImageIcon(getClass().getResource("/defaultFotoProfilo3.jpg"));
 	    return defaultProfileImageIcon;
 	}
 	
