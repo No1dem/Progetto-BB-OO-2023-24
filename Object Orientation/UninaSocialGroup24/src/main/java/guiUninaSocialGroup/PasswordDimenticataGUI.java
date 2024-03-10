@@ -27,25 +27,25 @@ public class PasswordDimenticataGUI extends JFrame {
         // Campo nickname
         JLabel lblNickname = new JLabel("Nickname:");
         lblNickname.setFont(new Font("Arial", Font.BOLD, 13));
-        lblNickname.setBounds(50, 50, 100, 20);
+        lblNickname.setBounds(92, 84, 100, 20);
         getContentPane().add(lblNickname);
         JTextField txtNickname = new JTextField();
-        txtNickname.setBounds(118, 51, 221, 20);
+        txtNickname.setBounds(202, 85, 221, 20);
         getContentPane().add(txtNickname);
 
         // Campo email
         JLabel lblEmail = new JLabel("Email:");
         lblEmail.setFont(new Font("Arial", Font.BOLD, 13));
-        lblEmail.setBounds(50, 100, 100, 20);
+        lblEmail.setBounds(116, 114, 100, 20);
         getContentPane().add(lblEmail);
         JTextField txtEmail = new JTextField();
-        txtEmail.setBounds(118, 100, 221, 20);
+        txtEmail.setBounds(202, 115, 221, 20);
         getContentPane().add(txtEmail);
 
         // Bottone richiedi codice di sicurezza
         JButton btnRichiediCodice = new JButton("Richiedi Codice di Sicurezza");
         btnRichiediCodice.setFont(new Font("Tahoma", Font.PLAIN, 10));
-        btnRichiediCodice.setBounds(162, 145, 177, 30);
+        btnRichiediCodice.setBounds(228, 145, 177, 30);
         getContentPane().add(btnRichiediCodice);
         btnRichiediCodice.addActionListener(new ActionListener() {
             @Override
@@ -95,32 +95,33 @@ public class PasswordDimenticataGUI extends JFrame {
         lblCodiceSicurezza.setBounds(50, 200, 200, 20);
         getContentPane().add(lblCodiceSicurezza);
         JTextField txtCodiceSicurezza = new JTextField();
-        txtCodiceSicurezza.setBounds(239, 201, 100, 20);
+        txtCodiceSicurezza.setBounds(266, 201, 100, 20);
         getContentPane().add(txtCodiceSicurezza);
         
-        
-        // Campo password
-        JLabel lblPassword = new JLabel("Password:");
-        lblPassword.setFont(new Font("Arial", Font.BOLD, 13));
-        lblPassword.setBounds(50, 292, 100, 20);
-        getContentPane().add(lblPassword);
-        
-        
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        getContentPane().add(panel);
-        
         Image imgNuovaPasswordLogo  = new ImageIcon(this.getClass().getResource("/nuovaPasswordLogo.png")).getImage();
-      
-        JLabel lblNuovaPasswordLogo = new JLabel();
-        lblNuovaPasswordLogo.setBounds(8, 280, 32, 32);
-        panel.add(lblNuovaPasswordLogo);
-        lblNuovaPasswordLogo.setIcon(new ImageIcon(imgNuovaPasswordLogo)); 
+        
 
         // Bottone recupera password
         JButton btnRecuperaPassword = new JButton("Recupera Password");
-        btnRecuperaPassword.setBounds(162, 247, 177, 30);
+        btnRecuperaPassword.setBounds(228, 249, 177, 30);
         getContentPane().add(btnRecuperaPassword);
+        
+          JLabel lblNuovaPasswordLogo = new JLabel();
+          lblNuovaPasswordLogo.setBounds(10, 10, 72, 78);
+          getContentPane().add(lblNuovaPasswordLogo);
+          lblNuovaPasswordLogo.setIcon(new ImageIcon(imgNuovaPasswordLogo));
+          
+          
+          // Campo password
+          JLabel lblPassword = new JLabel("Password:");
+          lblPassword.setBounds(116, 254, 100, 20);
+          getContentPane().add(lblPassword);
+          lblPassword.setFont(new Font("Arial", Font.BOLD, 13));
+          
+          JLabel lblNewLabel = new JLabel("RECUPERA PASSWORD");
+          lblNewLabel.setFont(new Font("Arial", Font.BOLD, 15));
+          lblNewLabel.setBounds(167, 34, 183, 40);
+          getContentPane().add(lblNewLabel);
         
         
      
