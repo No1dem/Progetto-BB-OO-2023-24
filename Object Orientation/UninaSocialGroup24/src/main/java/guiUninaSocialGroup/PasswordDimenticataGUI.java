@@ -3,7 +3,8 @@ package guiUninaSocialGroup;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument.Content;
 
-
+import controller.Controller;
+import controller.PwDimenticataController;
 import dataBaseConnection.ConnectDB;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class PasswordDimenticataGUI extends JFrame {
     public PasswordDimenticataGUI() {
@@ -68,6 +70,16 @@ public class PasswordDimenticataGUI extends JFrame {
 
                 
                 if (utenteEsiste) {
+                	 try {	
+			    		
+			    		 	
+			    		 	Controller.checkDataBase(conn);
+			    		 	
+								
+					 } catch (SQLException exc) {
+							exc.printStackTrace();
+					   }
+                	
                     int codiceSicurezza = (int) (Math.random() * 900) + 100; 
                     JOptionPane.showMessageDialog(getContentPane(), "Il codice di sicurezza è: " + codiceSicurezza, "Codice di Sicurezza", JOptionPane.INFORMATION_MESSAGE);
                 } else {
