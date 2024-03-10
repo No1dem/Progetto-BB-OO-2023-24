@@ -33,18 +33,19 @@ public class UtenteDAO {
 		}
 	}
 	
-	public void insertNuovoUtente(Utente ut) {
-		String query="INSERT INTO Utente(NomeUtente,CognomeUtente, Nickname, Email, Password, Biografia,UrlFotoProfilo) VALUES(?,?,?,?,?,?,?)";
+	public void insertNuovoUtente(String nomeUtente, String cognomeUtente ,String nickname , 
+			String email, String password , String biografia) throws SQLException {
+		String query="INSERT INTO Utente(NomeUtente,CognomeUtente, Nickname, Email, Password, Biografia) VALUES(?,?,?,?,?,?)";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
-			pstmt.setString(1,ut.getNomeUtente());
-			pstmt.setString(2,ut.getCognomeUtente());
-			pstmt.setString(3,ut.getNickname());
-			pstmt.setString(4,ut.getEmail());
-			pstmt.setString(5,ut.getPassword());
-			pstmt.setString(6,ut.getBiografia());
-			pstmt.setString(7,ut.getUrlFotoProfilo());
+			pstmt.setString(1,nomeUtente);
+			pstmt.setString(2,cognomeUtente);
+			pstmt.setString(3,nickname);
+			pstmt.setString(4,email);
+			pstmt.setString(5,password);
+			pstmt.setString(6,biografia);
+	
 			pstmt.executeUpdate();
-			listaUtente.add(ut);
+			
 			pstmt.close();
 		}
 		catch(SQLException e) {

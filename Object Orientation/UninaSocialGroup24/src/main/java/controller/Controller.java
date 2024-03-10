@@ -24,6 +24,7 @@ import classiDAO.RichiestaDiAccesso;
 import classiDAO.RichiestaDiAccessoDAO;
 import classiDAO.Utente;
 import classiDAO.UtenteDAO;
+import dataBaseConnection.ConnectDB;
 import guiUninaSocialGroup.CreazioneGruppoGUI;
 import guiUninaSocialGroup.HomeGUI;
 import guiUninaSocialGroup.ImpostazioniGUI;
@@ -55,23 +56,24 @@ public class Controller {
     public static int myIdUtente;
 
 	public static void main(String[] args) {
+		Connessione = ConnectDB.getConnection();	
 		login = new loginGUI();
+		registrazione = new registrazioneUtenteGUI();
 		login.setVisible(true);
 	}
 
 	public static void checkDataBase(Connection conn) throws SQLException {
-		Connessione=conn;
 	    try {
-	    	utenteDAO = new UtenteDAO(conn);
+	    	utenteDAO = new UtenteDAO(Connessione);
 	    	utenteDAO.stampaListaUtenti();
-	        gruppoDAO = new GruppoDAO(conn);
-	        amministratoreDAO = new AmministratoreDAO(conn,gruppoDAO,utenteDAO);
-	        creatoreGruppoDAO = new CreatoreGruppoDAO(conn,gruppoDAO,amministratoreDAO,utenteDAO);
-	        postDAO = new PostDAO(conn,utenteDAO,gruppoDAO);
-	        commentoDAO = new CommentoDAO(conn,postDAO);
-	        likeDAO = new LikeDAO(conn,postDAO,commentoDAO,utenteDAO);
-	        notificaDAO = new NotificaDAO(conn,postDAO,likeDAO,commentoDAO);
-	        richiestaDiAccessoDAO = new RichiestaDiAccessoDAO(conn,utenteDAO,creatoreGruppoDAO,gruppoDAO,notificaDAO);
+	        gruppoDAO = new GruppoDAO(Connessione);
+	        amministratoreDAO = new AmministratoreDAO(Connessione,gruppoDAO,utenteDAO);
+	        creatoreGruppoDAO = new CreatoreGruppoDAO(Connessione,gruppoDAO,amministratoreDAO,utenteDAO);
+	        postDAO = new PostDAO(Connessione,utenteDAO,gruppoDAO);
+	        commentoDAO = new CommentoDAO(Connessione,postDAO);
+	        likeDAO = new LikeDAO(Connessione,postDAO,commentoDAO,utenteDAO);
+	        notificaDAO = new NotificaDAO(Connessione,postDAO,likeDAO,commentoDAO);
+	        richiestaDiAccessoDAO = new RichiestaDiAccessoDAO(Connessione,utenteDAO,creatoreGruppoDAO,gruppoDAO,notificaDAO);
 	              
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -126,18 +128,11 @@ public class Controller {
 		return true;
 	}
 	
-	public static boolean registraUtente(String nomeUtente, String cognomeUtente, String nickname, String Biografia, String Email, String password) {
-		String query = "INSERT INTO Utente(NomeUtente, CognomeUtente, Nickname, Biografia, Email, Password) VALUES (?, ?, ?, ?, ?, ?)";
-		try(PreparedStatement stmt = Connessione.prepareStatement(query)){
-			stmt.setString(1, nomeUtente);
-			stmt.setString(2, cognomeUtente);
-			stmt.setString(3, nickname);
-			stmt.setString(4, Biografia);
-			stmt.setString(5, Email);
-			stmt.setString(6, password);
-			stmt.executeUpdate();
-			
-			utenteDAO = new UtenteDAO(Connessione);
+	public static boolean registraUtente(String nomeUtente, String cognomeUtente, String nickname,
+			String biografia, String email, String password) {
+		try{
+			UtenteDAO utenteDAO = new UtenteDAO(Connessione);
+			utenteDAO.insertNuovoUtente(nomeUtente, cognomeUtente, nickname, email, password, biografia);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -227,12 +222,19 @@ public class Controller {
 		//gruppo.setVisible(false);
 	}
 	
+	
 	public static void apriRegistrazioneUtente() {
-	//  registrazione.setVisible(true);
+	    registrazione.setVisible(true);
+	    login.setVisible(false);
 	}
 	
-	 
+	
+	public static void chiudiRegistrazioneUtente() {
+		registrazione.setVisible(false);
+		login.setVisible(true);
 	}
+	 
+}
 	
 	
 	

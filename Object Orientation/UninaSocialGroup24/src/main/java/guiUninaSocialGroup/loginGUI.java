@@ -89,6 +89,7 @@ public class loginGUI extends JFrame {
 		registrazioneButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		registrazioneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Controller.apriRegistrazioneUtente();
 			}
 		});
 		registrazioneButton.setBounds(404, 290, 112, 23);
@@ -165,10 +166,9 @@ public class loginGUI extends JFrame {
 			            return; 
 			     }
 			     
-			     new ConnectDB();
-			     Connection conn = ConnectDB.getConnection();
+			     
 			           
-			     boolean loginCorretto = new LoginController().login(nickname, password, conn);
+			     boolean loginCorretto = new LoginController().login(nickname, password, Controller.Connessione);
 			        
 			     if (loginCorretto) {
 			    	 
@@ -178,7 +178,7 @@ public class loginGUI extends JFrame {
 			    		 	passwordField.setText("");
 			    		 	
 			    		 	
-			    		 	Controller.checkDataBase(conn);
+			    		 	Controller.checkDataBase(Controller.Connessione);
 			    		 	Controller.getMyIdUtenteByNickname(nickname);
 			    		 	
 							Controller.apriHome();

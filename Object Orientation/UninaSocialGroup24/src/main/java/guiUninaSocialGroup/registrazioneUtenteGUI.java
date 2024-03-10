@@ -136,21 +136,21 @@ public class registrazioneUtenteGUI extends JFrame {
                 }
 
                 if (nickname.length() > 20) {
-                    JOptionPane.showMessageDialog(contentPane, "Il nickname può contenere massimo 20 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(contentPane, "Il nickname puÃ² contenere massimo 20 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
                 if (password.length() > 30) {
-                    JOptionPane.showMessageDialog(contentPane, "La password può contenere massimo 30 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(contentPane, "La password puÃ² contenere massimo 30 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-
+                
                 boolean registrazioneRiuscita = Controller.registraUtente(nome, cognome, nickname, biografia, email, password);
 
                 if (registrazioneRiuscita) {
                     JOptionPane.showMessageDialog(contentPane, "Registrazione avvenuta con successo", "Conferma", JOptionPane.INFORMATION_MESSAGE);
-                    dispose(); // Chiude la finestra di registrazione dopo il successo
+                    Controller.chiudiRegistrazioneUtente();
                 } else {
                     JOptionPane.showMessageDialog(contentPane, "Errore durante la registrazione", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
