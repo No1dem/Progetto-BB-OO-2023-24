@@ -63,7 +63,7 @@ public class loginGUI extends JFrame {
 		setTitle("UninaSocialGroup-LogIn");
 		setBackground(new Color(240, 240, 240));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 540, 360);
+		setBounds(100, 100, 541, 360);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(148, 190, 233));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
