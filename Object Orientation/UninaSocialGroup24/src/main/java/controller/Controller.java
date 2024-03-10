@@ -29,6 +29,7 @@ import guiUninaSocialGroup.HomeGUI;
 import guiUninaSocialGroup.ImpostazioniGUI;
 import guiUninaSocialGroup.NotificheGUI;
 import guiUninaSocialGroup.loginGUI;
+import guiUninaSocialGroup.registrazioneUtenteGUI;
 
 public class Controller {
 	
@@ -37,6 +38,7 @@ public class Controller {
 	public static NotificheGUI notifiche;
 	public static CreazioneGruppoGUI creazioneGruppo;
 	public static ImpostazioniGUI impostazioni;
+	public static registrazioneUtenteGUI registrazione;
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -124,7 +126,25 @@ public class Controller {
 		return true;
 	}
 	
-		
+	public static boolean registraUtente(String nomeUtente, String cognomeUtente, String nickname, String Biografia, String Email, String password) {
+		String query = "INSERT INTO Utente(NomeUtente, CognomeUtente, Nickname, Biografia, Email, Password) VALUES (?, ?, ?, ?, ?, ?)";
+		try(PreparedStatement stmt = Connessione.prepareStatement(query)){
+			stmt.setString(1, nomeUtente);
+			stmt.setString(2, cognomeUtente);
+			stmt.setString(3, nickname);
+			stmt.setString(4, Biografia);
+			stmt.setString(5, Email);
+			stmt.setString(6, password);
+			stmt.executeUpdate();
+			
+			utenteDAO = new UtenteDAO(Connessione);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;	
+	}
 		
 	public static boolean controlloEsistenzaIscrizioneGruppo(Gruppo g) {
 		for (Utente utente : g.getListaUtentiIscritti()) {
@@ -207,7 +227,9 @@ public class Controller {
 		//gruppo.setVisible(false);
 	}
 	
-	
+	public static void apriRegistrazioneUtente() {
+	//  registrazione.setVisible(true);
+	}
 	
 	 
 	}
