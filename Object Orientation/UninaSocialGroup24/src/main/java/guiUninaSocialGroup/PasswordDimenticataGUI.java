@@ -27,7 +27,7 @@ public class PasswordDimenticataGUI extends JFrame {
         setTitle("Recupera Password");
         setSize(541, 360);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setBackground(new Color(140, 190, 233));
         getContentPane().setLayout(null);
 

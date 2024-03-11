@@ -69,7 +69,6 @@ public class Controller {
 	public static void checkDataBase(Connection conn) throws SQLException {
 	    try {
 	    	utenteDAO = new UtenteDAO(Connessione);
-	    	utenteDAO.stampaListaUtenti();
 	        gruppoDAO = new GruppoDAO(Connessione);
 	        amministratoreDAO = new AmministratoreDAO(Connessione,gruppoDAO,utenteDAO);
 	        creatoreGruppoDAO = new CreatoreGruppoDAO(Connessione,gruppoDAO,amministratoreDAO,utenteDAO);
@@ -229,7 +228,6 @@ public class Controller {
 	
 	public static void apriRegistrazioneUtente() {
 	    registrazione.setVisible(true);
-	    login.setVisible(false);
 	}
 	
 	

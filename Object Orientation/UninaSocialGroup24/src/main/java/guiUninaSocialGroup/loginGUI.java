@@ -72,7 +72,7 @@ public class loginGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton passwordDimenticataButton = new JButton("Modifica Password");
+		JButton passwordDimenticataButton = new JButton("Recupera Password");
 		passwordDimenticataButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		passwordDimenticataButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
