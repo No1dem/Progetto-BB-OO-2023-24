@@ -29,6 +29,7 @@ import guiUninaSocialGroup.CreazioneGruppoGUI;
 import guiUninaSocialGroup.HomeGUI;
 import guiUninaSocialGroup.ImpostazioniGUI;
 import guiUninaSocialGroup.NotificheGUI;
+import guiUninaSocialGroup.PasswordDimenticataGUI;
 import guiUninaSocialGroup.loginGUI;
 import guiUninaSocialGroup.registrazioneUtenteGUI;
 
@@ -40,6 +41,7 @@ public class Controller {
 	public static CreazioneGruppoGUI creazioneGruppo;
 	public static ImpostazioniGUI impostazioni;
 	public static registrazioneUtenteGUI registrazione;
+	//public static PasswordDimenticataGUI PasswordDimenticata;
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -60,6 +62,7 @@ public class Controller {
 		login = new loginGUI();
 		registrazione = new registrazioneUtenteGUI();
 		login.setVisible(true);
+		
 	}
 
 	public static void checkDataBase(Connection conn) throws SQLException {
@@ -233,7 +236,12 @@ public class Controller {
 		registrazione.setVisible(false);
 		login.setVisible(true);
 	}
-	 
+/*
+	public static void apriPasswordDimenticata() {
+		PasswordDimenticata.setVisible(true);
+		
+	}
+	 */
 }
 	
 	

@@ -76,7 +76,7 @@ public class loginGUI extends JFrame {
 		passwordDimenticataButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		passwordDimenticataButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		
+				Controller.apriPasswordDimenticata();
 			}
 		});
 		passwordDimenticataButton.setBounds(10, 290, 167, 23);

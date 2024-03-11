@@ -1,6 +1,7 @@
 package guiUninaSocialGroup;
 
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.text.AbstractDocument.Content;
 
 import controller.Controller;
@@ -15,7 +16,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class PasswordDimenticataGUI extends JFrame {
+	private int codiceSicurezza;
+	
+	  
     public PasswordDimenticataGUI() {
+    	
+    	
         // Impostazioni finestra
         setTitle("Recupera Password");
         setSize(541, 360);
@@ -50,7 +56,7 @@ public class PasswordDimenticataGUI extends JFrame {
         btnRichiediCodice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ottieni il nickname e l'email inseriti dall'utente
+                
                 String nickname = txtNickname.getText();
                 String email = txtEmail.getText();
 
@@ -66,7 +72,7 @@ public class PasswordDimenticataGUI extends JFrame {
 			           
 			     boolean utenteEsiste = PwDimenticataController.verificaEsistenzadelUtente (nickname , email , conn);
                 
-               
+                 
 
                 
                 if (utenteEsiste) {
@@ -80,7 +86,8 @@ public class PasswordDimenticataGUI extends JFrame {
 							exc.printStackTrace();
 					   }
                 	
-                    int codiceSicurezza = (int) (Math.random() * 900) + 100; 
+                         codiceSicurezza = (int) (Math.random() * 900) + 100; 
+                   
                     JOptionPane.showMessageDialog(getContentPane(), "Il codice di sicurezza è: " + codiceSicurezza, "Codice di Sicurezza", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(getContentPane(), "Utente non trovato.", "Errore", JOptionPane.ERROR_MESSAGE);
@@ -105,7 +112,34 @@ public class PasswordDimenticataGUI extends JFrame {
         JButton btnRecuperaPassword = new JButton("Recupera Password");
         btnRecuperaPassword.setBounds(228, 249, 177, 30);
         getContentPane().add(btnRecuperaPassword);
+       
         
+        btnRecuperaPassword.addActionListener(new ActionListener() {
+        	 public void actionPerformed(ActionEvent e) {
+                
+                 String codiceInserito = txtCodiceSicurezza.getText();
+                 if (codiceInserito.isEmpty()) {
+                     JOptionPane.showMessageDialog(getContentPane(), "Inserisci il codice di sicurezza.", "Errore", JOptionPane.ERROR_MESSAGE);
+                     return;
+                 }
+
+                 if (codiceInserito.equals(String.valueOf(codiceSicurezza))) {
+                     
+                     String password = ""; 
+                     JPanel panelPassword = new JPanel();
+                     panelPassword.add(new JLabel("Password: " + password));
+                     JOptionPane.showMessageDialog(getContentPane(), panelPassword, "Password Recuperata", JOptionPane.INFORMATION_MESSAGE);
+                 } else {
+                     
+                     JOptionPane.showMessageDialog(getContentPane(), "Codice di sicurezza non corretto.", "Errore", JOptionPane.ERROR_MESSAGE);
+                 }
+             }
+         });
+     
+            
+        
+    
+    
           JLabel lblNuovaPasswordLogo = new JLabel();
           lblNuovaPasswordLogo.setBounds(10, 10, 72, 78);
           getContentPane().add(lblNuovaPasswordLogo);
