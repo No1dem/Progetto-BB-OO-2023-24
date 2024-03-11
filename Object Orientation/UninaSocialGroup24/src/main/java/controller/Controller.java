@@ -41,7 +41,7 @@ public class Controller {
 	public static CreazioneGruppoGUI creazioneGruppo;
 	public static ImpostazioniGUI impostazioni;
 	public static registrazioneUtenteGUI registrazione;
-	//public static PasswordDimenticataGUI PasswordDimenticata;
+	public static PasswordDimenticataGUI PasswordDimenticata;
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -61,6 +61,7 @@ public class Controller {
 		Connessione = ConnectDB.getConnection();	
 		login = new loginGUI();
 		registrazione = new registrazioneUtenteGUI();
+		PasswordDimenticata = new PasswordDimenticataGUI();
 		login.setVisible(true);
 		
 	}
@@ -236,12 +237,12 @@ public class Controller {
 		registrazione.setVisible(false);
 		login.setVisible(true);
 	}
-/*
+
+	
 	public static void apriPasswordDimenticata() {
-		PasswordDimenticata.setVisible(true);
-		
+		PasswordDimenticata.setVisible(true);	
 	}
-	 */
+	 
 }
 	
 	

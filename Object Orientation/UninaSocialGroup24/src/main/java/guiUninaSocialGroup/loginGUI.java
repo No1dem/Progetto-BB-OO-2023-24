@@ -79,6 +79,7 @@ public class loginGUI extends JFrame {
 				Controller.apriPasswordDimenticata();
 			}
 		});
+		
 		passwordDimenticataButton.setBounds(10, 290, 167, 23);
 		contentPane.add(passwordDimenticataButton);
 		Image imgPassword = new ImageIcon(this.getClass().getResource("/chiaveLucchetto.png")).getImage();

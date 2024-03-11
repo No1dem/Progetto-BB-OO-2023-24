@@ -4,6 +4,7 @@ import javax.swing.border.EmptyBorder;
 
 import javax.swing.text.AbstractDocument.Content;
 
+import classiDAO.Utente;
 import controller.Controller;
 import controller.PwDimenticataController;
 import dataBaseConnection.ConnectDB;
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 
 public class PasswordDimenticataGUI extends JFrame {
 	private int codiceSicurezza;
-	
+	private Utente ut;
 	  
     public PasswordDimenticataGUI() {
     	
@@ -71,7 +72,7 @@ public class PasswordDimenticataGUI extends JFrame {
 			     Connection conn = ConnectDB.getConnection();
 			           
 			     boolean utenteEsiste = PwDimenticataController.verificaEsistenzadelUtente (nickname , email , conn);
-                
+			     
                  
 
                 
@@ -85,7 +86,7 @@ public class PasswordDimenticataGUI extends JFrame {
 					 } catch (SQLException exc) {
 							exc.printStackTrace();
 					   }
-                	
+                	 		ut= Controller.utenteDAO.getUtenteFromArrayListByNickname(nickname);
                          codiceSicurezza = (int) (Math.random() * 900) + 100; 
                    
                     JOptionPane.showMessageDialog(getContentPane(), "Il codice di sicurezza è: " + codiceSicurezza, "Codice di Sicurezza", JOptionPane.INFORMATION_MESSAGE);
@@ -125,7 +126,7 @@ public class PasswordDimenticataGUI extends JFrame {
 
                  if (codiceInserito.equals(String.valueOf(codiceSicurezza))) {
                      
-                     String password = ""; 
+                     String password = ut.getPassword(); 
                      JPanel panelPassword = new JPanel();
                      panelPassword.add(new JLabel("Password: " + password));
                      JOptionPane.showMessageDialog(getContentPane(), panelPassword, "Password Recuperata", JOptionPane.INFORMATION_MESSAGE);
