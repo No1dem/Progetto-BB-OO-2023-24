@@ -3,10 +3,15 @@ package guiUninaSocialGroup;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,24 +33,20 @@ public class registrazioneUtenteGUI extends JFrame {
     private JTextField textFieldNickname;
     private JPasswordField passwordField;
     private JButton btnRegistrati;
-    private JTextField textField;
-    private JTextField textField_1;
+    private JTextField textFieldBiografia;
+    private JTextField textFieldEmail;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    registrazioneUtenteGUI frame = new registrazioneUtenteGUI();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+ 
+    public registrazioneUtenteGUI() {
+    	setResizable(false);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                setVisible(false);
+                resettaCampiRegistrazioneUtente();
             }
         });
-    }
-
-    public registrazioneUtenteGUI() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 496, 443);
         setTitle("Registrazione Utente");
         contentPane = new JPanel();
@@ -56,24 +57,24 @@ public class registrazioneUtenteGUI extends JFrame {
         contentPane.setLayout(null);
 
         JPanel registrazionePanel = new JPanel();
-        registrazionePanel.setBackground(new Color(124, 176, 228));
+        registrazionePanel.setBackground(new Color(148, 190, 233));
         registrazionePanel.setBounds(10, 10, 461, 386);
         contentPane.add(registrazionePanel);
         registrazionePanel.setLayout(null);
 
         JLabel lblNewLabel = new JLabel("Nome");
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        lblNewLabel.setBounds(10, 75, 60, 20);
+        lblNewLabel.setBounds(10, 111, 60, 20);
         registrazionePanel.add(lblNewLabel);
 
         JLabel lblNewLabel_1 = new JLabel("Cognome");
         lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 15));
-        lblNewLabel_1.setBounds(10, 124, 90, 20);
+        lblNewLabel_1.setBounds(10, 144, 90, 20);
         registrazionePanel.add(lblNewLabel_1);
 
         JLabel lblNewLabel_2 = new JLabel("Nickname");
         lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 15));
-        lblNewLabel_2.setBounds(10, 169, 90, 20);
+        lblNewLabel_2.setBounds(10, 183, 90, 20);
         registrazionePanel.add(lblNewLabel_2);
 
         JLabel lblNewLabel_3 = new JLabel("Password");
@@ -83,7 +84,7 @@ public class registrazioneUtenteGUI extends JFrame {
 
         JLabel lblNewLabel_10 = new JLabel("Biografia");
         lblNewLabel_10.setFont(new Font("Arial", Font.BOLD, 15));
-        lblNewLabel_10.setBounds(10, 223, 74, 13);
+        lblNewLabel_10.setBounds(10, 221, 74, 20);
         registrazionePanel.add(lblNewLabel_10);
         
         JLabel lblNewLabel_9 = new JLabel("Email");
@@ -92,43 +93,44 @@ public class registrazioneUtenteGUI extends JFrame {
         registrazionePanel.add(lblNewLabel_9);
 
         textFieldNome = new JTextField();
-        textFieldNome.setBounds(150, 77, 156, 20);
+        textFieldNome.setBounds(150, 109, 156, 20);
         registrazionePanel.add(textFieldNome);
         textFieldNome.setColumns(10);
 
         textFieldCognome = new JTextField();
-        textFieldCognome.setBounds(150, 126, 156, 20);
+        textFieldCognome.setBounds(150, 146, 156, 20);
         registrazionePanel.add(textFieldCognome);
         textFieldCognome.setColumns(10);
 
         textFieldNickname = new JTextField();
-        textFieldNickname.setBounds(150, 171, 156, 20);
+        textFieldNickname.setBounds(150, 185, 156, 20);
         registrazionePanel.add(textFieldNickname);
         textFieldNickname.setColumns(10);
 
         passwordField = new JPasswordField();
-        passwordField.setBounds(150, 300, 156, 20);
+        passwordField.setBounds(150, 302, 156, 20);
         registrazionePanel.add(passwordField);
 
-        textField = new JTextField();
-        textField.setBounds(150, 220, 156, 19);
-        registrazionePanel.add(textField);
-        textField.setColumns(10);
+        textFieldBiografia = new JTextField();
+        textFieldBiografia.setBounds(150, 223, 156, 20);
+        registrazionePanel.add(textFieldBiografia);
+        textFieldBiografia.setColumns(10);
         
-        textField_1 = new JTextField();
-        textField_1.setBounds(150, 264, 156, 19);
-        registrazionePanel.add(textField_1);
-        textField_1.setColumns(10);
+        textFieldEmail = new JTextField();
+        textFieldEmail.setBounds(150, 263, 156, 20);
+        registrazionePanel.add(textFieldEmail);
+        textFieldEmail.setColumns(10);
 
         btnRegistrati = new JButton("Registrati");
+        btnRegistrati.setFont(new Font("Arial Black", Font.PLAIN, 12));
         btnRegistrati.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String nome = textFieldNome.getText();
                 String cognome = textFieldCognome.getText();
                 String nickname = textFieldNickname.getText();
                 String password = new String(passwordField.getPassword());
-                String biografia = textField.getText();
-                String email = textField_1.getText();
+                String biografia = textFieldBiografia.getText();
+                String email = textFieldEmail.getText();
 
                 if (nome.isEmpty() || cognome.isEmpty() || nickname.isEmpty() || password.isEmpty() || biografia.isEmpty() || email.isEmpty()) {
                     JOptionPane.showMessageDialog(contentPane, "Inserisci tutti i dati necessari.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
@@ -140,8 +142,18 @@ public class registrazioneUtenteGUI extends JFrame {
                     return;
                 }
 
+                if (nickname.length() < 5) {
+                    JOptionPane.showMessageDialog(contentPane, "Il nickname deve contenere almeno 5 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
                 if (password.length() > 30) {
                     JOptionPane.showMessageDialog(contentPane, "La password può contenere massimo 30 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                if (password.length() < 6) {
+                    JOptionPane.showMessageDialog(contentPane, "La password deve contenere almeno 6 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -161,17 +173,17 @@ public class registrazioneUtenteGUI extends JFrame {
 
         JLabel lblNewLabel_4 = new JLabel("(Max 20 car.)");
         lblNewLabel_4.setFont(new Font("Arial", Font.BOLD, 10));
-        lblNewLabel_4.setBounds(350, 80, 90, 13);
+        lblNewLabel_4.setBounds(350, 149, 90, 13);
         registrazionePanel.add(lblNewLabel_4);
 
         JLabel lblNewLabel_5 = new JLabel("(Max 20 car.)");
         lblNewLabel_5.setFont(new Font("Arial", Font.BOLD, 10));
-        lblNewLabel_5.setBounds(350, 129, 90, 13);
+        lblNewLabel_5.setBounds(350, 116, 90, 13);
         registrazionePanel.add(lblNewLabel_5);
 
-        JLabel lblNewLabel_6 = new JLabel("(Max 20 car.)");
+        JLabel lblNewLabel_6 = new JLabel("(Max 12 car.)");
         lblNewLabel_6.setFont(new Font("Arial", Font.BOLD, 10));
-        lblNewLabel_6.setBounds(350, 174, 90, 13);
+        lblNewLabel_6.setBounds(350, 188, 90, 13);
         registrazionePanel.add(lblNewLabel_6);
 
         JLabel lblNewLabel_7 = new JLabel("(Max 30 car.)");
@@ -181,18 +193,34 @@ public class registrazioneUtenteGUI extends JFrame {
 
         JLabel lblNewLabel_8 = new JLabel("REGISTRAZIONE UTENTE");
         lblNewLabel_8.setFont(new Font("Arial", Font.BOLD, 15));
-        lblNewLabel_8.setBounds(136, 10, 198, 20);
+        lblNewLabel_8.setBounds(134, 29, 198, 20);
         registrazionePanel.add(lblNewLabel_8);
         
         JLabel lblNewLabel_11 = new JLabel("(Max 350 car.)");
         lblNewLabel_11.setFont(new Font("Arial", Font.BOLD, 10));
-        lblNewLabel_11.setBounds(350, 224, 90, 13);
+        lblNewLabel_11.setBounds(350, 226, 90, 13);
         registrazionePanel.add(lblNewLabel_11);
         
         JLabel lblNewLabel_12 = new JLabel("(Max 50 car.)");
         lblNewLabel_12.setFont(new Font("Arial", Font.BOLD, 10));
         lblNewLabel_12.setBounds(350, 267, 74, 13);
         registrazionePanel.add(lblNewLabel_12);
+        
+        JLabel logoRegistrazione = new JLabel("");
+        Image imgRegistrazione = new ImageIcon(this.getClass().getResource("/registrazione.png")).getImage();
+		logoRegistrazione.setIcon(new ImageIcon(imgRegistrazione));
+        logoRegistrazione.setBounds(10, 0, 74, 78);
+        registrazionePanel.add(logoRegistrazione);
 
+    }
+    
+    
+    public void resettaCampiRegistrazioneUtente() {
+    	textFieldNome.setText("");
+    	textFieldCognome.setText("");
+    	textFieldBiografia.setText("");
+    	textFieldEmail.setText("");
+    	passwordField.setText("");
+    	textFieldNickname.setText("");	
     }
 }

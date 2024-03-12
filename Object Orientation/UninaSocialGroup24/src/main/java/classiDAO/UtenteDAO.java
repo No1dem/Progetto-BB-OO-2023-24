@@ -11,19 +11,19 @@ import java.util.LinkedList;
 
 public class UtenteDAO {
 	private Connection connessioneDB; 
-	private LinkedList<Utente> listaUtente;
+	private LinkedList<Utente> listaUtenti;
 	
 	
 	public UtenteDAO(Connection conn) throws SQLException {
 		String query="SELECT * FROM Utente";
-		listaUtente = new LinkedList<Utente>();
+		listaUtenti = new LinkedList<Utente>();
 		
 		
 		try(Statement stmt=conn.createStatement()){
 			ResultSet res=stmt.executeQuery(query);
 			
 			while(res.next()) {
-				listaUtente.add(new Utente(res.getInt("IdUtente"),res.getString("NomeUtente"),res.getString("CognomeUtente"),res.getString("Email"),
+				listaUtenti.add(new Utente(res.getInt("IdUtente"),res.getString("NomeUtente"),res.getString("CognomeUtente"),res.getString("Email"),
 										   res.getString("Nickname"),res.getString("Password"),res.getString("Biografia"),res.getString("URLFotoProfilo")));  				
 			}
 			connessioneDB=conn;
@@ -59,7 +59,7 @@ public class UtenteDAO {
 			pstmt.setString(1,ut.getNickname());
 			pstmt.executeUpdate();		
 				
-			listaUtente.remove(ut);
+			listaUtenti.remove(ut);
 			pstmt.close();
 		}
 		catch(SQLException e) {
@@ -72,7 +72,7 @@ public class UtenteDAO {
 		String query="UPDATE FROM Utente SET Biografia='"+biografia+"' WHERE Nickname='"+nickname+"'";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			pstmt.executeUpdate();
-			for (Utente ut : listaUtente) {  
+			for (Utente ut : listaUtenti) {  
 	            if (ut.getNickname().equals(nickname)){
 	                ut.setBiografia(biografia);
 	                break;
@@ -89,7 +89,7 @@ public class UtenteDAO {
 		String query="UPDATE FROM Utente SET Email='"+email+"' WHERE Nickname='"+nickname+"'";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			pstmt.executeUpdate();
-			for (Utente ut : listaUtente) {  
+			for (Utente ut : listaUtenti) {  
 	            if (ut.getNickname().equals(nickname)){
 	                ut.setEmail(email);
 	                break;
@@ -113,7 +113,7 @@ public class UtenteDAO {
 		}
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			pstmt.executeUpdate();
-			for (Utente ut : listaUtente) {  
+			for (Utente ut : listaUtenti) {  
 	            if (ut.getNickname().equals(nickname)){
 	                ut.setUrlFotoProfilo(url);
 	                break;
@@ -131,7 +131,7 @@ public class UtenteDAO {
 		String query="UPDATE Utente SET Password='"+password+"' WHERE Nickname='"+nickname+"'";
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			pstmt.executeUpdate();
-			for (Utente ut : listaUtente) {  
+			for (Utente ut : listaUtenti) {  
 	            if (ut.getNickname().equals(nickname)){
 	                ut.setPassword(password);
 	                break;
@@ -144,11 +144,11 @@ public class UtenteDAO {
 		}
 	}
 	
-	public void updateNicknameByIdUtente(String nickname, int idUtente) {
+	public void updateNicknameByIdUtente(String nickname, int idUtente){
 		String query = "UPDATE Utente SET Nickname = '"+nickname+"' WHERE IdUtente ="+idUtente;
 		try(PreparedStatement pstmt=connessioneDB.prepareStatement(query)){
 			pstmt.executeUpdate();
-			for (Utente ut : listaUtente) {  
+			for (Utente ut : listaUtenti) {  
 	            if (ut.getIdUtente() == idUtente){
 	                ut.setNickname(nickname);
 	                break;
@@ -163,7 +163,7 @@ public class UtenteDAO {
 	
 	
 	public Utente getUtenteFromArrayListByNickname(String nickname) {
-		for (Utente ut : listaUtente) {  
+		for (Utente ut : listaUtenti) {  
             if (ut.getNickname().equals(nickname)){
                 return ut;
             }
@@ -172,7 +172,7 @@ public class UtenteDAO {
 	}
 	
 	public Utente getUtenteFromArrayListByEmail(String Email) {
-		for (Utente ut : listaUtente) {  
+		for (Utente ut : listaUtenti) {  
             if (ut.getEmail().equals(Email)){
                 return ut;
             }
@@ -181,7 +181,7 @@ public class UtenteDAO {
 	}
 	
 	public Utente getUtenteFromArrayListById(int id) {
-		for (Utente ut : listaUtente) {  
+		for (Utente ut : listaUtenti) {  
             if (ut.getIdUtente()==id){
                 return ut;
             }
@@ -189,25 +189,18 @@ public class UtenteDAO {
 		return null;
 	}
 	
-	public boolean utenteExistInArrayList(Utente ut) {
-		return listaUtente.contains(ut);
+	
+	public LinkedList<Utente> getListaUtenti(){
+		return listaUtenti;
 	}
 	
 	
-	public void stampaListaUtenti() {
-        for (Utente utente : listaUtente) {
-            System.out.println("ID: " + utente.getIdUtente());
-            System.out.println("Nome: " + utente.getNomeUtente());
-            System.out.println("Cognome: " + utente.getCognomeUtente());
-            System.out.println("Nickname: " + utente.getNickname());
-            System.out.println("Email: " + utente.getEmail());
-            System.out.println("Password: " + utente.getPassword());
-            System.out.println("Biografia: " + utente.getBiografia());
-            System.out.println("URL Foto Profilo: " + utente.getUrlFotoProfilo());
-            System.out.println("------------------------------------");
-        }
-    }
+	public boolean utenteExistInArrayList(Utente ut) {
+		return listaUtenti.contains(ut);
+	}
 	
+	
+
 	
 	
 }

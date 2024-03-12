@@ -41,7 +41,7 @@ public class Controller {
 	public static CreazioneGruppoGUI creazioneGruppo;
 	public static ImpostazioniGUI impostazioni;
 	public static registrazioneUtenteGUI registrazione;
-	public static PasswordDimenticataGUI PasswordDimenticata;
+	public static PasswordDimenticataGUI passwordDimenticata;
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -61,7 +61,7 @@ public class Controller {
 		Connessione = ConnectDB.getConnection();	
 		login = new loginGUI();
 		registrazione = new registrazioneUtenteGUI();
-		PasswordDimenticata = new PasswordDimenticataGUI();
+		passwordDimenticata = new PasswordDimenticataGUI();
 		login.setVisible(true);
 		
 	}
@@ -163,13 +163,19 @@ public class Controller {
 		return false;
 	}
 	
-	
+	public static boolean controlloEsistenzaNickname (String nickname) {
+		for (Utente u : utenteDAO.getListaUtenti()) {
+			if (u.getNickname().equals(nickname))
+				return true;
+		}
+		return false;
+	}
 	
 	public static void tornaAllaSchermataLogin() {
 		home.setVisible(false);
 		notifiche.setVisible(false);
 		creazioneGruppo.setVisible(false);
-		impostazioni.setVisible(false);
+		chiudiImpostazioni();
 		login.setVisible(true);
 	}
 		
@@ -180,6 +186,8 @@ public class Controller {
 		creazioneGruppo = new CreazioneGruppoGUI();
 		notifiche = new NotificheGUI();
 		impostazioni = new ImpostazioniGUI();
+		chiudiPasswordDimenticata();
+		chiudiRegistrazioneUtente();
 		home.setVisible(true);
 		login.setVisible(false);
 	}
@@ -203,17 +211,15 @@ public class Controller {
 	}
 	
 	
-	public static void aggiornaNotifiche() {
-		notifiche.mostraNotifiche(notificaDAO.getListaNotificheByIdUtente(Controller.myIdUtente));
-		notifiche.mostraRichiesteAccesso(notificaDAO.getListaNotificheByIdUtente(Controller.myIdUtente));
+	
+	public static void apriImpostazioni() {
+		impostazioni.setVisible(true); 
 	}
 	
 	
-	public static void apriImpostazioni() {
-		notifiche.setVisible(false);
-		home.setVisible(false);
-		impostazioni.setVisible(true); 
-		creazioneGruppo.setVisible(false);
+	public static void chiudiImpostazioni() {
+		impostazioni.setVisible(false);
+		impostazioni.resettaCampiImpostazioni();
 	}
 	
 	
@@ -233,14 +239,20 @@ public class Controller {
 	
 	public static void chiudiRegistrazioneUtente() {
 		registrazione.setVisible(false);
-		login.setVisible(true);
+		registrazione.resettaCampiRegistrazioneUtente();
 	}
 
 	
 	public static void apriPasswordDimenticata() {
-		PasswordDimenticata.setVisible(true);	
+		passwordDimenticata.setVisible(true);	
 	}
-	 
+	
+	public static void chiudiPasswordDimenticata() {
+		passwordDimenticata.setVisible(false);
+		passwordDimenticata.resettaCampiPasswordDimenticata();
+	}
+	
+
 }
 	
 	

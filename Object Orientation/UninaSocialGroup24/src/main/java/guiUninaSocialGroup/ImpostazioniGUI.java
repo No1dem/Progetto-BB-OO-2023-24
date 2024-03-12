@@ -14,6 +14,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+
 import javax.imageio.ImageIO;
 import java.awt.Font;
 
@@ -28,7 +30,15 @@ public class ImpostazioniGUI extends JFrame {
 
     public ImpostazioniGUI() {
     	setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                setVisible(false);
+                resettaCampiImpostazioni();
+                
+            }
+        });
         setBounds(100, 100, 403, 535);
         setTitle("Impostazioni Utente");
         contentPane = new JPanel();
@@ -210,8 +220,8 @@ public class ImpostazioniGUI extends JFrame {
                     return;
         		}
         		
-        		if (nuovoNick.length() > 12) {
-                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname deve contenere massimo 12 caratteri", "Errore lunghezza Nickname", JOptionPane.ERROR_MESSAGE);
+        		if (nuovoNick.length() > 20) {
+                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname deve contenere massimo 20 caratteri", "Errore lunghezza Nickname", JOptionPane.ERROR_MESSAGE);
                     return;
         		}
         		
@@ -221,10 +231,15 @@ public class ImpostazioniGUI extends JFrame {
         		}
         		
         		if (password.equals(utente.getPassword())){
-        			Controller.utenteDAO.updateNicknameByIdUtente(nuovoNick, Controller.myIdUtente);
-                    JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname è stato modificato con successo.\nVerrai reindirizzato alla schermata di login.", "Modifica effettuata Nickname", JOptionPane.INFORMATION_MESSAGE);
-        			Controller.tornaAllaSchermataLogin();
-        		}
+        				if (!Controller.controlloEsistenzaNickname(nuovoNick)) {
+        					Controller.utenteDAO.updateNicknameByIdUtente(nuovoNick, Controller.myIdUtente);
+        					JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname è stato modificato con successo.\nVerrai reindirizzato alla schermata di login.", "Modifica effettuata Nickname", JOptionPane.INFORMATION_MESSAGE);
+            				Controller.tornaAllaSchermataLogin();
+        				}
+        				else
+        					JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Il nickname appartiene già ad un utente.", "Errore modifica Nickname", JOptionPane.ERROR_MESSAGE);
+
+         		}
         		else
                     JOptionPane.showMessageDialog(ImpostazioniGUI.this, "Password errata!", "Errore inserimento", JOptionPane.ERROR_MESSAGE);
 
@@ -233,30 +248,18 @@ public class ImpostazioniGUI extends JFrame {
         			
         	}
         });
-        
-        
-        
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
-        addWindowListener(new WindowAdapter() {
-            public void windowClosed(WindowEvent e) {
-                super.windowClosed(e);
-                Controller.tornaAllaHome();
-            }
-        });
-        
+               
         setLocationRelativeTo(null); 
     }
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ImpostazioniGUI frame = new ImpostazioniGUI();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    
+    
+    public void resettaCampiImpostazioni() {
+        urlFotoProfiloTextField.setText("");
+        nuovoNickTextField.setText("");
+        passwordModificaNickField.setText("");
+        nickEliminaAccountTextField.setText("");
+        passwordEliminaAccountField.setText("");
     }
+
+    
 }
