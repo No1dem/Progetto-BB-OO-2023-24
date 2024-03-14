@@ -59,6 +59,7 @@ public class Controller {
     public static Connection Connessione;
     
     public static int myIdUtente;
+    public static int idGruppoVisualizzato;
 
 	public static void main(String[] args) {
 		Connessione = ConnectDB.getConnection();	
@@ -176,8 +177,10 @@ public class Controller {
 	}
 	
 	
-	public static boolean controlloUtenteÈCreatoreGruppo (Gruppo gruppo) {
-		
+	public static boolean controlloUtenteÈCreatoreGruppo (int idGruppo) {
+		int idUtenteCreatoreGruppo = creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(idGruppo).getIdUtente();
+		if (idUtenteCreatoreGruppo == Controller.myIdUtente)
+			return true;
 		return false;
 	}
 	
@@ -245,7 +248,7 @@ public class Controller {
 		home.setVisible(true);
 	    aggiornaHome();
 		creazioneGruppo.setVisible(false);
-		//gruppo.setVisible(false);
+		gruppo.setVisible(false);
 	}
 	
 	

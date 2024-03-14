@@ -34,6 +34,7 @@ public class GruppoGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public GruppoGUI() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 640);
 		contentPane = new JPanel();
@@ -73,16 +74,6 @@ public class GruppoGUI extends JFrame {
 		panel_3.setBounds(10, 254, 205, 281);
 		utentePanel.add(panel_3);
 		
-		JButton impostazioniButton = new JButton("Impostazioni Gruppo");
-		impostazioniButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		impostazioniButton.setOpaque(false);
-		impostazioniButton.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		impostazioniButton.setBounds(20, 72, 165, 21);
-		panel_3.add(impostazioniButton);
-		
 		JButton NotificheButton = new JButton("Notifiche");
 		NotificheButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -98,15 +89,16 @@ public class GruppoGUI extends JFrame {
 		scriviPostButton.setBounds(20, 41, 165, 21);
 		panel_3.add(scriviPostButton);
 		
-		JButton logOutButton = new JButton("Home");
-		logOutButton.addActionListener(new ActionListener() {
+		JButton homeButton = new JButton("Home");
+		homeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Controller.tornaAllaHome();
 			}
 		});
-		logOutButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		logOutButton.setBounds(20, 250, 165, 21);
-		panel_3.add(logOutButton);
+		homeButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		homeButton.setBounds(20, 250, 165, 21);
+		panel_3.add(homeButton);
+		
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setLayout(null);
@@ -135,6 +127,16 @@ public class GruppoGUI extends JFrame {
 		nicknameLabel.setBounds(20, 204, 165, 20);
 		panel_6.add(nicknameLabel);
 		
+		if (Controller.controlloUtenteÈCreatoreGruppo(Controller.idGruppoVisualizzato)) {
+			
+			JButton statisticheGruppoButton = new JButton("Statistiche");
+			statisticheGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+			statisticheGruppoButton.setBounds(20, 72, 165, 21);
+			panel_3.add(statisticheGruppoButton);
+				
+		}
+		
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(226, 235, 248));
 		panel.setBounds(224, 60, 762, 545);
@@ -145,6 +147,30 @@ public class GruppoGUI extends JFrame {
 		panel_1.setBackground(new Color(124, 176, 228));
 		panel_1.setBounds(0, 10, 752, 525);
 		panel.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(226, 235, 248));
+		panel_2.setBounds(10, 10, 732, 50);
+		panel_1.add(panel_2);
+		panel_2.setLayout(null);
+		
+		
+		String nomeGruppo = Controller.gruppoDAO.getGruppoFromArrayListById(Controller.idGruppoVisualizzato).getNomeGruppo();
+		
+		JLabel nomeGruppoLabel = new JLabel(nomeGruppo);
+		nomeGruppoLabel.setFont(new Font("Arial", Font.BOLD, 20));
+		nomeGruppoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		nomeGruppoLabel.setBounds(10, 10, 712, 30);
+		panel_2.add(nomeGruppoLabel);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(new Color(226, 235, 248));
+		panel_4.setBounds(10, 86, 732, 429);
+		panel_1.add(panel_4);
+		
+		
+		setLocationRelativeTo(null);
 	}
 	
 	

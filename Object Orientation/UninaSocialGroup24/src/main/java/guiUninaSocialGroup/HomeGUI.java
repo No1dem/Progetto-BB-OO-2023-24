@@ -359,6 +359,7 @@ public class HomeGUI extends JFrame {
 	                			} 
 	                	}
 	                	else {
+	                		Controller.idGruppoVisualizzato = gruppo.getIdGruppo();
 	                		Controller.apriSchermataGruppo();
 	                	}
 	                		
