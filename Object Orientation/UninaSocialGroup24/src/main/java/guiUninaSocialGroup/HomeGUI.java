@@ -206,17 +206,20 @@ public class HomeGUI extends JFrame {
 		nicknameLabel.setForeground(Color.BLACK);
 		nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
+		
 		JPanel pannelloCentrale = new JPanel();
 		pannelloCentrale.setBackground(new Color(226, 235, 248));
 		pannelloCentrale.setBounds(214, 59, 437, 546);
 		contentPane.add(pannelloCentrale);
 		pannelloCentrale.setLayout(null);
 		
+		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(124, 176, 228));
 		panel_4.setBounds(10, 10, 426, 269);
 		pannelloCentrale.add(panel_4);
 		panel_4.setLayout(null);
+		
 		
 		gruppiIscrittoPanel = new JPanel();
 		gruppiIscrittoPanel.setBounds(10, 42, 406, 217);
@@ -232,6 +235,7 @@ public class HomeGUI extends JFrame {
 		lblElencoGruppiIscritti.setText("GRUPPI A CUI SEI ISCRITTO");
 		lblElencoGruppiIscritti.setFont(new Font("Arial", Font.BOLD, 18));
 		lblElencoGruppiIscritti.setBackground(new Color(148, 190, 233));
+		
 		
 		JPanel panel_4_1 = new JPanel();
 		panel_4_1.setLayout(null);
@@ -292,17 +296,7 @@ public class HomeGUI extends JFrame {
 			
 	}
 	
-	
-	
-	
-	private ImageIcon getDefaultProfileImageIcon() {
-	    
-	    ImageIcon defaultProfileImageIcon = new ImageIcon(getClass().getResource("/defaultFotoProfilo3.jpg"));
-	    return defaultProfileImageIcon;
-	}
-	
-	
-	
+		
 	
 	private void aggiornaRisultati(LinkedList<Gruppo> listaGruppiRicerca) {
 	  
@@ -365,8 +359,7 @@ public class HomeGUI extends JFrame {
 	                			} 
 	                	}
 	                	else {
-	                		//*******
-	                		//Apri schermata Gruppo
+	                		Controller.apriSchermataGruppo();
 	                	}
 	                		
 	                }
@@ -535,6 +528,13 @@ public class HomeGUI extends JFrame {
     }
 	
 	
+	
+	public ImageIcon getDefaultProfileImageIcon() { 
+	    ImageIcon defaultProfileImageIcon = new ImageIcon(getClass().getResource("/defaultFotoProfilo3.jpg"));
+	    return defaultProfileImageIcon;
+	}
+	
+	
 	public void caricaImmagineDelProfilo() { 
         String urlImmagineProfilo = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente).getUrlFotoProfilo(); 
         ImageIcon profileImageIcon;
@@ -546,6 +546,7 @@ public class HomeGUI extends JFrame {
                 imgProfiloLabel.setIcon(profileImageIcon);
                
             } catch (Exception e) {
+            	profileImageIcon = new ImageIcon();
                 profileImageIcon = getDefaultProfileImageIcon();
                 imgProfiloLabel.setIcon(profileImageIcon);
             }

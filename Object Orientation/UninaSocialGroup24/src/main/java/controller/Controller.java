@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import classiDAO.AmministratoreDAO;
@@ -26,6 +27,7 @@ import classiDAO.Utente;
 import classiDAO.UtenteDAO;
 import dataBaseConnection.ConnectDB;
 import guiUninaSocialGroup.CreazioneGruppoGUI;
+import guiUninaSocialGroup.GruppoGUI;
 import guiUninaSocialGroup.HomeGUI;
 import guiUninaSocialGroup.ImpostazioniGUI;
 import guiUninaSocialGroup.NotificheGUI;
@@ -42,6 +44,7 @@ public class Controller {
 	public static ImpostazioniGUI impostazioni;
 	public static registrazioneUtenteGUI registrazione;
 	public static PasswordDimenticataGUI passwordDimenticata;
+	public static GruppoGUI gruppo;
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -109,6 +112,7 @@ public class Controller {
 		return listaGruppiIscritto;
 	}
 	
+
 	
 	public static boolean creaGruppo(int idUtente, String nomeGruppo, String tagGruppo, String descrizioneGruppo) {
 		String query = "SELECT CreaGruppo(?, ?, ?, ?)";		
@@ -171,10 +175,16 @@ public class Controller {
 		return false;
 	}
 	
+	
+	public static boolean controlloUtenteÈCreatoreGruppo (Gruppo gruppo) {
+		
+		return false;
+	}
+	
 	public static void tornaAllaSchermataLogin() {
 		home.setVisible(false);
-		notifiche.setVisible(false);
-		creazioneGruppo.setVisible(false);
+		chiudiNotifiche();
+		chiudiCreazioneGruppo();
 		chiudiImpostazioni();
 		login.setVisible(true);
 	}
@@ -204,10 +214,17 @@ public class Controller {
 		creazioneGruppo.setVisible(true);	
 	}
 	
+	public static void chiudiCreazioneGruppo() {
+		creazioneGruppo.setVisible(false);	
+	}
 
 	
 	public static void apriNotifiche() {	
 		notifiche.setVisible(true);	
+	}
+	
+	public static void chiudiNotifiche() {	
+		notifiche.setVisible(false);	
 	}
 	
 	
@@ -252,7 +269,14 @@ public class Controller {
 		passwordDimenticata.resettaCampiPasswordDimenticata();
 	}
 	
-
+	public static void apriSchermataGruppo() {
+		home.setVisible(false);
+		chiudiImpostazioni();
+		chiudiCreazioneGruppo();
+		
+		gruppo = new GruppoGUI();
+		gruppo.setVisible(true);
+	}
 }
 	
 	
