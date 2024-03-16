@@ -283,20 +283,21 @@ public class GruppoGUI extends JFrame {
         Utente autorePost = Controller.utenteDAO.getUtenteFromArrayListById(p.getIdUtente());
         
         // Autore post  --------------------
-        JPanel autorePanel = new JPanel();
-        autorePanel.setBackground(new Color(226, 235, 248));
-        autorePanel.setPreferredSize(new Dimension(navigazioneGruppoPanel.getWidth()-15,35));
-        autorePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
+        JLabel autoreLabel = new JLabel();
+        autoreLabel.setBackground(new Color(226, 235, 248));
+        //autoreLabel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
+//        autoreLabel.setPreferredSize(new Dimension(300, 35));
         
 
     
-        JLabel imgProfiloAutoreLabel = new JLabel();
-        imgProfiloAutoreLabel.setIcon(getImmagineProfiloScalata(autorePost.getUrlFotoProfilo()));
-        imgProfiloAutoreLabel.setPreferredSize(new Dimension(30, 30)); 
-        autorePanel.add(imgProfiloAutoreLabel);
+//        JLabel imgProfiloAutoreLabel = new JLabel();
+//        imgProfiloAutoreLabel.setIcon(getImmagineProfiloScalata(autorePost.getUrlFotoProfilo()));
+//        imgProfiloAutoreLabel.setPreferredSize(new Dimension(30, 30)); 
+//        autoreLabel.add(imgProfiloAutoreLabel);
 
         JLabel labelNomeAutore = new JLabel(autorePost.getNickname());
-        autorePanel.add(labelNomeAutore);
+        labelNomeAutore.setFont(new Font("Arial", Font.BOLD,15));
+        autoreLabel.add(labelNomeAutore);
 
         
         //-----------------------------------
@@ -311,9 +312,12 @@ public class GruppoGUI extends JFrame {
         labelDataOraPost.setForeground(Color.GRAY);
         labelDataOraPost.setFont(new Font("Arial", Font.ITALIC, 10));
       
-        JLabel labelTestoPost = new JLabel("<html><p style='width:280px;'>" + p.getTesto() + "</p></html>");
+        String spaziatura = "&nbsp;&nbsp;&nbsp;&nbsp;";
+        
+        JLabel labelTestoPost = new JLabel("<html><p style='width:280px;'>"+spaziatura+p.getTesto() + "</p></html>");
+        labelTestoPost.setFont(new Font("Arial", Font.PLAIN,13));
                
-        postPanel.add(autorePanel);
+        postPanel.add(labelNomeAutore);
         postPanel.add(labelDataOraPost);
         postPanel.add(labelTestoPost);
         return postPanel;
