@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
@@ -283,21 +284,51 @@ public class GruppoGUI extends JFrame {
         Utente autorePost = Controller.utenteDAO.getUtenteFromArrayListById(p.getIdUtente());
         
         // Autore post  --------------------
-        JLabel autoreLabel = new JLabel();
-        autoreLabel.setBackground(new Color(226, 235, 248));
-        //autoreLabel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
-//        autoreLabel.setPreferredSize(new Dimension(300, 35));
-        
+        JPanel autorePanel = new JPanel();
+        autorePanel.setBackground(new Color(207, 222, 243));
+        autorePanel.setLayout(new BoxLayout(autorePanel, BoxLayout.X_AXIS));
+        autorePanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 0));
 
     
-//        JLabel imgProfiloAutoreLabel = new JLabel();
-//        imgProfiloAutoreLabel.setIcon(getImmagineProfiloScalata(autorePost.getUrlFotoProfilo()));
-//        imgProfiloAutoreLabel.setPreferredSize(new Dimension(30, 30)); 
-//        autoreLabel.add(imgProfiloAutoreLabel);
+        JLabel imgProfiloAutoreLabel = new JLabel();
+        imgProfiloAutoreLabel.setIcon(getImmagineProfiloScalata(autorePost.getUrlFotoProfilo()));
+        imgProfiloAutoreLabel.setPreferredSize(new Dimension(30, 30)); 
+        autorePanel.add(imgProfiloAutoreLabel);
+        
+        autorePanel.add(Box.createRigidArea(new Dimension(10,0)));
 
         JLabel labelNomeAutore = new JLabel(autorePost.getNickname());
         labelNomeAutore.setFont(new Font("Arial", Font.BOLD,15));
-        autoreLabel.add(labelNomeAutore);
+        autorePanel.add(labelNomeAutore);
+        
+        autorePanel.add(Box.createHorizontalGlue());
+        
+        if (Controller.controlloUtenteÈCreatoreGruppo(Controller.idGruppoVisualizzato)) {
+        	JLabel eliminaPostButton = new JLabel("");
+        	eliminaPostButton.addMouseListener(new MouseAdapter() {
+        	    @Override
+        	    public void mouseEntered(MouseEvent e) {
+        	        eliminaPostButton.setOpaque(true);
+        	        eliminaPostButton.setBackground(Color.WHITE);
+        	    }
+
+        	    @Override
+        	    public void mouseExited(MouseEvent e) {
+        	        eliminaPostButton.setOpaque(false);
+        	        eliminaPostButton.setBackground(new Color(226, 235, 248));
+        	    }
+        	});
+
+        	ImageIcon icon = new ImageIcon(getClass().getResource("/cancella.png"));
+        	Image img = icon.getImage().getScaledInstance(16, 16, Image.SCALE_REPLICATE); 
+        	ImageIcon scaledIcon = new ImageIcon(img);
+        	eliminaPostButton.setIcon(scaledIcon);
+        	eliminaPostButton.setPreferredSize(new Dimension(16, 16));
+        	eliminaPostButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        	
+        	
+        	autorePanel.add(eliminaPostButton);
+        }
 
         
         //-----------------------------------
@@ -312,14 +343,16 @@ public class GruppoGUI extends JFrame {
         labelDataOraPost.setForeground(Color.GRAY);
         labelDataOraPost.setFont(new Font("Arial", Font.ITALIC, 10));
       
-        String spaziatura = "&nbsp;&nbsp;&nbsp;&nbsp;";
-        
-        JLabel labelTestoPost = new JLabel("<html><p style='width:280px;'>"+spaziatura+p.getTesto() + "</p></html>");
+          
+        JLabel labelTestoPost = new JLabel("<html><p style='width:280px;'>"+p.getTesto()+ "</p></html>");
         labelTestoPost.setFont(new Font("Arial", Font.PLAIN,13));
-               
-        postPanel.add(labelNomeAutore);
+        
+             
+             
+        postPanel.add(autorePanel);
         postPanel.add(labelDataOraPost);
         postPanel.add(labelTestoPost);
+//      postPanel.add(Commenti);
         return postPanel;
     }
 	

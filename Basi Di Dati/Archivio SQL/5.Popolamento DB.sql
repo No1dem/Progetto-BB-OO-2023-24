@@ -109,6 +109,27 @@ BEGIN
 	RETURNING IdCommento INTO varIdCommento;
 	
 	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('lello00'), varIdCommento);
+
+
+	INSERT INTO Post (Testo,URLImmagine,DataPubblicazione,OraPubblicazione,IdUtente,IdGruppo) 
+	VALUES ('Qualche consiglio per l''esame di ASD con il prof. Benerecetti ?',NULL,CURRENT_DATE,CURRENT_TIME,RecuperaIdUtenteConNickname('andrcap03'),varIdGruppo)
+	RETURNING IdPost INTO varIdPost;
+
+	INSERT INTO Like_ (IdUtente,IdPost) VALUES (RecuperaIdUtenteConNickname('DaviGatta'), varIdPost);
+	INSERT INTO Like_ (IdUtente,IdPost) VALUES (RecuperaIdUtenteConNickname('HugoToKnow'), varIdPost);
+	
+	INSERT INTO Commento (TestoCommento,IdUtente,IdPostCommentato) VALUES ('Studia !!',RecuperaIdUtenteConNickname('lello00'), varIdPost)
+	RETURNING IdCommento INTO varIdCommento;
+	
+	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('No1dem'), varIdCommento);
+
+	INSERT INTO Commento (TestoCommento,IdUtente,IdPostCommentato) VALUES ('Segui tutte le lezioni',RecuperaIdUtenteConNickname('HugoToKnow'), varIdPost)
+	RETURNING IdCommento INTO varIdCommento;
+
+	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('No1dem'), varIdCommento);
+	INSERT INTO Like_ (IdUtente,IdCommento) VALUES (RecuperaIdUtenteConNickname('lello00'), varIdCommento);
+
+	
 	
 	---------------------------
 	SELECT CreaGruppo(RecuperaIdUtenteConNickname('Eva1213'),'Passione Cucina','CUCINA,CIBO','Benvenuti nel nostro gruppo di appassionati di cucina.') INTO varIdGruppo;
