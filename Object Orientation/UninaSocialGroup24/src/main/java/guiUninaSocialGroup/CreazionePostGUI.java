@@ -58,6 +58,11 @@ public class CreazionePostGUI extends JFrame {
 				LocalDate data = LocalDate.now();
 				LocalTime ora = LocalTime.now();
 				
+				if(testo.length() < 10) {
+					JOptionPane.showMessageDialog(contentPane, "Il post deve contenere almeno 10 caratteri", "Errore creazione post", JOptionPane.ERROR_MESSAGE);
+                    return;
+				}
+				
 				boolean creazionePostRiuscita = Controller.aggiungiPost(testo,data,ora,Controller.myIdUtente,Controller.idGruppoVisualizzato);
 				 if (creazionePostRiuscita) {
 	                    JOptionPane.showMessageDialog(contentPane, "Post creato con successo", "Conferma", JOptionPane.INFORMATION_MESSAGE);
