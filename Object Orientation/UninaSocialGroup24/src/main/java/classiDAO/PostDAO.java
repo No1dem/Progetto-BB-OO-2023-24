@@ -47,22 +47,20 @@ public class PostDAO {
 	
 		
 	
-	public void insertNuovoPost(Post p) {
+	public void insertNuovoPost(String testo, LocalDate dataPubblicazione, LocalTime oraPubblicazione, int IdUtente, int IdGruppo) {
 		String query = "INSERT INTO Post (testo,dataPubblicazione,oraPubblicazione,idUtente,idGruppo) VALUES (?,?,?,?,?)";
 		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
-			pstmt.setString(1,p.getTesto());
-	        Date dataPubblicazione = Date.valueOf(p.getDataPubblicazione());
-	        pstmt.setDate(2, dataPubblicazione);
-	        Time oraPubblicazione = Time.valueOf(p.getOraPubblicazione());
-	        
-	        pstmt.setTime(3, oraPubblicazione);
-			pstmt.setInt(4,p.getIdUtente());
-			pstmt.setInt(5,p.getIdGruppo());
-			pstmt.execute();
+			pstmt.setString(1,testo);
+	        Date DataPubblicazione = Date.valueOf(dataPubblicazione);
+	        pstmt.setDate(2, DataPubblicazione);
+	        Time OraPubblicazione = Time.valueOf(oraPubblicazione);
+	        pstmt.setTime(3, OraPubblicazione);
+			pstmt.setInt(4, IdUtente);
+			pstmt.setInt(5, IdGruppo);
 			
-			listaPost.add(p);
-			
+			pstmt.executeUpdate();
+					
 			pstmt.close();
 		}
 		catch(SQLException e) {
