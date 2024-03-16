@@ -1,19 +1,18 @@
 package controller;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import classiDAO.AmministratoreDAO;
 import classiDAO.CommentoDAO;
-import classiDAO.CreatoreGruppo;
 import classiDAO.CreatoreGruppoDAO;
 import classiDAO.EnumStatiRichiesta;
 import classiDAO.Gruppo;
@@ -28,6 +27,7 @@ import classiDAO.Utente;
 import classiDAO.UtenteDAO;
 import dataBaseConnection.ConnectDB;
 import guiUninaSocialGroup.CreazioneGruppoGUI;
+import guiUninaSocialGroup.CreazionePostGUI;
 import guiUninaSocialGroup.GruppoGUI;
 import guiUninaSocialGroup.HomeGUI;
 import guiUninaSocialGroup.ImpostazioniGUI;
@@ -48,7 +48,7 @@ public class Controller {
 	public static PasswordDimenticataGUI passwordDimenticata;
 	public static GruppoGUI gruppo;
 	public static StatisticheGruppoGUI Statistichegruppo;
-	
+	public static CreazionePostGUI creazionePost;
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -200,6 +200,18 @@ public class Controller {
 		return false;
 	}
 	
+	public static boolean aggiungiPost(String testo, LocalDate dataPubblicazione, LocalTime oraPubblicazione, int IdUtente, int IdGruppo) {
+		try {
+			PostDAO postDAO = new PostDAO(Connessione, utenteDAO, gruppoDAO);
+			postDAO.insertNuovoPost(testo, dataPubblicazione, oraPubblicazione, IdUtente, IdGruppo);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
 	public static void tornaAllaSchermataLogin() {
 		home.setVisible(false);
 		chiudiNotifiche();
@@ -299,6 +311,11 @@ public class Controller {
 		
 		gruppo = new GruppoGUI();
 		gruppo.setVisible(true);
+	}
+	
+	public static void chiudiCreazionePost() {
+		creazionePost.setVisible(false);
+		home.setVisible(true);
 	}
 }
 	
