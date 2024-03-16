@@ -12,7 +12,7 @@ public class CommentoDAO {
 	private LinkedList<Commento> listaCommenti;
 	
 	
-	public CommentoDAO(Connection conn,PostDAO postDAO) throws SQLException{
+	public CommentoDAO(Connection conn,PostDAO postDAO,UtenteDAO utenteDAO) throws SQLException{
 		String query = "SELECT * FROM Commento";
 		listaCommenti = new LinkedList<Commento>();
 		try(Statement stmt = conn.createStatement()){
@@ -21,9 +21,10 @@ public class CommentoDAO {
 				
 				Post post = postDAO.getPostFromArrayListById(res.getInt("IdPostCommentato"));
 				Commento commento = getCommentoFromArrayListById(res.getInt("idCommentoRisp"));
+				Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));
 				
 				listaCommenti.add(new Commento (res.getInt("idCommento"),res.getString("testoCommento"),res.getInt("numeroLike"),
-												commento,post));
+												commento,post,utente));
 			}
 			connessioneDB = conn;
 		}
@@ -44,7 +45,15 @@ public class CommentoDAO {
 	    return null;
 	}
 
-
+	public LinkedList<Commento> getListaCommentiPost (Post p ){
+		LinkedList<Commento> listaCommentiPost = new LinkedList<Commento>();
+		
+		for (Commento c : listaCommenti) {
+			if (c.getPostRisposto().getIdPost() == p.getIdPost())
+				listaCommentiPost.add(c);
+		}
+		return listaCommentiPost;
+	}
 
 
 }

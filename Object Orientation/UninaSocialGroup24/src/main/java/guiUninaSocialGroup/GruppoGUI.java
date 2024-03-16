@@ -27,6 +27,7 @@ import java.awt.Image;
 
 import javax.swing.border.LineBorder;
 
+import classiDAO.Commento;
 import classiDAO.CreatoreGruppo;
 import classiDAO.Gruppo;
 import classiDAO.Post;
@@ -51,6 +52,7 @@ public class GruppoGUI extends JFrame {
 	private JPanel contentPane;
 	private JLabel imgProfiloLabel;
 	private JPanel navigazioneGruppoPanel;
+	private JPanel commentiPanel;
 
 
 	/**
@@ -108,6 +110,11 @@ public class GruppoGUI extends JFrame {
 		panel_3.add(NotificheButton);
 		
 		JButton scriviPostButton = new JButton("Scrivi Post");
+		scriviPostButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controller.apriCreazionePost();
+			}
+		});
 		scriviPostButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		scriviPostButton.setBounds(20, 41, 165, 21);
 		panel_3.add(scriviPostButton);
@@ -301,9 +308,41 @@ public class GruppoGUI extends JFrame {
         labelNomeAutore.setFont(new Font("Arial", Font.BOLD,15));
         autorePanel.add(labelNomeAutore);
         
+        autorePanel.add(Box.createRigidArea(new Dimension(30,0)));
+        
+        JLabel likeLabel = new JLabel();
+        Image imgLike = new ImageIcon(this.getClass().getResource("/like3.png")).getImage();
+        likeLabel.setIcon(new ImageIcon(imgLike));
+        autorePanel.add(likeLabel);
+        
+        autorePanel.add(Box.createRigidArea(new Dimension(2,0)));
+        
+        String testo = ""+p.getNumeroLike();
+        System.out.print(testo);
+        JLabel numeroLikeLabel = new JLabel(""+p.getNumeroLike());
+        numeroLikeLabel.setFont(new Font("Arial",Font.BOLD,20));
+        
+        autorePanel.add(numeroLikeLabel);
+        
+        autorePanel.add(Box.createRigidArea(new Dimension(20,0)));
+        
+        JLabel commentoLabel = new JLabel();
+        Image imgCommento = new ImageIcon(this.getClass().getResource("/commento2.png")).getImage();
+        commentoLabel.setIcon(new ImageIcon(imgCommento));
+        autorePanel.add(commentoLabel);
+        
+        
+        autorePanel.add(Box.createRigidArea(new Dimension(2,0)));
+        
+        JLabel numeroCommentiLabel = new JLabel(""+p.getNumeroCommenti());
+        numeroCommentiLabel.setFont(new Font("Arial",Font.BOLD,20));
+        
+        autorePanel.add(numeroCommentiLabel);
+        
+    
         autorePanel.add(Box.createHorizontalGlue());
         
-        if (Controller.controlloUtenteÈCreatoreGruppo(Controller.idGruppoVisualizzato)) {
+        if (Controller.controlloUtenteÈAmministratore(Controller.idGruppoVisualizzato)) {
         	JLabel eliminaPostButton = new JLabel("");
         	eliminaPostButton.addMouseListener(new MouseAdapter() {
         	    @Override
@@ -317,9 +356,17 @@ public class GruppoGUI extends JFrame {
         	        eliminaPostButton.setOpaque(false);
         	        eliminaPostButton.setBackground(new Color(226, 235, 248));
         	    }
+        	    
+        	    @Override
+        	    public void mouseClicked(MouseEvent e) {
+        	    	Controller.postDAO.deletePostById(p);
+        	        postPanel.removeAll();
+        	        Controller.aggiornaSchermataGruppo();
+        	        return;
+        	    }
         	});
 
-        	ImageIcon icon = new ImageIcon(getClass().getResource("/cancella.png"));
+        	ImageIcon icon = new ImageIcon(getClass().getResource("/cestino.png"));
         	Image img = icon.getImage().getScaledInstance(16, 16, Image.SCALE_REPLICATE); 
         	ImageIcon scaledIcon = new ImageIcon(img);
         	eliminaPostButton.setIcon(scaledIcon);
@@ -331,7 +378,14 @@ public class GruppoGUI extends JFrame {
         }
 
         
-        //-----------------------------------
+        //Contenuto Post--------------------------
+        JPanel contenutoPostPanel = new JPanel();
+        contenutoPostPanel.setBackground(new Color(226, 235, 248));
+        contenutoPostPanel.setLayout(new BoxLayout(contenutoPostPanel, BoxLayout.X_AXIS));
+        
+        JPanel dataTestoPanel = new JPanel();
+        dataTestoPanel.setBackground(new Color(226, 235, 248));
+        dataTestoPanel.setLayout(new BoxLayout(dataTestoPanel, BoxLayout.Y_AXIS));
         
         LocalDate dataPubblicazione = p.getDataPubblicazione();
         LocalTime oraPubblicazione = p.getOraPubblicazione();
@@ -347,14 +401,108 @@ public class GruppoGUI extends JFrame {
         JLabel labelTestoPost = new JLabel("<html><p style='width:280px;'>"+p.getTesto()+ "</p></html>");
         labelTestoPost.setFont(new Font("Arial", Font.PLAIN,13));
         
-             
-             
+        dataTestoPanel.add(labelDataOraPost);
+        dataTestoPanel.add(labelTestoPost);
+        
+        contenutoPostPanel.add(Box.createRigidArea(new Dimension(75,0)));
+        contenutoPostPanel.add(dataTestoPanel);
+        contenutoPostPanel.add(Box.createHorizontalGlue());
+        
+        //Titolo Commenti------------------------ 
+        
+        JPanel titoloCommentoPanel = new JPanel();
+        titoloCommentoPanel.setBackground(new Color(207, 222, 243));
+        titoloCommentoPanel.setLayout(new BoxLayout(titoloCommentoPanel, BoxLayout.X_AXIS));
+        titoloCommentoPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 0));
+        
+        JLabel titoloCommentoLabel = new JLabel("COMMENTI");
+        titoloCommentoLabel.setFont(new Font("Arial Black",Font.PLAIN,13));
+        
+        titoloCommentoPanel.add(Box.createRigidArea(new Dimension(50,0)));
+        titoloCommentoPanel.add(titoloCommentoLabel);
+        titoloCommentoPanel.add(Box.createHorizontalGlue());
+        
+        titoloCommentoPanel.add(Box.createRigidArea(new Dimension(200,0)));
+        
+        JButton scriviCommentoButton = new JButton("Commenta");
+        scriviCommentoButton.setFont(new Font("Arial Black", Font.PLAIN, 10));
+        scriviCommentoButton.setPreferredSize(new Dimension(100,6));
+        titoloCommentoPanel.add(scriviCommentoButton);
+        
+        titoloCommentoPanel.add(Box.createRigidArea(new Dimension(30,0)));
+        
+        JButton inserisciLikeButton = new JButton("Mi piace!");
+        inserisciLikeButton.setFont(new Font("Arial Black",Font.PLAIN,10));
+        inserisciLikeButton.setPreferredSize(new Dimension(100,6));
+        titoloCommentoPanel.add(inserisciLikeButton);
+        
+                 
         postPanel.add(autorePanel);
-        postPanel.add(labelDataOraPost);
-        postPanel.add(labelTestoPost);
-//      postPanel.add(Commenti);
+        
+        postPanel.add(contenutoPostPanel);
+        
+        postPanel.add(titoloCommentoPanel);
+        
+        if (p.getNumeroCommenti() == 0) {
+        	JLabel noCommentiLabel = new JLabel("Non sono ancora presenti commenti per questo Post.");
+        	noCommentiLabel.setFont(new Font("Arial",Font.ITALIC,13));
+        	noCommentiLabel.setForeground(Color.GRAY);
+        	postPanel.add(noCommentiLabel);
+        }
+        else {
+        	LinkedList<Commento> listaCommentiPost = Controller.commentoDAO.getListaCommentiPost(p);
+        	creaPannelloCommentiPost(p,listaCommentiPost);
+        	postPanel.add(commentiPanel);
+        }
+        
         return postPanel;
     }
+	
+	
+	private void creaPannelloCommentiPost(Post p,LinkedList<Commento> listaCommenti) {
+		commentiPanel = new JPanel();
+		commentiPanel.setLayout(new BoxLayout(commentiPanel,BoxLayout.Y_AXIS));
+		commentiPanel.setBackground(new Color(226, 235, 248));
+		
+		for (Commento c : listaCommenti) {
+			if (c.getPostRisposto().getIdPost() == p.getIdPost()) {
+								
+				Utente autore = Controller.utenteDAO.getUtenteFromArrayListById(c.getUtenteAutore().getIdUtente());
+				String nickname = autore.getNickname();
+				
+				JPanel nicknameCommentoPanel = new JPanel();
+				nicknameCommentoPanel.setLayout(new BoxLayout(nicknameCommentoPanel,BoxLayout.X_AXIS));
+				nicknameCommentoPanel.setBackground(new Color(226, 235, 248));
+						
+				JLabel nicknameCommentoLabel = new JLabel(nickname+":");
+				nicknameCommentoLabel.setFont(new Font("Arial",Font.BOLD,13));
+				nicknameCommentoLabel.setBackground(new Color(226, 235, 248));
+				
+				nicknameCommentoPanel.add(Box.createRigidArea(new Dimension(150,0)));
+				nicknameCommentoPanel.add(nicknameCommentoLabel);
+				nicknameCommentoPanel.add(Box.createHorizontalGlue());
+				
+				JPanel testoCommentoPanel = new JPanel();
+				testoCommentoPanel.setLayout(new BoxLayout(testoCommentoPanel,BoxLayout.X_AXIS));
+				testoCommentoPanel.setBackground(new Color(226, 235, 248));
+				testoCommentoPanel.add(Box.createRigidArea(new Dimension(175,0)));
+				
+				JLabel testoCommentoLabel = new JLabel("<html><p style='width:280px;'>"+c.getTestoCommento()+ "</p></html>");
+				testoCommentoLabel.setFont(new Font("Arial",Font.PLAIN,12));
+				testoCommentoLabel.setBackground(new Color(226, 235, 248));
+				
+				testoCommentoPanel.add(testoCommentoLabel);
+				testoCommentoPanel.add(Box.createHorizontalGlue());
+
+				commentiPanel.add(nicknameCommentoPanel);
+				commentiPanel.add(testoCommentoPanel);
+				
+				
+			}
+		}
+		
+		
+	}
 	
 	
 	private ImageIcon getImmagineProfiloScalata(String urlImmagineProfilo) {

@@ -6,16 +6,19 @@ public class Commento {
 	private int numeroLike;
 	private Commento CommentoRisposto;
 	private Post PostRisposto;
+	private Utente UtenteAutore;
 	
 	//Costruttore
 	
-	public Commento(int idCommento, String testoCommento, int numeroLike, Commento CommRisp, Post PostRisp) {
+	public Commento(int idCommento, String testoCommento, int numeroLike, Commento commentoRisposto, Post postRisposto,
+			Utente UtenteAutore) {
 		super();
 		this.idCommento = idCommento;
 		this.testoCommento = testoCommento;
 		this.numeroLike = numeroLike;
-		this.CommentoRisposto = CommRisp;
-		this.PostRisposto = PostRisp;
+		CommentoRisposto = commentoRisposto;
+		PostRisposto = postRisposto;
+		this.UtenteAutore = UtenteAutore;
 	}
 
 	//Getters e Setters
@@ -23,6 +26,7 @@ public class Commento {
 	public int getIdCommento() {
 		return idCommento;
 	}
+
 
 	public void setIdCommento(int idCommento) {
 		this.idCommento = idCommento;
@@ -58,6 +62,14 @@ public class Commento {
 
 	public void setPostRisposto(Post postRisposto) {
 		PostRisposto = postRisposto;
+	}
+
+	public Utente getUtenteAutore() {
+		return UtenteAutore;
+	}
+
+	public void setIdUtenteAutore(Utente UtenteAutore) {
+		this.UtenteAutore = UtenteAutore;
 	}
 
 	

@@ -25,19 +25,6 @@ public class CreazionePostGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreazionePostGUI frame = new CreazionePostGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public CreazionePostGUI() {
 		setBounds(100, 100, 542, 375);
 		contentPane = new JPanel();
@@ -55,18 +42,17 @@ public class CreazionePostGUI extends JFrame {
 		btnConferma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String testo = textAreaPost.getText();
-				LocalDate data = LocalDate.now();
-				LocalTime ora = LocalTime.now();
-				
+			
 				if(testo.length() < 10) {
 					JOptionPane.showMessageDialog(contentPane, "Il post deve contenere almeno 10 caratteri", "Errore creazione post", JOptionPane.ERROR_MESSAGE);
                     return;
 				}
 				
-				boolean creazionePostRiuscita = Controller.aggiungiPost(testo,data,ora,Controller.myIdUtente,Controller.idGruppoVisualizzato);
+				boolean creazionePostRiuscita = Controller.aggiungiPost(testo,Controller.myIdUtente,Controller.idGruppoVisualizzato);
 				 if (creazionePostRiuscita) {
 	                    JOptionPane.showMessageDialog(contentPane, "Post creato con successo", "Conferma", JOptionPane.INFORMATION_MESSAGE);
 	                    Controller.chiudiCreazionePost();
+	                    Controller.aggiornaSchermataGruppo();
 	                } else {
 	                    JOptionPane.showMessageDialog(contentPane, "Errore durante la creazione del post", "Errore", JOptionPane.ERROR_MESSAGE);
 	                }

@@ -81,7 +81,7 @@ public class Controller {
 	        amministratoreDAO = new AmministratoreDAO(Connessione,gruppoDAO,utenteDAO);
 	        creatoreGruppoDAO = new CreatoreGruppoDAO(Connessione,gruppoDAO,amministratoreDAO,utenteDAO);
 	        postDAO = new PostDAO(Connessione,utenteDAO,gruppoDAO);
-	        commentoDAO = new CommentoDAO(Connessione,postDAO);
+	        commentoDAO = new CommentoDAO(Connessione,postDAO,utenteDAO);
 	        likeDAO = new LikeDAO(Connessione,postDAO,commentoDAO,utenteDAO);
 	        notificaDAO = new NotificaDAO(Connessione,postDAO,likeDAO,commentoDAO);
 	        richiestaDiAccessoDAO = new RichiestaDiAccessoDAO(Connessione,utenteDAO,creatoreGruppoDAO,gruppoDAO,notificaDAO);
@@ -200,10 +200,18 @@ public class Controller {
 		return false;
 	}
 	
-	public static boolean aggiungiPost(String testo, LocalDate dataPubblicazione, LocalTime oraPubblicazione, int IdUtente, int IdGruppo) {
+	public static boolean controlloUtenteÈAmministratore (int idGruppo) {
+		int idUtenteCreatoreGruppo = creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(idGruppo).getIdUtente();
+		if (idUtenteCreatoreGruppo == Controller.myIdUtente)
+			return true;
+		return false;
+	}
+	
+	
+	
+	public static boolean aggiungiPost(String testo, int IdUtente, int IdGruppo) {
 		try {
-			PostDAO postDAO = new PostDAO(Connessione, utenteDAO, gruppoDAO);
-			postDAO.insertNuovoPost(testo, dataPubblicazione, oraPubblicazione, IdUtente, IdGruppo);
+			postDAO.insertNuovoPost(testo,IdUtente, IdGruppo);
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -311,12 +319,22 @@ public class Controller {
 		
 		gruppo = new GruppoGUI();
 		gruppo.setVisible(true);
+		creazionePost = new CreazionePostGUI();
+	}
+	
+	public static void apriCreazionePost() {
+		creazionePost.setVisible(true);
+	}
+	
+	public static void aggiornaSchermataGruppo() {
+		gruppo.mostraPannelloPost(getPostGruppoByIdGruppo(idGruppoVisualizzato));
 	}
 	
 	public static void chiudiCreazionePost() {
 		creazionePost.setVisible(false);
-		home.setVisible(true);
+//		creazionePost.resettaCampoCreazionePost();
 	}
+	
 }
 	
 	

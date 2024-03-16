@@ -11,13 +11,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import controller.Controller;
+
 public class PostDAO {
 	private Connection connessioneDB; 
 	private LinkedList<Post> listaPost;
 	
 	
 	public PostDAO(Connection conn,UtenteDAO utenteDAO,GruppoDAO gruppoDAO) throws SQLException{
-		String query="SELECT * FROM Post";
+		String query="SELECT * FROM Post ORDER BY dataPubblicazione,oraPubblicazione ";
 		listaPost = new LinkedList<Post>();
 		
 		try(Statement stmt=conn.createStatement()){
@@ -47,21 +49,48 @@ public class PostDAO {
 	
 		
 	
-	public void insertNuovoPost(String testo, LocalDate dataPubblicazione, LocalTime oraPubblicazione, int IdUtente, int IdGruppo) {
-		String query = "INSERT INTO Post (testo,dataPubblicazione,oraPubblicazione,idUtente,idGruppo) VALUES (?,?,?,?,?)";
-		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
+	public void insertNuovoPost(String testo, int IdUtente, int IdGruppo) throws SQLException{
+		String query = "INSERT INTO Post (testo,idUtente,idGruppo) VALUES (?,?,?)";
+		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query,Statement.RETURN_GENERATED_KEYS)){
 			
 			pstmt.setString(1,testo);
-	        Date DataPubblicazione = Date.valueOf(dataPubblicazione);
-	        pstmt.setDate(2, DataPubblicazione);
-	        Time OraPubblicazione = Time.valueOf(oraPubblicazione);
-	        pstmt.setTime(3, OraPubblicazione);
-			pstmt.setInt(4, IdUtente);
-			pstmt.setInt(5, IdGruppo);
+			pstmt.setInt(2, IdUtente);
+			pstmt.setInt(3, IdGruppo);
 			
-			pstmt.executeUpdate();
-					
-			pstmt.close();
+			int postInserito = pstmt.executeUpdate();	
+			int idPost;
+			
+			if (postInserito > 0) {
+
+	            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+	                if (generatedKeys.next()) {
+	                    idPost = generatedKeys.getInt(1);
+	                    System.out.println(idPost);
+	                    pstmt.close();
+	        			try(Statement stmt = connessioneDB.createStatement()){
+	        				String query2 = "SELECT * FROM Post WHERE idPost = "+idPost;
+	    
+	        				ResultSet res = stmt.executeQuery(query2);
+	        				
+	        				if (res.next()) {
+	        					java.sql.Date sqlDate = res.getDate("dataPubblicazione");
+	        		            LocalDate dataPubblicazione = sqlDate.toLocalDate();
+	        		            
+	        		            java.sql.Time sqlTime = res.getTime("oraPubblicazione");
+	        		            LocalTime oraPubblicazione = sqlTime.toLocalTime();
+	        					
+	        					Utente utente = Controller.utenteDAO.getUtenteFromArrayListById(IdUtente);
+	        					Gruppo gruppo = Controller.gruppoDAO.getGruppoFromArrayListById(IdGruppo);
+	        					
+	        					listaPost.add(new Post(res.getInt("idPost"),res.getString("testo"),res.getString("urlImmagine"),dataPubblicazione,oraPubblicazione,
+										   res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,gruppo));
+	        				}
+	        			}
+	                }
+	            }
+	            
+	        }
+			
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -75,13 +104,13 @@ public class PostDAO {
 		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 			
 			pstmt.setInt(1,p.getIdPost());
-			pstmt.execute(query);
+			pstmt.executeUpdate();
 			
 			listaPost.remove(p);
 			
 			pstmt.close();
 		}
-		catch(SQLException e ) {
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
