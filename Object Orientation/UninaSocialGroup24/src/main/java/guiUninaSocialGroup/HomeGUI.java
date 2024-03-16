@@ -410,6 +410,7 @@ public class HomeGUI extends JFrame {
         panelGruppi.setLayout(new BoxLayout(panelGruppi, BoxLayout.Y_AXIS));
         panelGruppi.setBackground(new Color(226, 235, 248));
         
+        
         for (Gruppo gruppo : listaGruppiIscritto) {
             JPanel gruppoPanel = creaPannelloGruppoIscritto(gruppo);
             panelGruppi.add(gruppoPanel);

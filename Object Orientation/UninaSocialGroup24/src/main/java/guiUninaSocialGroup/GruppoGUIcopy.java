@@ -16,12 +16,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.swing.border.LineBorder;
@@ -44,7 +42,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 
-public class GruppoGUI extends JFrame {
+public class GruppoGUIcopy extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -55,7 +53,7 @@ public class GruppoGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GruppoGUI() {
+	public GruppoGUIcopy() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 640);
@@ -203,7 +201,6 @@ public class GruppoGUI extends JFrame {
 		navigazioneGruppoPanel = new JPanel();
 		navigazioneGruppoPanel.setBackground(new Color(226, 235, 248));
 		navigazioneGruppoPanel.setBounds(10, 70, 732, 445);
-		navigazioneGruppoPanel.setLayout(new BoxLayout(navigazioneGruppoPanel, BoxLayout.Y_AXIS));
 		
 		LinkedList<Post> listaPostGruppo = Controller.getPostGruppoByIdGruppo(Controller.idGruppoVisualizzato);
 		mostraPannelloPost(listaPostGruppo);
@@ -252,9 +249,8 @@ public class GruppoGUI extends JFrame {
         navigazioneGruppoPanel.removeAll();  
         
         JPanel postGruppoPanel = new JPanel();
-        postGruppoPanel.setLayout(new BoxLayout(postGruppoPanel, BoxLayout.Y_AXIS));
 		postGruppoPanel.setBackground(new Color(226, 235, 248));
-		
+		postGruppoPanel.setBounds(10, 70, 732, 445);
         
         for (Post post : listaPostGruppo) {
             JPanel postPanel = creaPannelloPost(post);
@@ -262,10 +258,14 @@ public class GruppoGUI extends JFrame {
         }
         
         JScrollPane scrollPane = new JScrollPane(postGruppoPanel);
+        postGruppoPanel.setLayout(null);
+        
+        JPanel panel = new JPanel();
+        panel.setBounds(10, 10, 693, 207);
+        postGruppoPanel.add(panel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(10, 70, 732, 445);
-       
+        scrollPane.setPreferredSize(new Dimension(navigazioneGruppoPanel.getWidth(), navigazioneGruppoPanel.getHeight()));
   
         
         navigazioneGruppoPanel.removeAll();
@@ -285,9 +285,7 @@ public class GruppoGUI extends JFrame {
         // Autore post  --------------------
         JPanel autorePanel = new JPanel();
         autorePanel.setBackground(new Color(226, 235, 248));
-        autorePanel.setPreferredSize(new Dimension(navigazioneGruppoPanel.getWidth()-15,35));
         autorePanel.setLayout(new FlowLayout(FlowLayout.LEFT)); 
-        
 
     
         JLabel imgProfiloAutoreLabel = new JLabel();
@@ -297,6 +295,7 @@ public class GruppoGUI extends JFrame {
 
         JLabel labelNomeAutore = new JLabel(autorePost.getNickname());
         autorePanel.add(labelNomeAutore);
+
 
         
         //-----------------------------------
@@ -312,10 +311,13 @@ public class GruppoGUI extends JFrame {
         labelDataOraPost.setFont(new Font("Arial", Font.ITALIC, 10));
       
         JLabel labelTestoPost = new JLabel("<html><p style='width:280px;'>" + p.getTesto() + "</p></html>");
-               
+///     JLabel labelCreatore = new JLabel("Gruppo creato da: "+ nickname);
+//      JLabel labelNumeroIscritti = new JLabel("Numero iscritti: " + g.getNumeroIscritti());
+//       
         postPanel.add(autorePanel);
         postPanel.add(labelDataOraPost);
         postPanel.add(labelTestoPost);
+//      postPanel.add(labelNumeroIscritti);
         return postPanel;
     }
 	

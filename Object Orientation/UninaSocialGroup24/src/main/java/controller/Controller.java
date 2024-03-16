@@ -20,6 +20,7 @@ import classiDAO.Gruppo;
 import classiDAO.GruppoDAO;
 import classiDAO.LikeDAO;
 import classiDAO.NotificaDAO;
+import classiDAO.Post;
 import classiDAO.PostDAO;
 import classiDAO.RichiestaDiAccesso;
 import classiDAO.RichiestaDiAccessoDAO;
@@ -111,6 +112,18 @@ public class Controller {
 			e.printStackTrace();
 		}
 		return listaGruppiIscritto;
+	}
+	
+	
+	public static LinkedList<Post> getPostGruppoByIdGruppo(int idGruppo){
+		LinkedList<Post> listaPostGruppo = new LinkedList<Post>();
+		
+		for (Post p : postDAO.getListaPost()) {
+			if (p.getIdGruppo() == idGruppo) {
+				listaPostGruppo.add(p);
+			}
+		}
+		return listaPostGruppo;
 	}
 	
 

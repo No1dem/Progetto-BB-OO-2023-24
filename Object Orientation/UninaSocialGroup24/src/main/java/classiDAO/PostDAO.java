@@ -303,6 +303,11 @@ public class PostDAO {
 	    }
 	    return null;
 	}
+	
+	
+	public LinkedList<Post> getListaPost (){
+		return listaPost;
+	}
 
 	
 	
