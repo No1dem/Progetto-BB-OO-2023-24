@@ -33,6 +33,7 @@ import guiUninaSocialGroup.HomeGUI;
 import guiUninaSocialGroup.ImpostazioniGUI;
 import guiUninaSocialGroup.NotificheGUI;
 import guiUninaSocialGroup.PasswordDimenticataGUI;
+import guiUninaSocialGroup.StatisticheGruppoGUI;
 import guiUninaSocialGroup.loginGUI;
 import guiUninaSocialGroup.registrazioneUtenteGUI;
 
@@ -46,6 +47,8 @@ public class Controller {
 	public static registrazioneUtenteGUI registrazione;
 	public static PasswordDimenticataGUI passwordDimenticata;
 	public static GruppoGUI gruppo;
+	public static StatisticheGruppoGUI Statistichegruppo;
+	
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -283,6 +286,10 @@ public class Controller {
 	public static void chiudiPasswordDimenticata() {
 		passwordDimenticata.setVisible(false);
 		passwordDimenticata.resettaCampiPasswordDimenticata();
+	}
+	
+	public static void statisticheGruppo() {
+		Statistichegruppo.setVisible(true);	
 	}
 	
 	public static void apriSchermataGruppo() {
