@@ -13,32 +13,82 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class CreazionePostGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    CreazionePostGUI frame = new CreazionePostGUI();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 	public CreazionePostGUI() {
-		setBounds(100, 100, 542, 375);
+		setBounds(100, 100, 573, 331);
+		setTitle("Inserimento Post");
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(124, 190, 228));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JPanel creazionePanel = new JPanel();
+		creazionePanel.setBackground(new Color(124, 176, 228));
+		creazionePanel.setBounds(10, 10, 536, 268);
+		contentPane.add(creazionePanel);
+		creazionePanel.setLayout(null);
+		
 		JTextArea textAreaPost = new JTextArea();
-		textAreaPost.setBounds(36, 41, 447, 256);
-		contentPane.add(textAreaPost);
+		textAreaPost.setLineWrap(true); 
+		textAreaPost.setWrapStyleWord(true);
+		textAreaPost.setBounds(134, 81, 296, 121);
+		creazionePanel.add(textAreaPost);
+		
+		JLabel logoCreaGruppoLabel = new JLabel("");
+		Image img = new ImageIcon(this.getClass().getResource("/inserisciPost.png")).getImage();
+		logoCreaGruppoLabel.setBounds(10, 10, 78, 64);
+		creazionePanel.add(logoCreaGruppoLabel);
+		logoCreaGruppoLabel.setIcon(new ImageIcon (img));
+		
+		
+		JLabel lblNewLabel = new JLabel("INSERIMENTO POST");
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		lblNewLabel.setBounds(196, 25, 189, 34);
+		creazionePanel.add(lblNewLabel);
+
+		
+		JLabel lblNewLabel_2 = new JLabel("Testo post");
+		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(10, 82, 114, 20);
+		creazionePanel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_1 = new JLabel("(min 10 car.)");
+		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 10));
+		lblNewLabel_1.setBounds(363, 212, 67, 13);
+		creazionePanel.add(lblNewLabel_1);
 		
 		JButton btnConferma = new JButton("Conferma");
-		btnConferma.setBounds(387, 307, 96, 21);
+		btnConferma.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		btnConferma.setBounds(421, 235, 105, 23);
 		btnConferma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String testo = textAreaPost.getText();
@@ -58,11 +108,7 @@ public class CreazionePostGUI extends JFrame {
 	                }
 			}
 		});
-		contentPane.add(btnConferma);
-		
-		JLabel lblNewLabel = new JLabel("Inserisci il testo del tuo post:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel.setBounds(36, 10, 195, 21);
-		contentPane.add(lblNewLabel);
+		creazionePanel.add(btnConferma);
+
 	}
 }
