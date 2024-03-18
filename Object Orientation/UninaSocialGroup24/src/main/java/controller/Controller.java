@@ -320,6 +320,8 @@ public class Controller {
 		gruppo = new GruppoGUI();
 		gruppo.setVisible(true);
 		creazionePost = new CreazionePostGUI();
+		Statistichegruppo = new StatisticheGruppoGUI();
+		
 	}
 	
 	public static void apriCreazionePost() {

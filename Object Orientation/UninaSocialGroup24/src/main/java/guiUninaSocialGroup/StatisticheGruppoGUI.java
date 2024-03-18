@@ -19,9 +19,11 @@ public class StatisticheGruppoGUI extends JFrame {
     
     private int mese;
     private int anno; 
-    private Post postConLike;
-    private Post postCommenti;
-    
+    private int idpost;
+    private Post postConPiuLike;
+    private Post postPiuCommenti;
+    private Post postConMenoLike;
+    private Post postMenoCommenti;
     
 
     public StatisticheGruppoGUI() {
@@ -30,6 +32,8 @@ public class StatisticheGruppoGUI extends JFrame {
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centra la finestra
+        
+       
         
         gruppo= Controller.gruppoDAO.getGruppoFromArrayListById(Controller.idGruppoVisualizzato);
         
@@ -40,7 +44,7 @@ public class StatisticheGruppoGUI extends JFrame {
         getContentPane().add(mainPanel);
         
         
-        
+         /* ICONA CHE DA PROBLEMI
         Image imgIcona = new ImageIcon(this.getClass().getResource("/Satistics.png")).getImage();
 
         // l'icona 
@@ -48,7 +52,7 @@ public class StatisticheGruppoGUI extends JFrame {
         lblIcona.setBounds(10, 11, 50, 50);
         mainPanel.add(lblIcona); 
         lblIcona.setIcon(new ImageIcon(imgIcona)); 
-  
+          	*/
 
         // Pannello superiore
         groupNameLabel = new JLabel(gruppo.getNomeGruppo());
@@ -57,44 +61,7 @@ public class StatisticheGruppoGUI extends JFrame {
         groupNameLabel.setBounds(87, 11, 288, 30);
         mainPanel.add(groupNameLabel);
 
-        searchButton = new JButton("Cerca");
-        searchButton.setBounds(506, 11, 70, 30);
-        
-        searchButton.addActionListener(new ActionListener() {
-           
-            public void actionPerformed(ActionEvent e) {
-                String dataString = dataTextField.getText();
-                String[] parti = dataString.split("/");
-                
-                if (parti.length == 2) { 
-                    String meseString = parti[0];
-                    String annoString = parti[1];
-                    
-                    try {
-                        int mese = Integer.parseInt(meseString); 
-                        int anno = Integer.parseInt(annoString); 
-                        
-                        
-                        float mediaP = Controller.postDAO.getMediaPostInUnMese(mese , anno , gruppo);
-                        
-                        JLabel mediaLabel = new JLabel("mediaP");
-                        mediaLabel.setBounds(144, 61, 49, 14);
-                        mainPanel.add(mediaLabel);
-                          
-                       
-                    } catch (NumberFormatException ex) {
-                        System.out.println("Formato data non valido");
-                    }
-                } else {
-                    System.out.println("Formato data non valido");
-                }
-                   
-            }
-        });
-        
-        
-        mainPanel.add(searchButton);
-
+       
         dataTextField = new JTextField();
         dataTextField.setBounds(385, 11, 111, 30);
         dataTextField.setForeground(Color.GRAY); 
@@ -125,9 +92,9 @@ public class StatisticheGruppoGUI extends JFrame {
         scrollPaneMenoCommenti.setBounds(10, 22, 262, 83);
         topPanel1.add(scrollPaneMenoCommenti);
         
-        JPanel panel = new JPanel();
-        panel.setBackground(new Color(180, 210, 253));
-        scrollPaneMenoCommenti.setViewportView(panel);
+        JPanel subPanel1top = new JPanel();
+        subPanel1top.setBackground(new Color(180, 210, 253));
+        scrollPaneMenoCommenti.setViewportView(subPanel1top);
 
         JPanel topPanel2 = new JPanel();
         topPanel2.setBackground(new Color(180, 210, 253)); 
@@ -140,15 +107,15 @@ public class StatisticheGruppoGUI extends JFrame {
         LabelMenoLike.setFont(new Font("Arial Bold", Font.PLAIN, 13)); 
         topPanel2.add(LabelMenoLike);
         
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(10, 24, 262, 81);
-        topPanel2.add(scrollPane);
+        JScrollPane scrollPaneMenoLike = new JScrollPane();
+        scrollPaneMenoLike.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPaneMenoLike.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPaneMenoLike.setBounds(10, 24, 262, 81);
+        topPanel2.add(scrollPaneMenoLike);
         
-        JPanel panel_2 = new JPanel();
-        panel_2.setBackground(new Color(180, 210, 253));
-        scrollPane.setViewportView(panel_2);
+        JPanel subPanel2Top = new JPanel();
+        subPanel2Top.setBackground(new Color(180, 210, 253));
+        scrollPaneMenoLike.setViewportView(subPanel2Top);
 
         // Pannelli inferiori
         JPanel bottomPanel1 = new JPanel();
@@ -168,9 +135,9 @@ public class StatisticheGruppoGUI extends JFrame {
         scrollPanePiùCommenti.setBounds(10, 25, 262, 94);
         bottomPanel1.add(scrollPanePiùCommenti);
         
-        JPanel panel_1 = new JPanel();
-        panel_1.setBackground(new Color(180, 210, 253));
-        scrollPanePiùCommenti.setViewportView(panel_1);
+        JPanel subPanel1bottom = new JPanel();
+        subPanel1bottom.setBackground(new Color(180, 210, 253));
+        scrollPanePiùCommenti.setViewportView(subPanel1bottom);
 
         JPanel bottomPanel2 = new JPanel();
         bottomPanel2.setBackground(new Color(180, 210, 253)); 
@@ -191,18 +158,110 @@ public class StatisticheGruppoGUI extends JFrame {
         scrollPanePiùLike.setBounds(10, 21, 262, 98);
         bottomPanel2.add(scrollPanePiùLike);
         
-        JPanel panel_3 = new JPanel();
-        panel_3.setBackground(new Color(180, 210, 253));
-        scrollPanePiùLike.setViewportView(panel_3);
+        JPanel subPanel2Bottom = new JPanel();
+        subPanel2Bottom.setBackground(new Color(180, 210, 253));
+        scrollPanePiùLike.setViewportView(subPanel2Bottom);
         
         JLabel mediaLabel = new JLabel("");
         mediaLabel.setBounds(144, 61, 49, 14);
         mainPanel.add(mediaLabel);
 
         setVisible(true);
+    
+
+    
+    
+    
+    searchButton = new JButton("Cerca");
+    searchButton.setBounds(506, 11, 70, 30);
+    searchButton.addActionListener(new ActionListener() {
+       
+        public void actionPerformed(ActionEvent e) {
+            String dataString = dataTextField.getText();
+            String[] parti = dataString.split("/");
+            
+            if (parti.length == 2) { 
+                String meseString = parti[0];
+                String annoString = parti[1];
+                
+                try {
+                    int mese = Integer.parseInt(meseString); 
+                    int anno = Integer.parseInt(annoString); 
+                    
+                    
+                 
+                    float mediaP = Controller.postDAO.getMediaPostInUnMese(mese , anno , gruppo);
+                    
+                    String mediaString = String.valueOf(mediaP);
+
+                    
+                    JLabel mediaLabel = new JLabel(mediaString);
+                    mediaLabel.setBounds(144, 61, 49, 14);
+                    mainPanel.add(mediaLabel);
+                    
+                    idpost = Controller.postDAO.getIDPostConPiuLikeGruppoInUnMese( mese,  anno, gruppo);
+                    if( idpost==-1) {
+                    	 JOptionPane.showMessageDialog(null, "Il gruppo non ha messaggi nel periodo specificato.", "Nessun messaggio trovato", JOptionPane.INFORMATION_MESSAGE);
+                   
+                    }else {
+                    	postConPiuLike=Controller.postDAO.getPostFromArrayListById(idpost);
+                    	
+                    	idpost=	Controller.postDAO.getIDPostConPiuCommentiGruppoInUnMese( mese,  anno, gruppo);		
+                    	postPiuCommenti=Controller.postDAO.getPostFromArrayListById(idpost);
+                    	
+                    	idpost= Controller.postDAO.getIDPostConMenoLikeGruppoInUnMese( mese,  anno, gruppo);	
+                        postConMenoLike=Controller.postDAO.getPostFromArrayListById(idpost);
+                        
+                        idpost=	Controller.postDAO.getIDPostConMenoCommentiGruppoInUnMese( mese,  anno, gruppo);
+                        postMenoCommenti=Controller.postDAO.getPostFromArrayListById(idpost);
+                    	
+                        JPanel subPanel1Top = creaPannelloPost(postMenoCommenti);
+                        JPanel subPanel2Top = creaPannelloPost( postConMenoLike);
+                        
+                        JPanel subPanel1Bottom = creaPannelloPost(postPiuCommenti);
+                        JPanel subPanel2Bottom = creaPannelloPost(postConPiuLike);
+                        
+                        scrollPaneMenoCommenti.add(subPanel1Top);
+                        scrollPaneMenoLike.add(subPanel2Top);
+                        scrollPanePiùCommenti.add(subPanel1Bottom);
+                        scrollPanePiùLike.add( subPanel2Bottom);
+                    }
+                      
+                   
+                } catch (NumberFormatException ex) {
+                	 JOptionPane.showMessageDialog(null, "Formato data non valido", "Errore", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+            	 JOptionPane.showMessageDialog(null, "Formato data non valido", "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+               
+        }
+    });
+    
+    
+    mainPanel.add(searchButton);
+
+    
+    }
+    
+    private JPanel creaPannelloPost(Post post) {
+        JPanel panelPost = new JPanel();
+        panelPost.setBackground(new Color(226, 235, 248));
+        panelPost.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        panelPost.setLayout(new BoxLayout(panelPost, BoxLayout.Y_AXIS));
+        
+        JLabel labelAutore = new JLabel("Autore: " + post.getIdUtente());
+        JLabel labelData = new JLabel("Data: " + post.getDataPubblicazione());
+        JLabel labelText = new JLabel("<html><p style='width:250px;'>" + post.getTesto() + "</p></html>");
+       
+        panelPost.add(labelAutore);
+        panelPost.add(labelData);
+        panelPost.add(labelText);
+        return panelPost;
     }
 
-    public static void main(String[] args) {
+    
+	public static void main(String[] args) {
         SwingUtilities.invokeLater(StatisticheGruppoGUI::new);
     }
 }

@@ -163,6 +163,11 @@ public class GruppoGUI extends JFrame {
 			JButton statisticheGruppoButton = new JButton("Statistiche");
 			statisticheGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
 			statisticheGruppoButton.setBounds(20, 72, 165, 21);
+			statisticheGruppoButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Controller.statisticheGruppo();
+				}
+			});
 			panel_3.add(statisticheGruppoButton);
 			
 			
