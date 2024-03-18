@@ -4,6 +4,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.YearMonth;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -139,187 +140,155 @@ public class PostDAO {
 	
 	
 	
+	
+	public float getMediaPostInUnMese(int mese, int anno, Gruppo g) {
+	    float media = 0.0f;
+	    int numeroGiorniMese = YearMonth.of(anno, mese).lengthOfMonth();
+	    String query = "SELECT COUNT(*) AS numeroPostMese " +
+	                   "FROM Post P " +
+	                   "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? " +
+	                   "AND EXTRACT(MONTH FROM P.DataPubblicazione) = ? " +
+	                   "AND P.IdGruppo = ?";
+	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
+	        pstmt.setInt(1, anno);
+	        pstmt.setInt(2, mese);
+	        pstmt.setInt(3, g.getIdGruppo());
 
-	public float getMediaPostInUnMese(LocalDate data,Gruppo g) {
-		float media = 0.0f;
-		int numeroGiorniMese = data.lengthOfMonth();
-		String query = "SELECT count(*) AS numeroPostMese"
-					 + "FROM Post P "
-					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
-					 + "AND EXTRACT(MONTH FROM P.DataPubblicazione) = ? "
-					 + "AND P.IdGruppo = ?";
-		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
-			
-			pstmt.setInt(1,data.getYear());
-			pstmt.setInt(2,data.getMonthValue());
-			pstmt.setInt(3,g.getIdGruppo());
-			
-			ResultSet res = pstmt.executeQuery();
-			
-			if(res.next()) {
-				int numeroPostMese = res.getInt("numeroPostMese");
-				media=(float) numeroPostMese/numeroGiorniMese;
-			}
-			
-			pstmt.close();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return media;
-			
+	        ResultSet res = pstmt.executeQuery();
+
+	        if (res.next()) {
+	            int numeroPostMese = res.getInt("numeroPostMese");
+	            media = (float) numeroPostMese / numeroGiorniMese;
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return media;
+	}
+
+	
+	
+	
+	
+	
+	
+	public int getIDPostConPiuLikeGruppoInUnMese(int mese, int anno, Gruppo g) {
+	    String query = "SELECT P.IdPost " +
+	                   "FROM Post P " +
+	                   "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? " +
+	                   "AND EXTRACT(MONTH FROM P.DataPubblicazione) = ? " +
+	                   "AND P.IdGruppo = ? " +
+	                   "ORDER BY P.NumeroLike DESC " +
+	                   "LIMIT 1";
+
+	    int idPostConPiuLike = -1; 
+
+	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
+	        pstmt.setInt(1, anno);
+	        pstmt.setInt(2, mese);
+	        pstmt.setInt(3, g.getIdGruppo());
+
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            idPostConPiuLike = rs.getInt("IdPost");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return idPostConPiuLike;
 	}
 	
-	
-	
-	public Post getPostConPiuLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g,UtenteDAO utenteDAO) {   
-		String query = "SELECT * "
-					 + "FROM Post P "
-					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
-					 + "AND EXTRACT (MONTH FROM P.DataPubblicazione) = ? "
-					 + "AND P.IdGruppo = ? "
-					 + "ORDER BY P.NumeroLike DESC "
-					 + "LIMIT 1";
-	    Post postConPiuLike = null;
-		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
-			
-			pstmt.setInt(1,dataRicerca.getYear());
-			pstmt.setInt(2,dataRicerca.getMonthValue());
-			pstmt.setInt(3,g.getIdGruppo());
-			
-			ResultSet res = pstmt.executeQuery();
-			if(res.next()) {
-				
-				Date dataPost=res.getDate("DataPubblicazione");
-				LocalDate localDataPost=dataPost.toLocalDate();
-				Time oraPost=res.getTime("OraPubblicazione");
-				LocalTime localOraPost=oraPost.toLocalTime();
-				
-				Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));                
-                
-				postConPiuLike = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
-								          res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g);
-		   }
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return postConPiuLike;
-	}
 	
 	
 
-	public Post getPostConMenoLikeGruppoInUnMese(LocalDate dataRicerca,Gruppo g,UtenteDAO utenteDAO) {
-		String query = "SELECT * "
-					 + "FROM Post P "
-					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
-					 + "AND EXTRACT (MONTH FROM P.DataPubblicazione) = ? "
-					 + "AND P.IdGruppo = ? "
-					 + "ORDER BY P.NumeroLike ASC "
-					 + "LIMIT 1";
-	    Post postConMenoLike = null;
-		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
-			
-			pstmt.setInt(1,dataRicerca.getYear());
-			pstmt.setInt(2,dataRicerca.getMonthValue());
-			pstmt.setInt(3,g.getIdGruppo());
-			
-			ResultSet res=pstmt.executeQuery();
-			if(res.next()) {
-				
-				Date dataPost = res.getDate("DataPubblicazione");
-				LocalDate localDataPost = dataPost.toLocalDate();
-				Time oraPost = res.getTime("OraPubblicazione");
-				LocalTime localOraPost = oraPost.toLocalTime();
-				
-				Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));
-                
-                
-                postConMenoLike = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
-				          				   res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g);
-           
-		   }
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return postConMenoLike;
-	}
-	
-	
-	
-	
-	public Post getPostConPiuCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g,UtenteDAO utenteDAO) {
-		String query = "SELECT * "
-					 + "FROM Post P "
-					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
-					 + "AND EXTRACT (MONTH FROM P.DataPubblicazione) = ? "
-					 + "AND P.IdGruppo = ? "
-					 + "ORDER BY P.NumeroCommenti DESC "
-					 + "LIMIT 1";
-	    Post postConPiuCommenti = null;
-		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
-			
-			pstmt.setInt(1,dataRicerca.getYear());
-			pstmt.setInt(2,dataRicerca.getMonthValue());
-			pstmt.setInt(3,g.getIdGruppo());
-			
-			ResultSet res = pstmt.executeQuery();
-			if(res.next()) {
-				
-				Date dataPost = res.getDate("DataPubblicazione");
-				LocalDate localDataPost = dataPost.toLocalDate();
-				Time oraPost = res.getTime("OraPubblicazione");
-				LocalTime localOraPost = oraPost.toLocalTime();
-				Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));
-                
-                
-                postConPiuCommenti = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
-			          	  res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g);
-		   }
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return postConPiuCommenti;
-	}
-	
-	
-	
-	public Post getPostConMenoCommentiGruppoInUnMese(LocalDate dataRicerca,Gruppo g,UtenteDAO utenteDAO) {
-		String query = "SELECT * "
-					 + "FROM Post P "
-					 + "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? "
-					 + "AND EXTRACT (MONTH FROM P.DataPubblicazione) = ? "
-					 + "AND P.IdGruppo = ? "
-					 + "ORDER BY P.NumeroCommenti ASC "
-					 + "LIMIT 1";
-	    Post postConMenoCommenti = null;
-		try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
-			
-			pstmt.setInt(1,dataRicerca.getYear());
-			pstmt.setInt(2,dataRicerca.getMonthValue());
-			pstmt.setInt(3,g.getIdGruppo());
-			
-			ResultSet res = pstmt.executeQuery();
-			if(res.next()) {
-				
-				Date dataPost = res.getDate("DataPubblicazione");
-				LocalDate localDataPost = dataPost.toLocalDate();
-				Time oraPost = res.getTime("OraPubblicazione");
-				LocalTime localOraPost = oraPost.toLocalTime();
-				Utente utente = utenteDAO.getUtenteFromArrayListById(res.getInt("IdUtente"));
+	public int getIDPostConMenoLikeGruppoInUnMese(int mese, int anno, Gruppo g) {
+	    String query = "SELECT P.IdPost " +
+	                   "FROM Post P " +
+	                   "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? " +
+	                   "AND EXTRACT(MONTH FROM P.DataPubblicazione) = ? " +
+	                   "AND P.IdGruppo = ? " +
+	                   "ORDER BY P.NumeroLike ASC " +
+	                   "LIMIT 1";
 
-                
-                postConMenoCommenti = new Post(res.getInt("IdPost"),res.getString("Testo"),res.getString("URLImmagine"),localDataPost,localOraPost,
-				          					   res.getInt("NumeroLike"),res.getInt("NumeroCommenti"),utente,g);
-		   }
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return postConMenoCommenti;
+	    int idPostConMenoLike = -1; 
+
+	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
+	        pstmt.setInt(1, anno);
+	        pstmt.setInt(2, mese);
+	        pstmt.setInt(3, g.getIdGruppo());
+
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            idPostConMenoLike = rs.getInt("IdPost");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return idPostConMenoLike;
 	}
+
+	
+	
+	public int getIDPostConPiuCommentiGruppoInUnMese(int mese, int anno, Gruppo g) {
+	    String query = "SELECT P.IdPost " +
+	                   "FROM Post P " +
+	                   "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? " +
+	                   "AND EXTRACT(MONTH FROM P.DataPubblicazione) = ? " +
+	                   "AND P.IdGruppo = ? " +
+	                   "ORDER BY P.NumeroCommenti DESC " +
+	                   "LIMIT 1";
+
+	    int idPostConPiuCommenti = -1; 
+
+	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
+	        pstmt.setInt(1, anno);
+	        pstmt.setInt(2, mese);
+	        pstmt.setInt(3, g.getIdGruppo());
+
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            idPostConPiuCommenti = rs.getInt("IdPost");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return idPostConPiuCommenti;
+	}
+
+	
+	
+	
+	public int getIDPostConMenoCommentiGruppoInUnMese(int mese, int anno, Gruppo g) {
+	    String query = "SELECT P.IdPost " +
+	                   "FROM Post P " +
+	                   "WHERE EXTRACT(YEAR FROM P.DataPubblicazione) = ? " +
+	                   "AND EXTRACT(MONTH FROM P.DataPubblicazione) = ? " +
+	                   "AND P.IdGruppo = ? " +
+	                   "ORDER BY P.NumeroCommenti ASC " +
+	                   "LIMIT 1";
+
+	    int idPostConMenoCommenti = -1; 
+
+	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
+	        pstmt.setInt(1, anno);
+	        pstmt.setInt(2, mese);
+	        pstmt.setInt(3, g.getIdGruppo());
+
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            idPostConMenoCommenti = rs.getInt("IdPost");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return idPostConMenoCommenti;
+	}
+
 
 		
 	public Post getPostFromArrayListById(int idPost) {
