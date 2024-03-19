@@ -15,15 +15,14 @@ public class StatisticheGruppoGUI extends JFrame {
     private JTextField dataTextField;
     private JButton searchButton;
     private Gruppo gruppo;
-    
+    private JPanel subPanel1Top; 
+    private JPanel subPanel2Top;
+    private JPanel subPanel1Bottom;
+    private JPanel subPanel2Bottom;
     
     private int mese;
     private int anno; 
     private int idpost;
-    private Post postConPiuLike;
-    private Post postPiuCommenti;
-    private Post postConMenoLike;
-    private Post postMenoCommenti;
     
 
     public StatisticheGruppoGUI() {
@@ -44,21 +43,20 @@ public class StatisticheGruppoGUI extends JFrame {
         getContentPane().add(mainPanel);
         
         
-         /* ICONA CHE DA PROBLEMI
-        Image imgIcona = new ImageIcon(this.getClass().getResource("/Satistics.png")).getImage();
-
-        // l'icona 
+        
+        Image imgIcona = new ImageIcon(this.getClass().getResource("/Statistics.png")).getImage();
+       
         JLabel lblIcona = new JLabel();
-        lblIcona.setBounds(10, 11, 50, 50);
-        mainPanel.add(lblIcona); 
+        lblIcona.setBounds(10, 0, 50, 50);
         lblIcona.setIcon(new ImageIcon(imgIcona)); 
-          	*/
-
-        // Pannello superiore
+        mainPanel.add(lblIcona); 
+        
+        
+        
         groupNameLabel = new JLabel(gruppo.getNomeGruppo());
-        groupNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        groupNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
         groupNameLabel.setFont(new Font("Arial Bold", Font.PLAIN, 13)); 
-        groupNameLabel.setBounds(87, 11, 288, 30);
+        groupNameLabel.setBounds(44, 10, 331, 30);
         mainPanel.add(groupNameLabel);
 
        
@@ -68,115 +66,97 @@ public class StatisticheGruppoGUI extends JFrame {
         dataTextField.setText("mm/aaaa"); 
         mainPanel.add(dataTextField);
 
-        // label su i panelli superiori
+      
         JLabel LabelMediaGiornaliera = new JLabel("Media giornaliera:\r\n");
         LabelMediaGiornaliera.setFont(new Font("Arial Bold", Font.PLAIN, 13)); 
         LabelMediaGiornaliera.setBounds(20, 52, 128, 32);
         mainPanel.add(LabelMediaGiornaliera);
 
-        // Pannelli superiori
-        JPanel topPanel1 = new JPanel();
-        topPanel1.setBackground(new Color(180, 210, 253)); 
-        topPanel1.setBounds(10, 95, 282, 116);
-        mainPanel.add(topPanel1);
-        topPanel1.setLayout(null);
+       
+        JPanel panel1Top = new JPanel();
+        panel1Top.setBackground(new Color(180, 210, 253)); 
+        panel1Top.setBounds(10, 81, 282, 130);
+        mainPanel.add(panel1Top);
+        panel1Top.setLayout(null);
 
         JLabel LabelMenoCommenti = new JLabel("Post con meno commenti:");
         LabelMenoCommenti.setBounds(69, 5, 177, 16);
         LabelMenoCommenti.setFont(new Font("Arial Bold", Font.PLAIN, 13)); 
-        topPanel1.add(LabelMenoCommenti);
+        panel1Top.add(LabelMenoCommenti);
+         
         
-        JScrollPane scrollPaneMenoCommenti = new JScrollPane();
-        scrollPaneMenoCommenti.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPaneMenoCommenti.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPaneMenoCommenti.setBounds(10, 22, 262, 83);
-        topPanel1.add(scrollPaneMenoCommenti);
-        
-        JPanel subPanel1top = new JPanel();
-        subPanel1top.setBackground(new Color(180, 210, 253));
-        scrollPaneMenoCommenti.setViewportView(subPanel1top);
-
-        JPanel topPanel2 = new JPanel();
-        topPanel2.setBackground(new Color(180, 210, 253)); 
-        topPanel2.setBounds(294, 95, 282, 116);
-        mainPanel.add(topPanel2);
-        topPanel2.setLayout(null);
+        JPanel panel2Top = new JPanel();
+        panel2Top.setBackground(new Color(180, 210, 253)); 
+        panel2Top.setBounds(294, 81, 282, 130);
+        mainPanel.add(panel2Top);
+        panel2Top.setLayout(null);
 
         JLabel LabelMenoLike = new JLabel("Post con meno Like:");
         LabelMenoLike.setBounds(80, 5, 135, 16);
         LabelMenoLike.setFont(new Font("Arial Bold", Font.PLAIN, 13)); 
-        topPanel2.add(LabelMenoLike);
+        panel2Top.add(LabelMenoLike);
         
-        JScrollPane scrollPaneMenoLike = new JScrollPane();
-        scrollPaneMenoLike.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPaneMenoLike.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPaneMenoLike.setBounds(10, 24, 262, 81);
-        topPanel2.add(scrollPaneMenoLike);
-        
-        JPanel subPanel2Top = new JPanel();
-        subPanel2Top.setBackground(new Color(180, 210, 253));
-        scrollPaneMenoLike.setViewportView(subPanel2Top);
-
+            
         // Pannelli inferiori
-        JPanel bottomPanel1 = new JPanel();
-        bottomPanel1.setBackground(new Color(180, 210, 253)); 
-        bottomPanel1.setBounds(10, 222, 282, 130);
-        mainPanel.add(bottomPanel1);
-        bottomPanel1.setLayout(null);
+        JPanel panel1Bottom = new JPanel();
+        panel1Bottom.setBackground(new Color(180, 210, 253)); 
+        panel1Bottom.setBounds(10, 222, 282, 130);
+        mainPanel.add(panel1Bottom);
+        panel1Bottom.setLayout(null);
 
         JLabel LabelPiuCommenti = new JLabel("Post con più Commenti:");
         LabelPiuCommenti.setBounds(65, 5, 151, 16);
         LabelPiuCommenti.setFont(new Font("Arial Bold", Font.PLAIN, 13)); 
-        bottomPanel1.add(LabelPiuCommenti);
+        panel1Bottom.add(LabelPiuCommenti);
         
-        JScrollPane scrollPanePiùCommenti = new JScrollPane();
-        scrollPanePiùCommenti.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPanePiùCommenti.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPanePiùCommenti.setBounds(10, 25, 262, 94);
-        bottomPanel1.add(scrollPanePiùCommenti);
-        
-        JPanel subPanel1bottom = new JPanel();
-        subPanel1bottom.setBackground(new Color(180, 210, 253));
-        scrollPanePiùCommenti.setViewportView(subPanel1bottom);
-
-        JPanel bottomPanel2 = new JPanel();
-        bottomPanel2.setBackground(new Color(180, 210, 253)); 
-        bottomPanel2.setBounds(294, 222, 282, 130);
-        mainPanel.add(bottomPanel2);
-        bottomPanel2.setLayout(null);
+       
+        JPanel panel2Bottom = new JPanel();
+        panel2Bottom.setBackground(new Color(180, 210, 253)); 
+        panel2Bottom.setBounds(294, 222, 282, 130);
+        mainPanel.add(panel2Bottom);
+        panel2Bottom.setLayout(null);
 
        
-
         JLabel LabelPiuLike = new JLabel("Post con più Like:");
         LabelPiuLike.setBounds(87, 5, 133, 16);
         LabelPiuLike.setFont(new Font("Arial Bold", Font.PLAIN, 13));
-        bottomPanel2.add(LabelPiuLike);
+        panel2Bottom.add(LabelPiuLike);
         
-        JScrollPane scrollPanePiùLike = new JScrollPane();
-        scrollPanePiùLike.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPanePiùLike.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPanePiùLike.setBounds(10, 21, 262, 98);
-        bottomPanel2.add(scrollPanePiùLike);
+        subPanel2Bottom = new JPanel();
+        panel2Bottom.add(subPanel2Bottom);
+        subPanel2Bottom.setBounds(10, 22, 262, 97);
+        subPanel2Bottom.setBackground(new Color(226, 235, 248));
+        subPanel2Bottom.setLayout(new BoxLayout(subPanel2Bottom, BoxLayout.Y_AXIS));
         
-        JPanel subPanel2Bottom = new JPanel();
-        subPanel2Bottom.setBackground(new Color(180, 210, 253));
-        scrollPanePiùLike.setViewportView(subPanel2Bottom);
+        subPanel1Bottom = new JPanel();
+        panel1Bottom.add(subPanel1Bottom);
+        subPanel1Bottom.setBounds(10, 22, 262, 97);
+        subPanel1Bottom.setBackground(new Color(226, 235, 248));
+        subPanel1Bottom.setLayout(new BoxLayout(subPanel1Bottom, BoxLayout.Y_AXIS));
+        
+        subPanel2Top = new JPanel();
+        panel2Top.add(subPanel2Top);
+        subPanel2Top.setBounds(10, 22, 262, 97);
+        subPanel2Top.setBackground(new Color(226, 235, 248));
+        subPanel2Top.setLayout(new BoxLayout(subPanel2Top, BoxLayout.Y_AXIS));
+        
+        subPanel1Top = new JPanel();
+        panel1Top.add(subPanel1Top);
+        subPanel1Top.setBounds(10, 22, 262, 97);
+        subPanel1Top.setBackground(new Color(226, 235, 248));
+        subPanel1Top.setLayout(new BoxLayout(subPanel1Top, BoxLayout.Y_AXIS));
+  
+        setVisible(true);
         
         JLabel mediaLabel = new JLabel("");
         mediaLabel.setBounds(144, 61, 49, 14);
-        mainPanel.add(mediaLabel);
-
-        setVisible(true);
-    
-
-    
-    
-    
-    searchButton = new JButton("Cerca");
-    searchButton.setBounds(506, 11, 70, 30);
-    searchButton.addActionListener(new ActionListener() {
+        
+        searchButton = new JButton("Cerca");
+        searchButton.setBounds(506, 11, 70, 30);
+        searchButton.addActionListener(new ActionListener() {
        
         public void actionPerformed(ActionEvent e) {
+        	
             String dataString = dataTextField.getText();
             String[] parti = dataString.split("/");
             
@@ -188,46 +168,41 @@ public class StatisticheGruppoGUI extends JFrame {
                     int mese = Integer.parseInt(meseString); 
                     int anno = Integer.parseInt(annoString); 
                     
-                    
-                 
                     float mediaP = Controller.postDAO.getMediaPostInUnMese(mese , anno , gruppo);
                     
-                    String mediaString = String.valueOf(mediaP);
-
-                    
-                    JLabel mediaLabel = new JLabel(mediaString);
-                    mediaLabel.setBounds(144, 61, 49, 14);
+                    mediaLabel.setText(""+mediaP);
                     mainPanel.add(mediaLabel);
                     
+               
                     idpost = Controller.postDAO.getIDPostConPiuLikeGruppoInUnMese( mese,  anno, gruppo);
                     if( idpost==-1) {
-                    	 JOptionPane.showMessageDialog(null, "Il gruppo non ha messaggi nel periodo specificato.", "Nessun messaggio trovato", JOptionPane.INFORMATION_MESSAGE);
+                    	 JOptionPane.showMessageDialog(null, "Il gruppo non ha post nel periodo specificato.", "Nessun messaggio trovato", JOptionPane.INFORMATION_MESSAGE);
                    
                     }else {
-                    	postConPiuLike=Controller.postDAO.getPostFromArrayListById(idpost);
+                                          
+                    	
+                    	Post postConPiùLike=Controller.postDAO.getPostFromArrayListById(idpost);
                     	
                     	idpost=	Controller.postDAO.getIDPostConPiuCommentiGruppoInUnMese( mese,  anno, gruppo);		
-                    	postPiuCommenti=Controller.postDAO.getPostFromArrayListById(idpost);
+                    	Post postConPiùCommenti=Controller.postDAO.getPostFromArrayListById(idpost);
                     	
                     	idpost= Controller.postDAO.getIDPostConMenoLikeGruppoInUnMese( mese,  anno, gruppo);	
-                        postConMenoLike=Controller.postDAO.getPostFromArrayListById(idpost);
+                        Post postConMenoLike=Controller.postDAO.getPostFromArrayListById(idpost);
                         
                         idpost=	Controller.postDAO.getIDPostConMenoCommentiGruppoInUnMese( mese,  anno, gruppo);
-                        postMenoCommenti=Controller.postDAO.getPostFromArrayListById(idpost);
+                        Post postConMenoCommenti=Controller.postDAO.getPostFromArrayListById(idpost);
                     	
-                        JPanel subPanel1Top = creaPannelloPost(postMenoCommenti);
-                        JPanel subPanel2Top = creaPannelloPost( postConMenoLike);
+                        mostraPannelloMenoLike(postConMenoLike);
+                        mostraPannelloPiùCommenti(postConPiùCommenti);
+                        mostraPannelloMenoCommenti(postConMenoCommenti);
+                        mostraPannelloPiùLike(postConPiùLike);
                         
-                        JPanel subPanel1Bottom = creaPannelloPost(postPiuCommenti);
-                        JPanel subPanel2Bottom = creaPannelloPost(postConPiuLike);
                         
-                        scrollPaneMenoCommenti.add(subPanel1Top);
-                        scrollPaneMenoLike.add(subPanel2Top);
-                        scrollPanePiùCommenti.add(subPanel1Bottom);
-                        scrollPanePiùLike.add( subPanel2Bottom);
                     }
-                      
-                   
+                    
+                    mainPanel.repaint();
+                    mainPanel.revalidate();
+                    
                 } catch (NumberFormatException ex) {
                 	 JOptionPane.showMessageDialog(null, "Formato data non valido", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
@@ -238,21 +213,109 @@ public class StatisticheGruppoGUI extends JFrame {
         }
     });
     
-    
+   
     mainPanel.add(searchButton);
-
     
     }
+    
+    private void mostraPannelloPiùLike(Post p) {
+    	subPanel2Bottom.removeAll();
+    	
+    	JPanel postPanel = new JPanel();
+        postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+		postPanel.setBackground(new Color(226, 235, 248));
+		
+		JPanel postConPiùLike = creaPannelloPost(p);
+		postPanel.add(postConPiùLike);
+		
+		
+        JScrollPane scrollPanePiùLike = new JScrollPane(postPanel);
+        scrollPanePiùLike.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPanePiùLike.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanePiùLike.setBounds(10, 22, 262, 97);
+                
+        subPanel2Bottom.add(scrollPanePiùLike);
+        subPanel2Bottom.revalidate();
+        subPanel2Bottom.repaint();
+    	
+    }
+    
+    private void mostraPannelloMenoLike(Post p) {
+    	subPanel2Top.removeAll();
+    	
+    	JPanel postPanel = new JPanel();
+        postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+		postPanel.setBackground(new Color(226, 235, 248));
+		
+		JPanel postConMenoLike = creaPannelloPost(p);
+		postPanel.add(postConMenoLike);
+		
+		JScrollPane scrollPanePiùLike = new JScrollPane(postPanel);
+        scrollPanePiùLike.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPanePiùLike.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanePiùLike.setBounds(10, 22, 262, 97);
+        
+        subPanel2Top.add(scrollPanePiùLike);
+        subPanel2Top.revalidate();
+        subPanel2Top.repaint();
+    	
+    }
+    
+    private void mostraPannelloPiùCommenti(Post p) {
+    	subPanel1Bottom.removeAll();
+    	
+    	JPanel postPanel = new JPanel();
+        postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+		postPanel.setBackground(new Color(226, 235, 248));
+		
+		JPanel postConPiùCommenti = creaPannelloPost(p);
+		postPanel.add(postConPiùCommenti);
+		
+		
+        JScrollPane scrollPanePiùCommenti = new JScrollPane(postPanel);
+        scrollPanePiùCommenti.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPanePiùCommenti.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPanePiùCommenti.setBounds(10, 22, 262, 97);
+                
+        subPanel1Bottom.add(scrollPanePiùCommenti);
+        subPanel1Bottom.revalidate();
+        subPanel1Bottom.repaint();
+    	
+    }
+    
+    private void mostraPannelloMenoCommenti(Post p) {
+    	subPanel1Top.removeAll();
+    	
+    	JPanel postPanel = new JPanel();
+        postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
+		postPanel.setBackground(new Color(226, 235, 248));
+		
+		JPanel postConMenoCommenti = creaPannelloPost(p);
+		postPanel.add(postConMenoCommenti);
+		
+		
+        JScrollPane scrollPaneMenoCommenti = new JScrollPane(postPanel);
+        scrollPaneMenoCommenti.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPaneMenoCommenti.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPaneMenoCommenti.setBounds(10, 22, 262, 97);
+                
+        subPanel1Top.add(scrollPaneMenoCommenti);
+        subPanel1Top.revalidate();
+        subPanel1Top.repaint();
+    	
+    }
+    
+    
     
     private JPanel creaPannelloPost(Post post) {
         JPanel panelPost = new JPanel();
         panelPost.setBackground(new Color(226, 235, 248));
-        panelPost.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         panelPost.setLayout(new BoxLayout(panelPost, BoxLayout.Y_AXIS));
         
-        JLabel labelAutore = new JLabel("Autore: " + post.getIdUtente());
+        
+        JLabel labelAutore = new JLabel("Autore: " + post.getIdUtente());   //Togliere l'id e mettere nick ******************
         JLabel labelData = new JLabel("Data: " + post.getDataPubblicazione());
-        JLabel labelText = new JLabel("<html><p style='width:250px;'>" + post.getTesto() + "</p></html>");
+        JLabel labelText = new JLabel("<html><p style='width:170px;'>" + post.getTesto() + "</p></html>");
        
         panelPost.add(labelAutore);
         panelPost.add(labelData);
@@ -261,7 +324,5 @@ public class StatisticheGruppoGUI extends JFrame {
     }
 
     
-	public static void main(String[] args) {
-        SwingUtilities.invokeLater(StatisticheGruppoGUI::new);
-    }
+	
 }
