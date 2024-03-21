@@ -24,24 +24,10 @@ import javax.swing.JButton;
 import java.awt.Color;
 
 public class CreazionePostGUI extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    CreazionePostGUI frame = new CreazionePostGUI();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-	public CreazionePostGUI() {
+    public CreazionePostGUI() {
 		setBounds(100, 100, 573, 331);
 		setTitle("Inserimento Post");
 		contentPane = new JPanel();
@@ -64,7 +50,7 @@ public class CreazionePostGUI extends JFrame {
 		creazionePanel.add(textAreaPost);
 		
 		JLabel logoCreaGruppoLabel = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/inserisciPost.png")).getImage();
+		Image img = new ImageIcon(this.getClass().getResource("")).getImage();
 		logoCreaGruppoLabel.setBounds(10, 10, 78, 64);
 		creazionePanel.add(logoCreaGruppoLabel);
 		logoCreaGruppoLabel.setIcon(new ImageIcon (img));

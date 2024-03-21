@@ -283,7 +283,8 @@ public class Controller {
 	public static void tornaAllaHome() {
 		home.setVisible(true);
 	    aggiornaHome();
-		creazioneGruppo.setVisible(false);
+	    chiudiStatisticheGruppo();
+	    chiudiCreazioneGruppo();
 		gruppo.setVisible(false);
 	}
 	
@@ -308,9 +309,14 @@ public class Controller {
 		passwordDimenticata.resettaCampiPasswordDimenticata();
 	}
 	
-	public static void statisticheGruppo() {
+	public static void apriStatisticheGruppo() {
 		Statistichegruppo.setVisible(true);	
 	}
+	
+	public static void chiudiStatisticheGruppo() {
+		Statistichegruppo.setVisible(false);	
+	}
+	
 	
 	public static void apriSchermataGruppo() {
 		home.setVisible(false);

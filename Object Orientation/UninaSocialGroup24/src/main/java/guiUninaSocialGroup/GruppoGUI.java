@@ -165,7 +165,7 @@ public class GruppoGUI extends JFrame {
 			statisticheGruppoButton.setBounds(20, 72, 165, 21);
 			statisticheGruppoButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Controller.statisticheGruppo();
+					Controller.apriStatisticheGruppo();
 				}
 			});
 			panel_3.add(statisticheGruppoButton);

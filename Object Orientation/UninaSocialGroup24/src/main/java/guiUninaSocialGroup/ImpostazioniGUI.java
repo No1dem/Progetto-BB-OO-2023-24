@@ -36,10 +36,9 @@ public class ImpostazioniGUI extends JFrame {
             public void windowClosing(WindowEvent e) {
                 setVisible(false);
                 resettaCampiImpostazioni();
-                
             }
         });
-        setBounds(100, 100, 403, 535);
+        setBounds(100, 100, 397, 535);
         setTitle("Impostazioni Utente");
         contentPane = new JPanel();
         contentPane.setBackground(new Color(226, 235, 248));

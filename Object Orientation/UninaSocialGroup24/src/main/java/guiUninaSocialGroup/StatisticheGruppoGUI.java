@@ -9,6 +9,8 @@ import controller.Controller;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class StatisticheGruppoGUI extends JFrame {
     private JLabel groupNameLabel;
@@ -29,7 +31,14 @@ public class StatisticheGruppoGUI extends JFrame {
         setResizable(false);
         setTitle("Statistiche del Gruppo");
         setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                setVisible(false);                
+            }
+        });
+        
         setLocationRelativeTo(null); // Centra la finestra
         
        
@@ -145,9 +154,7 @@ public class StatisticheGruppoGUI extends JFrame {
         subPanel1Top.setBounds(10, 22, 262, 97);
         subPanel1Top.setBackground(new Color(226, 235, 248));
         subPanel1Top.setLayout(new BoxLayout(subPanel1Top, BoxLayout.Y_AXIS));
-  
-        setVisible(true);
-        
+          
         JLabel mediaLabel = new JLabel("");
         mediaLabel.setBounds(144, 61, 49, 14);
         
@@ -180,7 +187,7 @@ public class StatisticheGruppoGUI extends JFrame {
                    
                     }else {
                                           
-                    	
+                   
                     	Post postConPiùLike=Controller.postDAO.getPostFromArrayListById(idpost);
                     	
                     	idpost=	Controller.postDAO.getIDPostConPiuCommentiGruppoInUnMese( mese,  anno, gruppo);		
@@ -204,17 +211,17 @@ public class StatisticheGruppoGUI extends JFrame {
                     mainPanel.revalidate();
                     
                 } catch (NumberFormatException ex) {
-                	 JOptionPane.showMessageDialog(null, "Formato data non valido", "Errore", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
+                	JOptionPane.showMessageDialog(null, "Formato data non valido", "Errore", JOptionPane.ERROR_MESSAGE);
+                   }
+            }else {
             	 JOptionPane.showMessageDialog(null, "Formato data non valido", "Errore", JOptionPane.ERROR_MESSAGE);
             }
                
         }
-    });
+        });
     
    
-    mainPanel.add(searchButton);
+        mainPanel.add(searchButton);
     
     }
     
