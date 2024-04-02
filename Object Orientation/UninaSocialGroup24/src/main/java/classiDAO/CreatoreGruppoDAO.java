@@ -93,15 +93,19 @@ public class CreatoreGruppoDAO {
 	}
 	
 	public LinkedList<Gruppo> getListaGruppiCreatiFromArrayListByIdUtente (int idUtente,GruppoDAO gruppoDAO) {
-		LinkedList<Gruppo> listaGruppi = new LinkedList<>();
+		LinkedList<Gruppo> listaGruppiCreati = new LinkedList<>();
 		
 		for (CreatoreGruppo  cg : listaCreatoriGruppi) {  
             if (cg.getIdUtente()== idUtente){
                 Gruppo gruppo = gruppoDAO.getGruppoFromArrayListById(cg.getIdGruppoAmministrato());
-                listaGruppi.add(gruppo);
+                listaGruppiCreati.add(gruppo);
             }
         }
-		return listaGruppi;
+		return listaGruppiCreati;
+	}
+	
+	public LinkedList<CreatoreGruppo> getListaCreatori() {
+		return listaCreatoriGruppi;
 	}
 	
 	public void stampaLista(LinkedList<CreatoreGruppo> listaCreatori) {

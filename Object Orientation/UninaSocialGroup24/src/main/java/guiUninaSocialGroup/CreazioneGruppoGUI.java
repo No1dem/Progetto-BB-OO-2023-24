@@ -157,7 +157,7 @@ public class CreazioneGruppoGUI extends JFrame {
 
 				if (creazioneRiuscita) {
 					JOptionPane.showMessageDialog(contentPane, "Gruppo creato con successo", "Conferma", JOptionPane.INFORMATION_MESSAGE);
-					Controller.tornaAllaHome();
+					Controller.aggiornaHome();;
 				} else {
 					JOptionPane.showMessageDialog(contentPane, "Errore durante la creazione del gruppo.", "Errore", JOptionPane.ERROR_MESSAGE);
 				}

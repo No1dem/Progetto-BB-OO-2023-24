@@ -13,6 +13,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import classiDAO.CreatoreGruppo;
 import classiDAO.Gruppo;
+import classiDAO.Utente;
 import controller.Controller;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
@@ -342,8 +343,9 @@ public class HomeGUI extends JFrame {
 	            panelGruppo.addMouseListener(new MouseAdapter() {
 	                @Override
 	                public void mouseClicked(MouseEvent e) {
+	                	Utente myUtente = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente);
 	                	
-	                	if (Controller.controlloEsistenzaRichiestaDiAccessoGruppoInAttesa(gruppo))
+	                	if (Controller.richiestaDiAccessoDAO.esisteRichiestaDiAccessoInAttesa(myUtente,gruppo))
 	                		JOptionPane.showMessageDialog(panelGruppi, "Richiesta di accesso in attesa.");
 	                	else if (!Controller.controlloEsistenzaIscrizioneGruppo(gruppo)) {
 	                			String messaggio = "Per accedere al gruppo devi prima inviare la richiesta di iscrizione.";
@@ -437,8 +439,8 @@ public class HomeGUI extends JFrame {
         gruppoPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            	
-                JOptionPane.showMessageDialog(null, "Hai cliccato sul pannello!");
+            	Controller.idGruppoVisualizzato = g.getIdGruppo();
+        		Controller.apriSchermataGruppo();
             }
             
             public void mouseEntered(MouseEvent e) {
@@ -503,8 +505,8 @@ public class HomeGUI extends JFrame {
         gruppoPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-   
-                JOptionPane.showMessageDialog(null, "Hai cliccato sul pannello!");
+            	Controller.idGruppoVisualizzato = g.getIdGruppo();
+        		Controller.apriSchermataGruppo();
             }
             
             @Override

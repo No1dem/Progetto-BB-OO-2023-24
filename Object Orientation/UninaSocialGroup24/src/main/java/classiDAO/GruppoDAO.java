@@ -52,7 +52,7 @@ public class GruppoDAO {
 	 
 	 
 	 
-	 public void deleteGruppoById(Gruppo g) {
+	 public void deleteGruppo(Gruppo g) {
 	    	String query = "DELETE FROM Gruppo WHERE idGruppo = ?";
 	    	try(PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 	    		pstmt.setInt(1, g.getIdGruppo());
@@ -201,10 +201,12 @@ public class GruppoDAO {
 		return null;
 	 }
 	 
+     
 	 public LinkedList<Gruppo> getListaGruppi(){
 		 return listaGruppi;
 	 }
 	 
+ 
 	 public void stampaListaGruppi(LinkedList<Gruppo> listaGruppi) {
 		for (Gruppo gruppo : listaGruppi) {
 		        System.out.println("ID Gruppo: " + gruppo.getIdGruppo());

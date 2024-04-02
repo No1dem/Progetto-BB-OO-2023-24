@@ -174,6 +174,17 @@ public class GruppoGUI extends JFrame {
 			JButton eliminaGruppoButton = new JButton("Elimina Gruppo");
 			eliminaGruppoButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
 			eliminaGruppoButton.setBounds(20, 133, 165, 21);
+			eliminaGruppoButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Object[] opzioni = {"Conferma", "Annulla"};
+        	    	int conferma = JOptionPane.showOptionDialog(null, "Sei sicuro di voler eliminare il gruppo?", "Conferma eliminazione", 
+        	    	JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opzioni, opzioni[0]);
+        	        if (conferma == JOptionPane.YES_OPTION) {
+		                	Controller.eliminaGruppo(Controller.idGruppoVisualizzato);
+		                	Controller.tornaAllaHome();
+		                }
+				}
+			});
 			panel_3.add(eliminaGruppoButton);
 			
 			
@@ -313,7 +324,7 @@ public class GruppoGUI extends JFrame {
         labelNomeAutore.setFont(new Font("Arial", Font.BOLD,15));
         autorePanel.add(labelNomeAutore);
         
-        autorePanel.add(Box.createRigidArea(new Dimension(30,0)));
+        autorePanel.add(Box.createRigidArea(new Dimension(370,0)));
         
         JLabel likeLabel = new JLabel();
         Image imgLike = new ImageIcon(this.getClass().getResource("/like3.png")).getImage();
@@ -364,9 +375,14 @@ public class GruppoGUI extends JFrame {
         	    
         	    @Override
         	    public void mouseClicked(MouseEvent e) {
-        	    	Controller.postDAO.deletePostById(p);
-        	        postPanel.removeAll();
-        	        Controller.aggiornaSchermataGruppo();
+        	    	Object[] opzioni = {"Conferma", "Annulla"};
+        	    	int conferma = JOptionPane.showOptionDialog(null, "Sei sicuro di voler eliminare questo post?", "Conferma eliminazione", 
+        	    	JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opzioni, opzioni[0]);
+        	        if (conferma == JOptionPane.YES_OPTION) {
+        	        	Controller.postDAO.deletePostById(p);
+        	        	postPanel.removeAll();
+        	        	Controller.aggiornaSchermataGruppo();
+        	    	}
         	        return;
         	    }
         	});

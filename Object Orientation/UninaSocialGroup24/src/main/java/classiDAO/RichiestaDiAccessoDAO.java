@@ -56,6 +56,7 @@ public class RichiestaDiAccessoDAO {
 	        
 	        pstmt.executeUpdate();        
 	        pstmt.close();
+	        listaRichiesteDiAccesso.add(null);
 	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -100,7 +101,22 @@ public class RichiestaDiAccessoDAO {
 	    return null;
 	}
 	
-	
+	public boolean esisteRichiestaDiAccessoInAttesa(Utente u,Gruppo g) {
+		String query = "SELECT * FROM RichiestaDiAccesso WHERE idGruppoRichiesta = ? "
+					 + "AND idUtenteRichiesta = ? AND StatoRichiesta = 'In_attesa' ";
+		 try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
+		        pstmt.setInt(1, g.getIdGruppo());
+		        pstmt.setInt(2, u.getIdUtente());
+
+		        ResultSet rs = pstmt.executeQuery();
+
+		        return rs.next();
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        return false;
+		    }
+	}
 	
 	public LinkedList<RichiestaDiAccesso> getListaRichiesteUtenteFromArrayListByIdUtente(int idUtente) {
 		LinkedList<RichiestaDiAccesso> listaRichiesteUtente = new LinkedList<RichiestaDiAccesso>();

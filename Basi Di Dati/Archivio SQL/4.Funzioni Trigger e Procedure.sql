@@ -387,6 +387,7 @@ BEGIN
     	PERFORM InserisciNotificaPost(NEW.IdUtente, RigaUtenti.IdUtente, NEW.IdGruppo,NEW.IdPost);
 		RETURN NEW;
     END LOOP;
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 

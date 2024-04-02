@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import classiDAO.AmministratoreDAO;
 import classiDAO.CommentoDAO;
+import classiDAO.CreatoreGruppo;
 import classiDAO.CreatoreGruppoDAO;
 import classiDAO.EnumStatiRichiesta;
 import classiDAO.Gruppo;
@@ -97,7 +98,24 @@ public class Controller {
 		myIdUtente = utenteDAO.getUtenteFromArrayListByNickname(Nickname).getIdUtente();
 	}
 	
-	
+	public static void eliminaGruppo(int idGruppo) {
+		LinkedList<Gruppo> listaGruppi = gruppoDAO.getListaGruppi();
+		CreatoreGruppo creatoreDaEliminare = creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(idGruppo);
+		
+		LinkedList<CreatoreGruppo> listaCreatoriGruppo = creatoreGruppoDAO.getListaCreatori();
+		Gruppo gruppoDaEliminare = gruppoDAO.getGruppoFromArrayListById(idGruppo);
+		
+
+		if (gruppoDaEliminare != null) {
+			listaGruppi.remove(gruppoDaEliminare);
+			listaCreatoriGruppo.remove(creatoreDaEliminare);
+			gruppoDAO.deleteGruppo(gruppoDaEliminare);
+			JOptionPane.showMessageDialog(null, "Eliminazione avvenuta con successo.", "Eliminazione gruppo", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else
+			 JOptionPane.showMessageDialog(null, "Errore eliminazione gruppo.", "Errore", JOptionPane.ERROR_MESSAGE);
+		
+	}
 	
 	public static LinkedList<Gruppo> getListaGruppiUtenteIscrittoById(int idUtente){
 		LinkedList<Gruppo> listaGruppiIscritto = new LinkedList<Gruppo>();
@@ -174,15 +192,6 @@ public class Controller {
 		return false;	
 	}
 		
-		
-	
-	public static boolean controlloEsistenzaRichiestaDiAccessoGruppoInAttesa (Gruppo g) {
-		for (RichiestaDiAccesso rda : richiestaDiAccessoDAO.getListaRichiesteUtenteFromArrayListByIdUtente(myIdUtente)) {	
-			if (rda.getGruppoAccesso().equals(g) && rda.getStatoRichiesta() == EnumStatiRichiesta.In_attesa)
-				return true;
-		}
-		return false;
-	}
 	
 	public static boolean controlloEsistenzaNickname (String nickname) {
 		for (Utente u : utenteDAO.getListaUtenti()) {
@@ -285,6 +294,7 @@ public class Controller {
 	    aggiornaHome();
 	    chiudiStatisticheGruppo();
 	    chiudiCreazioneGruppo();
+	    chiudiCreazionePost();
 		gruppo.setVisible(false);
 	}
 	
@@ -340,7 +350,7 @@ public class Controller {
 	
 	public static void chiudiCreazionePost() {
 		creazionePost.setVisible(false);
-//		creazionePost.resettaCampoCreazionePost();
+		creazionePost.resettaCampoCreazionePost();
 	}
 	
 }
