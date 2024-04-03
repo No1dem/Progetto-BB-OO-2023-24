@@ -175,12 +175,12 @@ public class Controller {
 		try{
 			UtenteDAO utenteDAO = new UtenteDAO(Connessione);
 			utenteDAO.insertNuovoUtente(nomeUtente, cognomeUtente, nickname, email, password, biografia);
+			return true;
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
-		return true;	
+		}	
 	}
 		
 	public static boolean controlloEsistenzaIscrizioneGruppo(Gruppo g) {
@@ -253,6 +253,7 @@ public class Controller {
 	
 	public static void aggiornaHome() {
 		home.caricaImmagineDelProfilo();
+		home.resettaRicercaGruppi();
 		home.mostraGruppiIscritto(getListaGruppiUtenteIscrittoById(Controller.myIdUtente));
 		home.mostraGruppiCreati(Controller.creatoreGruppoDAO.getListaGruppiCreatiFromArrayListByIdUtente(Controller.myIdUtente,Controller.gruppoDAO));	
 	}
@@ -264,6 +265,7 @@ public class Controller {
 	
 	public static void chiudiCreazioneGruppo() {
 		creazioneGruppo.setVisible(false);	
+		creazioneGruppo.resettaCampiCreazioneGruppo();
 	}
 
 	

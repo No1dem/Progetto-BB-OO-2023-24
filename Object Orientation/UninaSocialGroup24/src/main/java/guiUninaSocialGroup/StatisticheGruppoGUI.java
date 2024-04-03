@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import classiDAO.Gruppo;
 import classiDAO.Post;
+import classiDAO.Utente;
 import controller.Controller;
 
 import java.awt.*;
@@ -29,7 +30,7 @@ public class StatisticheGruppoGUI extends JFrame {
 
     public StatisticheGruppoGUI() {
         setResizable(false);
-        setTitle("Statistiche del Gruppo");
+        setTitle("Statistiche");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -48,7 +49,7 @@ public class StatisticheGruppoGUI extends JFrame {
    
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
-        mainPanel.setBackground(new Color(148, 190, 223)); 
+        mainPanel.setBackground(new Color(172, 202, 232)); 
         getContentPane().add(mainPanel);
         
         
@@ -83,7 +84,7 @@ public class StatisticheGruppoGUI extends JFrame {
 
        
         JPanel panel1Top = new JPanel();
-        panel1Top.setBackground(new Color(180, 210, 253)); 
+        panel1Top.setBackground(new Color(124, 176, 228)); 
         panel1Top.setBounds(10, 81, 282, 130);
         mainPanel.add(panel1Top);
         panel1Top.setLayout(null);
@@ -95,7 +96,7 @@ public class StatisticheGruppoGUI extends JFrame {
          
         
         JPanel panel2Top = new JPanel();
-        panel2Top.setBackground(new Color(180, 210, 253)); 
+        panel2Top.setBackground(new Color(124, 176, 228)); 
         panel2Top.setBounds(294, 81, 282, 130);
         mainPanel.add(panel2Top);
         panel2Top.setLayout(null);
@@ -108,7 +109,7 @@ public class StatisticheGruppoGUI extends JFrame {
             
         // Pannelli inferiori
         JPanel panel1Bottom = new JPanel();
-        panel1Bottom.setBackground(new Color(180, 210, 253)); 
+        panel1Bottom.setBackground(new Color(124, 176, 228)); 
         panel1Bottom.setBounds(10, 222, 282, 130);
         mainPanel.add(panel1Bottom);
         panel1Bottom.setLayout(null);
@@ -120,7 +121,7 @@ public class StatisticheGruppoGUI extends JFrame {
         
        
         JPanel panel2Bottom = new JPanel();
-        panel2Bottom.setBackground(new Color(180, 210, 253)); 
+        panel2Bottom.setBackground(new Color(124, 176, 228)); 
         panel2Bottom.setBounds(294, 222, 282, 130);
         mainPanel.add(panel2Bottom);
         panel2Bottom.setLayout(null);
@@ -146,13 +147,13 @@ public class StatisticheGruppoGUI extends JFrame {
         subPanel2Top = new JPanel();
         panel2Top.add(subPanel2Top);
         subPanel2Top.setBounds(10, 22, 262, 97);
-        subPanel2Top.setBackground(new Color(226, 235, 248));
+        subPanel2Top.setBackground(new Color(225, 235, 248));
         subPanel2Top.setLayout(new BoxLayout(subPanel2Top, BoxLayout.Y_AXIS));
         
         subPanel1Top = new JPanel();
         panel1Top.add(subPanel1Top);
         subPanel1Top.setBounds(10, 22, 262, 97);
-        subPanel1Top.setBackground(new Color(226, 235, 248));
+        subPanel1Top.setBackground(new Color(225, 235, 248));
         subPanel1Top.setLayout(new BoxLayout(subPanel1Top, BoxLayout.Y_AXIS));
           
         JLabel mediaLabel = new JLabel("");
@@ -184,10 +185,11 @@ public class StatisticheGruppoGUI extends JFrame {
                     idpost = Controller.postDAO.getIDPostConPiuLikeGruppoInUnMese( mese,  anno, gruppo);
                     if( idpost==-1) {
                     	 JOptionPane.showMessageDialog(null, "Il gruppo non ha post nel periodo specificato.", "Nessun messaggio trovato", JOptionPane.INFORMATION_MESSAGE);
-                   
+                    	 subPanel2Top.removeAll();
+                    	 subPanel1Top.removeAll();
+                    	 subPanel1Bottom.removeAll();
+                    	 subPanel2Bottom.removeAll();                    	 
                     }else {
-                                          
-                   
                     	Post postConPiùLike=Controller.postDAO.getPostFromArrayListById(idpost);
                     	
                     	idpost=	Controller.postDAO.getIDPostConPiuCommentiGruppoInUnMese( mese,  anno, gruppo);		
@@ -319,10 +321,15 @@ public class StatisticheGruppoGUI extends JFrame {
         panelPost.setBackground(new Color(226, 235, 248));
         panelPost.setLayout(new BoxLayout(panelPost, BoxLayout.Y_AXIS));
         
+        Utente autore = Controller.utenteDAO.getUtenteFromArrayListById(post.getIdUtente());
+        JLabel labelAutore = new JLabel("" + autore.getNickname() );
+        labelAutore.setFont(new Font("Arial",Font.BOLD,14));
         
-        JLabel labelAutore = new JLabel("Autore: " + post.getIdUtente());   //Togliere l'id e mettere nick ******************
-        JLabel labelData = new JLabel("Data: " + post.getDataPubblicazione());
+        JLabel labelData = new JLabel("" + post.getDataPubblicazione());
+        labelData.setFont(new Font("Arial",Font.ITALIC,10));
+        
         JLabel labelText = new JLabel("<html><p style='width:170px;'>" + post.getTesto() + "</p></html>");
+        labelText.setFont(new Font("Arial",Font.PLAIN,12));
        
         panelPost.add(labelAutore);
         panelPost.add(labelData);

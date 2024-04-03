@@ -156,8 +156,13 @@ public class NotificheGUI extends JFrame {
         panelNotifica.setLayout(new BoxLayout(panelNotifica, BoxLayout.Y_AXIS));
         
         JLabel labelData = new JLabel("Data: " + notifica.getDataInvio());
+        labelData.setFont(new Font("Arial",Font.BOLD,11));
+        
         JLabel labelTipo = new JLabel("Ora:" + notifica.getOraInvio());
+        labelTipo.setFont(new Font("Arial",Font.BOLD,11));
+        
         JLabel labelText = new JLabel("<html><p style='width:250px;'>" + notifica.getTestoNotifica() + "</p></html>");
+        labelText.setFont(new Font("Arial",Font.ITALIC,13));
        
         panelNotifica.add(labelData);
         panelNotifica.add(labelTipo);
@@ -175,7 +180,11 @@ public class NotificheGUI extends JFrame {
         
         
         JLabel labelData = new JLabel("Data: " + notifica.getDataInvio());
+        labelData.setFont(new Font("Arial",Font.BOLD,11));
+
         JLabel labelText = new JLabel("<html><p style='width:250px;'>" + notifica.getTestoNotifica() + "</p></html>");
+        labelText.setFont(new Font("Arial",Font.ITALIC,13));
+
         
         JPanel panelBottoni = new JPanel();
         panelBottoni.setLayout(new FlowLayout(FlowLayout.LEFT));

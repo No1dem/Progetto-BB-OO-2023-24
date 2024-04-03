@@ -50,7 +50,7 @@ public class registrazioneUtenteGUI extends JFrame {
         setBounds(100, 100, 496, 443);
         setTitle("Registrazione Utente");
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(148, 190, 233));
+        contentPane.setBackground(new Color(172, 202, 232));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         setContentPane(contentPane);
@@ -136,6 +136,26 @@ public class registrazioneUtenteGUI extends JFrame {
                     JOptionPane.showMessageDialog(contentPane, "Inserisci tutti i dati necessari.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                
+                if (!nome.matches("^[a-zA-Z ]+$")) {
+                    JOptionPane.showMessageDialog(contentPane, "Il nome può contenere solo caratteri e spazi.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (!cognome.matches("^[a-zA-Z ]+$")) {
+                    JOptionPane.showMessageDialog(contentPane, "Il cognome può contenere solo caratteri e spazi.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                if (nome.length() > 20) {
+                    JOptionPane.showMessageDialog(contentPane, "Il nome può contenere al massimo 20 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (cognome.length() > 20) {
+                    JOptionPane.showMessageDialog(contentPane, "Il cognome può contenere al massimo 20 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
                 if (nickname.length() > 20) {
                     JOptionPane.showMessageDialog(contentPane, "Il nickname può contenere massimo 20 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
@@ -144,6 +164,21 @@ public class registrazioneUtenteGUI extends JFrame {
 
                 if (nickname.length() < 5) {
                     JOptionPane.showMessageDialog(contentPane, "Il nickname deve contenere almeno 5 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                if (biografia.length() > 350) {
+                    JOptionPane.showMessageDialog(contentPane, "La biografia può contenere al massimo 350 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (email.length() > 50) {
+                    JOptionPane.showMessageDialog(contentPane, "L'email può contenere al massimo 50 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                if (email.length() < 10) {
+                    JOptionPane.showMessageDialog(contentPane, "L'email deve contenere almeno 10 caratteri.", "Errore registrazione", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 

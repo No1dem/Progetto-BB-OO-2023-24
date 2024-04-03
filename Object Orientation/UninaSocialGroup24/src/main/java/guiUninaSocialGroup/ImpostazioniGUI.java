@@ -41,7 +41,7 @@ public class ImpostazioniGUI extends JFrame {
         setBounds(100, 100, 397, 535);
         setTitle("Impostazioni Utente");
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(226, 235, 248));
+        contentPane.setBackground(new Color(172, 202, 232));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);

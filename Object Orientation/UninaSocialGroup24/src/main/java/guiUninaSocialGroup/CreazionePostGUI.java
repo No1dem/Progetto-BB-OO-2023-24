@@ -43,20 +43,20 @@ public class CreazionePostGUI extends JFrame {
             }
         });
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(226, 235, 248));
+		contentPane.setBackground(new Color(172, 202, 232));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel creazionePanel = new JPanel();
-		creazionePanel.setBackground(new Color(124, 176, 228));
+		creazionePanel.setBackground(new Color(148, 190, 233));
 		creazionePanel.setBounds(10, 10, 536, 271);
 		contentPane.add(creazionePanel);
 		creazionePanel.setLayout(null);
 		
 		JPanel testoPostPanel = new JPanel();
-		testoPostPanel.setBackground(new Color(255,255,255));
+		testoPostPanel.setBackground(new Color(255, 255, 255));
 		testoPostPanel.setBounds(67, 41, 412, 187);
 		creazionePanel.add(testoPostPanel);
 			
@@ -72,24 +72,24 @@ public class CreazionePostGUI extends JFrame {
 		
 		JLabel logoCreaGruppoLabel = new JLabel("");
 		Image img = new ImageIcon(this.getClass().getResource("/inserisciPost.png")).getImage();
-		logoCreaGruppoLabel.setBounds(10, 10, 59, 60);
+		logoCreaGruppoLabel.setBounds(10, 32, 59, 60);
 		creazionePanel.add(logoCreaGruppoLabel);
 		logoCreaGruppoLabel.setIcon(new ImageIcon (img));
 		
 		
-		JLabel lblNewLabel = new JLabel("INSERIMENTO POST");
+		JLabel lblNewLabel = new JLabel("SCRIVI UN POST");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel.setBounds(191, 10, 162, 34);
+		lblNewLabel.setBounds(67, 12, 162, 23);
 		creazionePanel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("(Minimo 10 caratteri)");
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 10));
-		lblNewLabel_1.setBounds(67, 238, 122, 13);
+		lblNewLabel_1.setBounds(375, 18, 104, 13);
 		creazionePanel.add(lblNewLabel_1);
 		
 		JButton btnConferma = new JButton("Conferma");
 		btnConferma.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		btnConferma.setBounds(421, 238, 105, 23);
+		btnConferma.setBounds(375, 238, 105, 23);
 		btnConferma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String testo = textAreaPost.getText();

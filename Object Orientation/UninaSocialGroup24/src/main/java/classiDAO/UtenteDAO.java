@@ -50,6 +50,7 @@ public class UtenteDAO {
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 	

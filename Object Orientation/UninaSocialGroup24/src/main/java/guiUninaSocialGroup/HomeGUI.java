@@ -319,19 +319,25 @@ public class HomeGUI extends JFrame {
 	            panelGruppo.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
 	            panelGruppo.setBackground(new Color(226, 235, 248));
 	            
-	            JLabel labelNomeGruppo = new JLabel("Nome: " + gruppo.getNomeGruppo());
+	            JLabel labelNomeGruppo = new JLabel("" + gruppo.getNomeGruppo());
+	            labelNomeGruppo.setFont(new Font("Arial Black",Font.PLAIN,12));
 
 	            // Elenco dei tag
-	            JLabel labelTag = new JLabel("Tag: " + String.join(", ", gruppo.getTagGruppo()));
+	            JLabel labelTag = new JLabel(" Tag: " + String.join(", ", gruppo.getTagGruppo()));
+	            labelTag.setFont(new Font("Arial",Font.PLAIN,11));
 
 	            
 	            JLabel labelDescrizione = new JLabel("<html><div style='width: 300px; text-align: justify'>" + gruppo.getDescrizioneGruppo() + "</div></html>");
-	           
+	            labelDescrizione.setFont(new Font("Arial",Font.ITALIC,12));
 
-	            JLabel labelIscritti = new JLabel("Iscritti: " + gruppo.getNumeroIscritti());
+
+	            JLabel labelIscritti = new JLabel(" Iscritti: " + gruppo.getNumeroIscritti());
+	            labelIscritti.setFont(new Font("Arial",Font.BOLD,11));
+
 	            
 	            CreatoreGruppo creatoreGruppo = Controller.creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(gruppo.getIdGruppo());
-	            JLabel labelCreatore = new JLabel("Creatore: " + creatoreGruppo.getNomeUtente()+" "+creatoreGruppo.getCognomeUtente());
+	            JLabel labelCreatore = new JLabel(" Creatore: " + creatoreGruppo.getNickname());
+	            labelCreatore.setFont(new Font("Arial",Font.BOLD,11));
 
 	            panelGruppo.add(labelNomeGruppo);
 	            panelGruppo.add(labelTag);
@@ -450,7 +456,6 @@ public class HomeGUI extends JFrame {
             
             @Override
             public void mouseExited(MouseEvent e) {
-                
                 gruppoPanel.setBackground(new Color (226, 235, 248));
             }
         });
@@ -458,10 +463,17 @@ public class HomeGUI extends JFrame {
         CreatoreGruppo cg = Controller.creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(g.getIdGruppo());
         String nickname = cg.getNickname();
         
-        JLabel labelNome= new JLabel("Nome gruppo: " + g.getNomeGruppo());
-        JLabel labelDescrizione = new JLabel("<html><p style='width:280px;'>" + g.getDescrizioneGruppo() + "</p></html>");
-        JLabel labelCreatore = new JLabel("Gruppo creato da: "+ nickname);
-        JLabel labelNumeroIscritti = new JLabel("Numero iscritti: " + g.getNumeroIscritti());
+        JLabel labelNome= new JLabel("" + g.getNomeGruppo());
+        labelNome.setFont(new Font("Arial Black",Font.PLAIN,12));
+        
+        JLabel labelDescrizione = new JLabel("<html><p style='width:280px;'>"+ g.getDescrizioneGruppo() + "</p></html>");
+        labelDescrizione.setFont(new Font("Arial",Font.ITALIC,12));
+        
+        JLabel labelCreatore = new JLabel(" Gruppo creato da: "+ nickname);
+        labelCreatore.setFont(new Font("Arial",Font.BOLD,11));
+        
+        JLabel labelNumeroIscritti = new JLabel(" Iscritti: " + g.getNumeroIscritti());
+        labelNumeroIscritti.setFont(new Font("Arial",Font.BOLD,11));
        
         gruppoPanel.add(labelNome);
         gruppoPanel.add(labelDescrizione);
@@ -521,9 +533,14 @@ public class HomeGUI extends JFrame {
         });
         
         
-        JLabel labelNome= new JLabel("Nome gruppo: " + g.getNomeGruppo());
+        JLabel labelNome= new JLabel("" + g.getNomeGruppo());
+        labelNome.setFont(new Font("Arial Black",Font.PLAIN,12));
+        
         JLabel labelDescrizione = new JLabel("<html><p style='width:280px;'>" + g.getDescrizioneGruppo() + "</p></html>");
-        JLabel labelNumeroIscritti = new JLabel("Numero iscritti: " + g.getNumeroIscritti());
+        labelDescrizione.setFont(new Font("Arial",Font.ITALIC,12));
+
+        JLabel labelNumeroIscritti = new JLabel(" Numero iscritti: " + g.getNumeroIscritti());
+        labelNumeroIscritti.setFont(new Font("Arial",Font.BOLD,11));
        
         gruppoPanel.add(labelNome);
         gruppoPanel.add(labelDescrizione);
@@ -558,6 +575,11 @@ public class HomeGUI extends JFrame {
             profileImageIcon = getDefaultProfileImageIcon();
             imgProfiloLabel.setIcon(profileImageIcon);
         }
+	}
+	
+	public void resettaRicercaGruppi() {
+		risultatiRicercaPanel.removeAll();
+		barraDiRicercaTxtField.setText("");
 	}
 		
 }

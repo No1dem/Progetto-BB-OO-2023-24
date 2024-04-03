@@ -16,6 +16,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.util.HashSet;
 
@@ -27,8 +29,8 @@ public class CreazioneGruppoGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField nomeField;
+	private JTextField descrizioneField;
 	private JTextField tagField;
 	private HashSet<String> tagSet = new HashSet<>(); 
 
@@ -36,9 +38,19 @@ public class CreazioneGruppoGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public CreazioneGruppoGUI() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 570, 324);
 		setTitle("Creazione Gruppo");
+		
+		addWindowListener(new WindowAdapter() {
+		    @Override
+		    public void windowClosing(WindowEvent e) {
+		    	Controller.chiudiCreazioneGruppo();
+		    }
+		    
+		});
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(148, 190, 233));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -67,20 +79,20 @@ public class CreazioneGruppoGUI extends JFrame {
 		creazionePanel.add(lblNewLabel_2);
 		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 15));
 
-		textField = new JTextField();
-		textField.setBounds(223, 84, 250, 20);
-		creazionePanel.add(textField);
-		textField.setColumns(10);
+		nomeField = new JTextField();
+		nomeField.setBounds(223, 84, 250, 20);
+		creazionePanel.add(nomeField);
+		nomeField.setColumns(10);
 
 		JLabel lblNewLabel_4 = new JLabel("(Max 30 car.)");
 		lblNewLabel_4.setBounds(223, 103, 114, 13);
 		creazionePanel.add(lblNewLabel_4);
 		lblNewLabel_4.setFont(new Font("Arial", Font.BOLD, 10));
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(223, 137, 250, 20);
-		creazionePanel.add(textField_1);
-		textField_1.setColumns(10);
+		descrizioneField = new JTextField();
+		descrizioneField.setBounds(223, 137, 250, 20);
+		creazionePanel.add(descrizioneField);
+		descrizioneField.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("(Max 150 car.)");
 		lblNewLabel_3.setBounds(223, 156, 90, 13);
@@ -121,8 +133,8 @@ public class CreazioneGruppoGUI extends JFrame {
 		
 		btnConferma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String nomeGruppo = textField.getText();
-				String descrizioneGruppo = textField_1.getText();
+				String nomeGruppo = nomeField.getText();
+				String descrizioneGruppo = descrizioneField.getText();
 				StringBuilder tagBuilder = new StringBuilder();
 				
 				
@@ -141,7 +153,6 @@ public class CreazioneGruppoGUI extends JFrame {
 					JOptionPane.showMessageDialog(contentPane, "Inserire almeno un tag.", "Errore creazione", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-
 				if (nomeGruppo.length() > 30) {
 					JOptionPane.showMessageDialog(contentPane, "Il nome del gruppo può contenere solo 30 caratteri.", "Errore creazione", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -154,10 +165,13 @@ public class CreazioneGruppoGUI extends JFrame {
 
 				boolean creazioneRiuscita = Controller.creaGruppo(Controller.myIdUtente, nomeGruppo, tagGruppo, descrizioneGruppo);
 				tagSet.clear();
+				tagField.setText("");
+				descrizioneField.setText("");
+				nomeField.setText("");
 
 				if (creazioneRiuscita) {
 					JOptionPane.showMessageDialog(contentPane, "Gruppo creato con successo", "Conferma", JOptionPane.INFORMATION_MESSAGE);
-					Controller.aggiornaHome();;
+					Controller.aggiornaHome();
 				} else {
 					JOptionPane.showMessageDialog(contentPane, "Errore durante la creazione del gruppo.", "Errore", JOptionPane.ERROR_MESSAGE);
 				}
@@ -173,8 +187,8 @@ public class CreazioneGruppoGUI extends JFrame {
 					}
 				}
 				
-				if (!nuovoTag.matches("^.*$")) { 
-					JOptionPane.showMessageDialog(contentPane, "Il tag deve contenere solo caratteri.", "Errore", JOptionPane.ERROR_MESSAGE);
+				if (!nuovoTag.matches("^\\S+$")) { 
+					JOptionPane.showMessageDialog(contentPane, "Il tag deve contenere solo caratteri senza spazi.", "Errore", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 
@@ -191,5 +205,12 @@ public class CreazioneGruppoGUI extends JFrame {
 				tagField.setText("");
 			}
 		});
+	}
+	
+	
+	public void resettaCampiCreazioneGruppo() {
+		tagField.setText("");
+    	descrizioneField.setText("");
+    	nomeField.setText("");
 	}
 }
