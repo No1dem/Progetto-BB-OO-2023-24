@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Calendar;
 
 public class StatisticheGruppoGUI extends JFrame {
     private JLabel groupNameLabel;
@@ -176,6 +177,19 @@ public class StatisticheGruppoGUI extends JFrame {
                     int mese = Integer.parseInt(meseString); 
                     int anno = Integer.parseInt(annoString); 
                     
+                    if (mese < 1 || mese > 12) {
+                        JOptionPane.showMessageDialog(null, "Il valore inserito per il mese non è valido.", "Errore", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    
+                    int annoCorrente = Calendar.getInstance().get(Calendar.YEAR);
+                    if (anno < 2024 || anno > annoCorrente) {
+                        JOptionPane.showMessageDialog(null, "Il valore fornito per l'anno non è valido. ", "Errore", JOptionPane.ERROR_MESSAGE);
+                        return; 
+                    }
+                    
+            
+                    
                     float mediaP = Controller.postDAO.getMediaPostInUnMese(mese , anno , gruppo);
                     
                     mediaLabel.setText(""+mediaP);
@@ -183,7 +197,7 @@ public class StatisticheGruppoGUI extends JFrame {
                     
                
                     idpost = Controller.postDAO.getIDPostConPiuLikeGruppoInUnMese( mese,  anno, gruppo);
-                    if( idpost==-1) {
+                    if(idpost == -1) {
                     	 JOptionPane.showMessageDialog(null, "Il gruppo non ha post nel periodo specificato.", "Nessun messaggio trovato", JOptionPane.INFORMATION_MESSAGE);
                     	 subPanel2Top.removeAll();
                     	 subPanel1Top.removeAll();

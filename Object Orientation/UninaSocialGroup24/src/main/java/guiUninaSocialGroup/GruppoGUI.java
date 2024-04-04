@@ -188,10 +188,21 @@ public class GruppoGUI extends JFrame {
 			panel_3.add(eliminaGruppoButton);
 			
 			
-			JButton eliminaUtenteButton = new JButton("Elimina Utente");
-			eliminaUtenteButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
-			eliminaUtenteButton.setBounds(20, 102, 165, 21);
-			panel_3.add(eliminaUtenteButton);
+			JButton gestioneButton = new JButton("Gestione");
+			gestioneButton.setFont(new Font("Arial Black", Font.PLAIN, 12));
+			gestioneButton.setBounds(20, 102, 165, 21);
+			gestioneButton.addActionListener(new ActionListener() {
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			    	Gruppo gruppoVisualizzato = Controller.gruppoDAO.getGruppoFromArrayListById(Controller.idGruppoVisualizzato);
+			    	if(gruppoVisualizzato.getNumeroIscritti() > 1) {
+			    		Controller.apriGestioneIscrittiGruppo();
+			    	}
+			    	else {
+			    		JOptionPane.showMessageDialog(GruppoGUI.this, "Non sono presenti altri iscritti al gruppo.", "Messaggio", JOptionPane.INFORMATION_MESSAGE);			    	}
+			    	}
+			});
+			panel_3.add(gestioneButton);
 					
 		}
 		
@@ -358,7 +369,9 @@ public class GruppoGUI extends JFrame {
     
         autorePanel.add(Box.createHorizontalGlue());
         
-        if (Controller.controlloUtenteÈAmministratore(Controller.idGruppoVisualizzato)) {
+        Gruppo gruppoVisualizzato = Controller.gruppoDAO.getGruppoFromArrayListById(Controller.idGruppoVisualizzato);
+        Utente io = Controller.utenteDAO.getUtenteFromArrayListById(Controller.myIdUtente);
+        if (Controller.controlloUtenteÈAmministratore(gruppoVisualizzato, io)) {
         	JLabel eliminaPostButton = new JLabel("");
         	eliminaPostButton.addMouseListener(new MouseAdapter() {
         	    @Override
@@ -499,14 +512,14 @@ public class GruppoGUI extends JFrame {
 				nicknameCommentoLabel.setFont(new Font("Arial",Font.BOLD,13));
 				nicknameCommentoLabel.setBackground(new Color(226, 235, 248));
 				
-				nicknameCommentoPanel.add(Box.createRigidArea(new Dimension(150,0)));
+				nicknameCommentoPanel.add(Box.createRigidArea(new Dimension(90,0)));
 				nicknameCommentoPanel.add(nicknameCommentoLabel);
 				nicknameCommentoPanel.add(Box.createHorizontalGlue());
 				
 				JPanel testoCommentoPanel = new JPanel();
 				testoCommentoPanel.setLayout(new BoxLayout(testoCommentoPanel,BoxLayout.X_AXIS));
 				testoCommentoPanel.setBackground(new Color(226, 235, 248));
-				testoCommentoPanel.add(Box.createRigidArea(new Dimension(175,0)));
+				testoCommentoPanel.add(Box.createRigidArea(new Dimension(130,0)));
 				
 				JLabel testoCommentoLabel = new JLabel("<html><p style='width:280px;'>"+c.getTestoCommento()+ "</p></html>");
 				testoCommentoLabel.setFont(new Font("Arial",Font.PLAIN,12));

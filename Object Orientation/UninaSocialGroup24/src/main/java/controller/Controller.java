@@ -11,6 +11,7 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import classiDAO.Amministratore;
 import classiDAO.AmministratoreDAO;
 import classiDAO.CommentoDAO;
 import classiDAO.CreatoreGruppo;
@@ -35,6 +36,7 @@ import guiUninaSocialGroup.ImpostazioniGUI;
 import guiUninaSocialGroup.NotificheGUI;
 import guiUninaSocialGroup.PasswordDimenticataGUI;
 import guiUninaSocialGroup.StatisticheGruppoGUI;
+import guiUninaSocialGroup.gestioneIscrittiGruppoGUI;
 import guiUninaSocialGroup.loginGUI;
 import guiUninaSocialGroup.registrazioneUtenteGUI;
 
@@ -50,6 +52,7 @@ public class Controller {
 	public static GruppoGUI gruppo;
 	public static StatisticheGruppoGUI Statistichegruppo;
 	public static CreazionePostGUI creazionePost;
+	public static gestioneIscrittiGruppoGUI gestioneIscritti;
 	
 	public static UtenteDAO utenteDAO;
 	public static CreatoreGruppoDAO creatoreGruppoDAO;
@@ -209,9 +212,12 @@ public class Controller {
 		return false;
 	}
 	
-	public static boolean controlloUtenteÈAmministratore (int idGruppo) {
-		int idUtenteCreatoreGruppo = creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(idGruppo).getIdUtente();
-		if (idUtenteCreatoreGruppo == Controller.myIdUtente)
+	
+	
+	public static boolean controlloUtenteÈAmministratore (Gruppo g , Utente u) {
+		int idUtenteCreatoreGruppo = creatoreGruppoDAO.getCreatoreGruppoFromArrayListByIdGruppo(g.getIdGruppo()).getIdUtente();
+		Amministratore amministratore = amministratoreDAO.getAmministratoreFromArrayListByIdGruppoIdUtente(g.getIdGruppo(), u.getIdUtente());
+		if (idUtenteCreatoreGruppo == u.getIdUtente() || amministratore != null  )
 			return true;
 		return false;
 	}
@@ -339,6 +345,7 @@ public class Controller {
 		gruppo.setVisible(true);
 		creazionePost = new CreazionePostGUI();
 		Statistichegruppo = new StatisticheGruppoGUI();
+		gestioneIscritti = new gestioneIscrittiGruppoGUI();
 		
 	}
 	
@@ -353,6 +360,19 @@ public class Controller {
 	public static void chiudiCreazionePost() {
 		creazionePost.setVisible(false);
 		creazionePost.resettaCampoCreazionePost();
+	}
+	
+	public static void apriGestioneIscrittiGruppo() {
+		gestioneIscritti.setVisible(true);
+	}
+	
+	public static void chiudiGestioneIscrittiGruppo() {
+		gestioneIscritti.setVisible(false);
+		aggiornaSchermataGruppo();
+	}
+	
+	public static void aggiornaGestioneIscrittiGruppo(Gruppo g) {
+		gestioneIscritti.mostraPannelloIscrittiGruppo(g);
 	}
 	
 }

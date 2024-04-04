@@ -41,19 +41,19 @@ public class loginGUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-			
-				try {
-					loginGUI frame = new loginGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//			
+//				try {
+//					loginGUI frame = new loginGUI();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -167,8 +167,7 @@ public class loginGUI extends JFrame {
 			            return; 
 			     }
 			     
-			     
-			           
+			        
 			     boolean loginCorretto = new LoginController().login(nickname, password, Controller.Connessione);
 			        
 			     if (loginCorretto) {
@@ -200,9 +199,6 @@ public class loginGUI extends JFrame {
 		panel_2.setBounds(0, 51, 526, 10);
 		contentPane.add(panel_2);
 		
-		
-		
-		setLocationRelativeTo(null);   //Schermata al centro
-		
+		setLocationRelativeTo(null);   //Schermata al centro	
 	}
 }

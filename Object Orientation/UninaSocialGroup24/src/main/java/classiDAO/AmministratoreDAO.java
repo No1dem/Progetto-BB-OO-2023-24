@@ -16,6 +16,7 @@ public class AmministratoreDAO {
 	public AmministratoreDAO(Connection conn, GruppoDAO gruppoDAO, UtenteDAO utenteDAO) throws SQLException{
         String query = "SELECT * FROM Amministratore";
         listaAmministratori = new LinkedList<Amministratore>();
+        connessioneDB = conn;
 
         
         try (Statement stmt = conn.createStatement();
@@ -44,17 +45,27 @@ public class AmministratoreDAO {
 	
     
 	
-	public void insertNuovoAmministratore(Amministratore amministratore,CreatoreGruppoDAO creatoreDAO) {
+	public void insertNuovoAmministratore(Utente utente,Gruppo gruppo,CreatoreGruppoDAO creatoreDAO) {
 	    String query = "INSERT INTO Amministratore (idCreatore , idUtente, idGruppo) VALUES (?, ? ,?)";
 	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
 	    	
-	    	CreatoreGruppo CreatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListByIdGruppo(amministratore.getIdGruppoAmministrato());
+	    	CreatoreGruppo CreatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListByIdGruppo(gruppo.getIdGruppo());
 	    	
 	    	pstmt.setInt(1, CreatoreGruppo.getIdCreatoreGruppo());
-	        pstmt.setInt(2, amministratore.getIdUtente());
-	        pstmt.setInt(3, amministratore.getIdGruppoAmministrato());
+	        pstmt.setInt(2, utente.getIdUtente());
+	        pstmt.setInt(3, gruppo.getIdGruppo());
 	        pstmt.executeUpdate();
-	        listaAmministratori.add(amministratore); 
+	        
+	        ResultSet generatedKeys = pstmt.getGeneratedKeys();
+	        if (generatedKeys.next()) {
+	            int idAmministratore = generatedKeys.getInt(1);
+	      
+	            listaAmministratori.add(new Amministratore(utente.getIdUtente(),utente.getNomeUtente(),utente.getCognomeUtente(),
+					 	   utente.getEmail(),utente.getNickname(),utente.getPassword(),utente.getBiografia(),
+						   utente.getUrlFotoProfilo(),idAmministratore, gruppo));
+	            
+	            stampaLista(listaAmministratori);
+	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
@@ -62,12 +73,17 @@ public class AmministratoreDAO {
 
 
 
-	public void deleteAmministratoreByNickname(Amministratore amministratore) {
-	    String query = "DELETE FROM Amministratore WHERE idAmministratore IN (SELECT idAmministratore FROM Utente WHERE Nickname = ?)";
+	public void deleteAmministratore(Utente utente,Gruppo gruppo) {
+	    String query = "DELETE FROM Amministratore WHERE idUtente = ? AND idGruppo = ?";
 	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
-	        pstmt.setString(1, amministratore.getNickname());
+	        pstmt.setInt(1, utente.getIdUtente());
+	        pstmt.setInt(2, gruppo.getIdGruppo());
 	        pstmt.executeUpdate();
-	        listaAmministratori.remove(amministratore);
+	        
+	      
+		    Amministratore amministratore = getAmministratoreFromArrayListByIdGruppoIdUtente(gruppo.getIdGruppo(),utente.getIdUtente());
+		    listaAmministratori.remove(amministratore);
+	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
