@@ -47,7 +47,7 @@ public class AmministratoreDAO {
 	
 	public void insertNuovoAmministratore(Utente utente,Gruppo gruppo,CreatoreGruppoDAO creatoreDAO) {
 	    String query = "INSERT INTO Amministratore (idCreatore , idUtente, idGruppo) VALUES (?, ? ,?)";
-	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)){
+	    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query,Statement.RETURN_GENERATED_KEYS)){
 	    	
 	    	CreatoreGruppo CreatoreGruppo = creatoreDAO.getCreatoreGruppoFromArrayListByIdGruppo(gruppo.getIdGruppo());
 	    	

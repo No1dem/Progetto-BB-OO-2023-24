@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
@@ -142,6 +143,7 @@ public class gestioneIscrittiGruppoGUI extends JFrame {
 	            public void actionPerformed(ActionEvent e) {
 	            	Controller.amministratoreDAO.deleteAmministratore(u, g);
 	            	Controller.aggiornaGestioneIscrittiGruppo(g);
+	            	Controller.aggiornaSchermataGruppo();
 	            }
 	        });
 	        
@@ -155,8 +157,14 @@ public class gestioneIscrittiGruppoGUI extends JFrame {
 		eliminaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               
-                JOptionPane.showMessageDialog(gestioneIscrittiGruppoGUI.this, "Hai cliccato su Elimina per l'utente: " + nickname);
+            	try {
+            		Controller.gruppoDAO.disiscriviUtenteDaGruppo(u, g);
+            		Controller.aggiornaGestioneIscrittiGruppo(g);
+            	}
+            	catch(SQLException exc) {
+            		exc.printStackTrace();
+        	    	JOptionPane.showMessageDialog(gestioneIscrittiGruppoGUI.this, "Errore eliminazione iscrizione.", "Errore", JOptionPane.WARNING_MESSAGE);
+            	}
             }
         });
 		

@@ -104,6 +104,21 @@ public class GruppoDAO {
 		 }
 	 }
      	
+	 public void disiscriviUtenteDaGruppo(Utente utente, Gruppo gruppo) throws SQLException{
+		    String query = "DELETE FROM Iscrizione WHERE idGruppo = ? AND idUtente = ?";
+		    
+		    try (PreparedStatement pstmt = connessioneDB.prepareStatement(query)) {
+		        pstmt.setInt(1, gruppo.getIdGruppo());
+		        pstmt.setInt(2, utente.getIdUtente());
+		        pstmt.executeUpdate();
+		        
+		        gruppo.removeUtenteDaListaIscrittiById(utente.getIdUtente());
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        throw e;
+		    }
+	}
 	 
 	 
 	 public int recuperaNumeroIscrittiById(int id) {

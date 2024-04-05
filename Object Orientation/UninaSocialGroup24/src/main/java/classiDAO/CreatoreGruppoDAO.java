@@ -92,6 +92,7 @@ public class CreatoreGruppoDAO {
 		return null;
 	}
 	
+	
 	public LinkedList<Gruppo> getListaGruppiCreatiFromArrayListByIdUtente (int idUtente,GruppoDAO gruppoDAO) {
 		LinkedList<Gruppo> listaGruppiCreati = new LinkedList<>();
 		
@@ -104,9 +105,11 @@ public class CreatoreGruppoDAO {
 		return listaGruppiCreati;
 	}
 	
+	
 	public LinkedList<CreatoreGruppo> getListaCreatori() {
 		return listaCreatoriGruppi;
 	}
+	
 	
 	public void stampaLista(LinkedList<CreatoreGruppo> listaCreatori) {
 	    for (CreatoreGruppo cg : listaCreatori) {

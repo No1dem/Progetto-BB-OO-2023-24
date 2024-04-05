@@ -303,6 +303,7 @@ public class Controller {
 	    chiudiStatisticheGruppo();
 	    chiudiCreazioneGruppo();
 	    chiudiCreazionePost();
+	    chiudiGestioneIscrittiGruppo();
 		gruppo.setVisible(false);
 	}
 	
