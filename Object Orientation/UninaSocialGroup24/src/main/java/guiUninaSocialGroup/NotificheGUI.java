@@ -10,6 +10,8 @@ import controller.Controller;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.awt.event.ActionListener;
@@ -122,7 +124,7 @@ public class NotificheGUI extends JFrame {
     }
    
 
-    public void mostraRichiesteAccesso(List<Notifica> listaNotifiche) {
+    public void mostraRichiesteAccesso(LinkedList<Notifica> listaNotifiche) {
         panelRichiesteDiAccesso.removeAll();
         for (Notifica notifica : listaNotifiche) {
             if (notifica.getTipoNotifica() == EnumTipoNotifica.Accesso) {
@@ -136,8 +138,9 @@ public class NotificheGUI extends JFrame {
         }
     }
 
-    public void mostraNotifiche(List<Notifica> listaNotifiche) {
-        panelNotifiche.removeAll();  
+    public void mostraNotifiche(LinkedList<Notifica> listaNotifiche) {
+        panelNotifiche.removeAll(); 
+        ordinaListaNotifichePerDataEOrario(listaNotifiche);
         for (Notifica notifica : listaNotifiche) {
             if (notifica.getTipoNotifica() != EnumTipoNotifica.Accesso) {
                 JPanel panelNotifica = creaPannelloNotifica(notifica);
@@ -225,4 +228,22 @@ public class NotificheGUI extends JFrame {
 
         return panelRichiestaAccesso;
     } 
+    
+    
+    private void ordinaListaNotifichePerDataEOrario(LinkedList<Notifica> listaNotifiche) {
+        Collections.sort(listaNotifiche, new Comparator<Notifica>() {
+            @Override
+            public int compare(Notifica notifica1, Notifica notifica2) {
+
+            	int compareDate = notifica1.getDataInvio().compareTo(notifica2.getDataInvio());
+                if (compareDate == 0) {
+                	
+                    return notifica1.getOraInvio().compareTo(notifica2.getOraInvio());
+                }
+                return compareDate;
+            }
+        });
+        
+        Collections.reverse(listaNotifiche);
+    }
 }

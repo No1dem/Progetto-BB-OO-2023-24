@@ -43,6 +43,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 
@@ -286,6 +288,8 @@ public class GruppoGUI extends JFrame {
 	
 	public void mostraPannelloPost(LinkedList<Post> listaPostGruppo) {
         navigazioneGruppoPanel.removeAll();  
+        
+        ordinaListaPostPerDataEOrario(listaPostGruppo);
         
         JPanel postGruppoPanel = new JPanel();
         postGruppoPanel.setLayout(new BoxLayout(postGruppoPanel, BoxLayout.Y_AXIS));
@@ -554,5 +558,23 @@ public class GruppoGUI extends JFrame {
             }
         }
         return profileImageIcon;
+    }
+	
+	
+	private void ordinaListaPostPerDataEOrario(LinkedList<Post> listaPostGruppo) {
+        Collections.sort(listaPostGruppo, new Comparator<Post>() {
+            @Override
+            public int compare(Post post1, Post post2) {
+                
+                int compareDate = post1.getDataPubblicazione().compareTo(post2.getDataPubblicazione());
+                if (compareDate == 0) {
+                   
+                    return post1.getOraPubblicazione().compareTo(post2.getOraPubblicazione());
+                }
+                return compareDate;
+            }
+        });
+        Collections.reverse(listaPostGruppo);
+
     }
 }

@@ -20,7 +20,7 @@ public class PostDAO {
 	
 	
 	public PostDAO(Connection conn,UtenteDAO utenteDAO,GruppoDAO gruppoDAO) throws SQLException{
-		String query="SELECT * FROM Post ORDER BY dataPubblicazione,oraPubblicazione ";
+		String query="SELECT * FROM Post";
 		listaPost = new LinkedList<Post>();
 		
 		try(Statement stmt=conn.createStatement()){
