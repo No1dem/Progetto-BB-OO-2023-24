@@ -38,22 +38,7 @@ public class loginGUI extends JFrame {
 	private JTextField nickTextField;
 	private JPasswordField passwordField;
 
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//			
-//				try {
-//					loginGUI frame = new loginGUI();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+
 
 	/**
 	 * Create the frame.
